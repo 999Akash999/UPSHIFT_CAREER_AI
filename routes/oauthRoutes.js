@@ -42,7 +42,7 @@ router.get(
 router.get(
   "/linkedin",
   providerEnabled("linkedin"),
-  passport.authenticate("linkedin")
+  passport.authenticate("linkedin", { state: true })
 );
 router.get(
   "/linkedin/callback",

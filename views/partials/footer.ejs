@@ -1,8 +1,14 @@
 <footer class="public-footer">
   <div class="public-footer-inner">
-    <a class="public-brand" href="/"><span class="brand-badge">U</span><span><strong>UPSHIFT</strong><small>Career OS</small></span></a>
-    <p>Practical tools to help student engineers move forward.</p>
-    <nav><a href="/courses">Courses</a><a href="/student/ai-tutor">AI tutor</a><a href="mailto:support@upshiftcareer.com">Support</a></nav>
-    <small>© <%= new Date().getFullYear() %> UPSHIFT CAREER</small>
+    <div class="public-footer-brand">
+      <a class="public-brand" href="/"><img class="brand-badge brand-logo-image" src="/images/logos/m1.png" alt="" aria-hidden="true"><span><strong>UPSHIFT</strong><small>Career OS</small></span></a>
+      <p>Practical tools to help student engineers move forward.</p>
+    </div>
+    <nav class="public-footer-links" aria-label="Footer navigation">
+      <div><strong>Explore</strong><a href="/courses">Courses</a><a href="/resources">Free resources</a><a href="/jobs">Hiring board</a><a href="/mentorship">Mentorship</a></div>
+      <div><strong>UPSHIFT</strong><a href="/about">About</a><a href="/team">Team</a><a href="/contact">Contact</a></div>
+      <div><strong>Help & policies</strong><a href="/help">Help center</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
+    </nav>
+    <div class="public-footer-bottom"><small>© <%= new Date().getFullYear() %> UPSHIFT CAREER</small><a href="mailto:support@upshiftcareer.com">support@upshiftcareer.com</a></div>
   </div>
 </footer>

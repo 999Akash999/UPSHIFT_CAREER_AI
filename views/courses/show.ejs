@@ -1,76 +1,13 @@
 <% layout('layouts/dashboardLayout') %>
-
-<div style="max-width: 1040px; margin: 0 auto;">
-  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
-    
-    <!-- Main Content: Course Modules & Overview -->
-    <div>
-      <div style="margin-bottom: 1.5rem;">
-        <span style="background: rgba(37, 99, 235, 0.1); color: #2563eb; font-size: 0.75rem; font-weight: 800; padding: 0.25rem 0.65rem; border-radius: 4px; text-transform: uppercase;">
-          <%= course.category %> &bull; <%= course.level %>
-        </span>
-        <h1 style="font-size: 2.2rem; font-weight: 900; color: #0f172a; margin: 0.5rem 0 0.75rem; letter-spacing: -0.02em;">
-          <%= course.title %>
-        </h1>
-        <p style="font-size: 1rem; color: #64748b; line-height: 1.6; margin: 0;">
-          <%= course.description %>
-        </p>
-      </div>
-
-      <!-- Curriculum Accordion -->
-      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 2rem;">
-        <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 1.25rem;">Syllabus & Modules</h3>
-
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-          <% if (course.modules && course.modules.length > 0) { %>
-            <% course.modules.forEach((mod, idx) => { %>
-              <div style="border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-                <div style="background: #f8fafc; padding: 1rem 1.25rem; font-weight: 700; color: #0f172a; font-size: 0.95rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between;">
-                  <span>Module <%= idx + 1 %>: <%= mod.title %></span>
-                  <span style="color: #64748b; font-size: 0.8rem; font-weight: 600;"><%= (mod.lessons || []).length %> Lessons</span>
-                </div>
-                <div style="padding: 0.5rem 1.25rem;">
-                  <% (mod.lessons || []).forEach(lesson => { %>
-                    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.85rem;">
-                      <span style="color: #334155;">▶ <%= lesson.title %></span>
-                      <span style="color: #64748b;"><%= lesson.durationMinutes %>m</span>
-                    </div>
-                  <% }) %>
-                </div>
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p style="color: #64748b; font-size: 0.9rem;">Modules will be published on cohort launch.</p>
-          <% } %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right Side Enrollment Card -->
-    <div>
-      <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: sticky; top: 90px;">
-        <div style="font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Enrollment Fee</div>
-        <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.25rem 0 1rem;">
-          ₹<%= course.discountPrice || course.price %>
-        </div>
-
-        <a href="/courses/<%= course.slug %>/checkout" style="display: block; text-align: center; background: #2563eb; color: #ffffff; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4); margin-bottom: 1.25rem;">
-          Proceed to Checkout →
-        </a>
-
-        <div style="font-size: 0.8rem; color: #64748b; line-height: 1.5; display: flex; flex-direction: column; gap: 0.5rem;">
-          <div style="display: flex; align-items: center; gap: 0.4rem;">
-            <span style="color: #10b981; font-weight: 800;">✓</span> Full lifetime access & updates
-          </div>
-          <div style="display: flex; align-items: center; gap: 0.4rem;">
-            <span style="color: #10b981; font-weight: 800;">✓</span> Direct verification points on profile
-          </div>
-          <div style="display: flex; align-items: center; gap: 0.4rem;">
-            <span style="color: #10b981; font-weight: 800;">✓</span> Capstone portfolio code reviews
-          </div>
-        </div>
-      </div>
-    </div>
-
+<section class="course-detail">
+  <a class="course-back-link" href="/courses">← All courses</a>
+  <div class="course-detail-grid">
+    <main>
+      <header class="course-detail-hero"><p class="eyebrow"><%= course.category %> · <%= course.level %></p><h1><%= course.title %></h1><p><%= course.description %></p><div class="course-detail-meta"><span>◷ Self paced</span><span>▤ <%= (course.modules || []).length %> modules</span><span>✓ Practical exercises</span></div></header>
+      <section class="course-syllabus"><div class="course-section-heading"><div><p class="eyebrow">YOUR LEARNING PATH</p><h2>Course curriculum</h2></div><span><%= (course.modules || []).reduce((count, mod) => count + (mod.lessons || []).length, 0) %> lessons</span></div>
+        <% if (course.modules?.length) { %><div class="course-module-list"><% course.modules.forEach((mod, idx) => { %><details class="course-module" <%= idx === 0 ? 'open' : '' %>><summary><span><b>Module <%= String(idx + 1).padStart(2, '0') %></b><strong><%= mod.title %></strong></span><small><%= (mod.lessons || []).length %> lessons</small></summary><% if (mod.description) { %><p class="course-module-description"><%= mod.description %></p><% } %><div class="course-lesson-list"><% (mod.lessons || []).forEach((lesson, lessonIdx) => { %><details class="course-lesson-preview"><summary><span class="course-lesson-number"><%= String(lessonIdx + 1).padStart(2, '0') %></span><strong><%= lesson.title %></strong><small><%= lesson.durationMinutes %> min · View details</small></summary><div class="course-lesson-preview-content"><% if (lesson.content) { %><p><%= lesson.content %></p><% } %><% if (lesson.practiceTask) { %><div class="course-practice"><strong>Practice task</strong><p><%= lesson.practiceTask %></p></div><% } %><% if (lesson.codeExample) { %><pre><code><%= lesson.codeExample %></code></pre><% } %></div></details><% }) %></div></details><% }) %></div><% } else { %><p class="course-curriculum-empty">Course modules will be added soon.</p><% } %>
+      </section>
+    </main>
+    <aside class="course-enroll-card"><div class="course-enroll-icon" aria-hidden="true">✦</div><p class="eyebrow">START LEARNING</p><h2>Build skills that move you forward.</h2><div class="course-price">₹<%= course.discountPrice || course.price %><% if (course.discountPrice && course.discountPrice < course.price) { %><del>₹<%= course.price %></del><% } %></div><a class="button-primary" href="/courses/<%= course.slug %>/checkout">Continue to checkout <span aria-hidden="true">→</span></a><ul><li>Structured lessons and practice</li><li>Learn at your own pace</li><li>Project-focused curriculum</li></ul></aside>
   </div>
-</div>
+</section>

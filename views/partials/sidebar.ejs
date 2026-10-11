@@ -1,7 +1,7 @@
 <% const workspaceHome = currUser && ['student', 'recruiter', 'mentor', 'alumni', 'admin'].includes(currUser.role) ? `/${currUser.role}/dashboard` : '/'; %>
 <aside class="sidebar" id="appSidebar" aria-label="Main navigation">
   <a class="sidebar-brand" href="<%= workspaceHome %>">
-    <span class="brand-badge">U</span>
+    <img class="brand-badge brand-logo-image" src="/images/logos/m1.png" alt="" aria-hidden="true">
     <span><strong>UPSHIFT</strong><small><%= currUser ? currUser.role.toUpperCase() : 'STUDENT' %> WORKSPACE</small></span>
   </a>
   <nav class="sidebar-menu">
@@ -43,6 +43,7 @@
       <a href="/admin/companies" class="sidebar-link"><span>▦</span> Companies</a>
       <a href="/admin/audit-logs" class="sidebar-link"><span>≡</span> Audit logs</a>
     <% } %>
+    <a href="/resources" class="sidebar-link"><span>▧</span> Free resources</a>
   </nav>
   <div class="sidebar-profile">
     <a href="<%= currUser && currUser.role === 'student' ? '/student/profile' : '/' + (currUser ? currUser.role : 'student') + '/dashboard' %>" class="profile-chip" aria-label="Open profile settings">

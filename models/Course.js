@@ -14,6 +14,21 @@ const lessonSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  content: {
+    type: String,
+    trim: true,
+    maxlength: 12000,
+  },
+  codeExample: {
+    type: String,
+    trim: true,
+    maxlength: 6000,
+  },
+  practiceTask: {
+    type: String,
+    trim: true,
+    maxlength: 2000,
+  },
   isFreePreview: {
     type: Boolean,
     default: false,
@@ -66,7 +81,6 @@ const courseSchema = new mongoose.Schema(
     instructor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
       index: true,
     },
     price: {

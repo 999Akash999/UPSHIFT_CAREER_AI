@@ -7,8 +7,7 @@ const AlumniProfile = require("../models/AlumniProfile");
 const EmailVerification = require("../models/EmailVerification");
 const PasswordReset = require("../models/PasswordReset");
 const { sendSystemEmail } = require("../services/emailService");
-
-const appBaseUrl = () => (process.env.APP_BASE_URL || "http://localhost:5000").replace(/\/$/, "");
+const getAppBaseUrl = require("../config/appBaseUrl");
 
 exports.renderVerifyEmail = (req, res) => {
   res.render("auth/verify-email", { title: "Verify your email" });
@@ -35,7 +34,7 @@ exports.resendVerification = async (req, res) => {
   const token = crypto.randomBytes(32).toString("hex");
   await EmailVerification.deleteMany({ user: req.user._id });
   await EmailVerification.create({ user: req.user._id, token, expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000) });
-  const verificationUrl = `${appBaseUrl()}/verify-email/${token}`;
+  const verificationUrl = `${getAppBaseUrl()}/verify-email/${token}`;
   await sendSystemEmail({
     to: req.user.email,
     subject: "Verify your UPSHIFT CAREER email",

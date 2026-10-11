@@ -132,16 +132,35 @@ if (providers.linkedin.enabled) {
         clientSecret: providers.linkedin.clientSecret,
         callbackURL: providers.linkedin.callbackURL,
         scope: providers.linkedin.scope,
+        // LinkedIn's OIDC scopes replace the legacy r_emailaddress/r_liteprofile scopes.
+        // Fetch claims from /v2/userinfo after token exchange instead of the legacy /v2/me API.
+        skipUserProfile: true,
+        // LinkedIn requires OAuth state; passport-linkedin-oauth2 can
+        // persist and validate it against the user's session when enabled.
+        state: true,
       },
-      async (accessToken, refreshToken, profile, done) => {
+      async (accessToken, refreshToken, _profile, done) => {
         try {
-          const email = profile.emails?.[0]?.value;
+          const response = await fetch("https://api.linkedin.com/v2/userinfo", {
+            headers: { Authorization: `Bearer ${accessToken}`, Accept: "application/json" },
+            signal: AbortSignal.timeout(10000),
+          });
+          const claims = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(claims.error_description || claims.message || `LinkedIn profile request failed (HTTP ${response.status}).`);
+          }
+
+          const email = typeof claims.email === "string" ? claims.email.trim().toLowerCase() : "";
+          if (!claims.sub || !email || claims.email_verified !== true) {
+            return done(null, false, { message: "LinkedIn did not provide a verified email. Try another sign-in method." });
+          }
+
           const user = await handleOAuthUser({
             provider: "linkedin",
-            providerId: profile.id,
+            providerId: claims.sub,
             email,
-            name: profile.displayName,
-            avatar: profile.photos?.[0]?.value,
+            name: claims.name || [claims.given_name, claims.family_name].filter(Boolean).join(" "),
+            avatar: claims.picture,
           });
           return done(null, user);
         } catch (err) {

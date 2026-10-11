@@ -2,6 +2,7 @@ const Student = require("../models/Student");
 const DailyTask = require("../models/DailyTask");
 const { sendNotification } = require("../services/notificationService");
 const { sendSystemEmail } = require("../services/emailService");
+const getAppBaseUrl = require("../config/appBaseUrl");
 
 const dailyReminderJob = async () => {
   console.log("⚡ [Job: DailyReminder] Scanning pending tasks for today...");
@@ -61,7 +62,7 @@ const dailyReminderJob = async () => {
           <div style="background-color: #f4f6f8; padding: 12px; border-radius: 6px; margin: 15px 0;">
             ${taskPreview}
           </div>
-          <a href="${process.env.APP_BASE_URL || "http://localhost:8090"}/student/daily-tasks"
+          <a href="${getAppBaseUrl()}/student/daily-tasks"
              style="background-color: #4f46e5; color: white; padding: 10px 18px; text-decoration: none; border-radius: 4px; display: inline-block;">
              Open Today's Tasks
           </a>

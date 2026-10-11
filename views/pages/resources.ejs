@@ -1,0 +1,85 @@
+<% layout('layouts/boilerplate') %>
+<% const studentPath = (path) => typeof currUser !== 'undefined' && currUser?.role === 'student' ? path : '/login'; %>
+<section class="free-resources-page">
+  <header class="resources-hero">
+    <a class="public-info-back" href="/">← UPSHIFT home</a>
+    <p class="eyebrow">LEARN · PRACTICE · BUILD</p>
+    <h1>Good learning resources.<br><span>Free to get started.</span></h1>
+    <p>A curated library of documentation, guided lessons, and practice tools. Pick one resource, work through it, then apply what you learned in a small project.</p>
+    <a class="landing-primary resources-hero-action" href="/signup">Build your learning plan <span aria-hidden="true">→</span></a>
+    <div class="resources-hero-note"><span aria-hidden="true">✦</span> Links open the original learning platform. Some may ask you to create a free account.</div>
+  </header>
+
+  <nav class="resources-jump-links" aria-label="Resource topics">
+    <a href="#upshift">UPSHIFT tools</a><a href="#pdf-notes">PDF notes</a><a href="#web">Web development</a><a href="#backend">Backend</a><a href="#data">Data &amp; AI</a><a href="#practice">Practice &amp; career</a>
+  </nav>
+
+  <section class="resources-group" id="upshift">
+    <div class="resources-group-heading"><div><p class="eyebrow">START WITH YOUR GOAL</p><h2>Learning tools inside UPSHIFT</h2></div><span class="resources-count">4 tools</span></div>
+    <div class="resource-card-grid">
+      <a class="resource-card resource-card-featured" href="/courses"><span class="resource-card-icon">▤</span><span class="resource-card-kind">COURSES</span><h3>Guided courses</h3><p>Follow structured modules with lesson notes, practice tasks, and a clear next step.</p><span class="resource-card-link">Explore UPSHIFT courses <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="<%= studentPath('/student/roadmap') %>"><span class="resource-card-icon">↗</span><span class="resource-card-kind">PERSONAL PLAN</span><h3>Role-based roadmap</h3><p>Choose a target role and use a week-by-week learning path to organize your effort.</p><span class="resource-card-link">Open your roadmap <b aria-hidden="true">→</b></span></a>
+      <a class="resource-card" href="<%= studentPath('/student/daily-tasks') %>"><span class="resource-card-icon">☑</span><span class="resource-card-kind">DAILY PRACTICE</span><h3>Daily tasks</h3><p>Turn a roadmap topic into a manageable study session and track what you complete.</p><span class="resource-card-link">View daily learning <b aria-hidden="true">→</b></span></a>
+      <a class="resource-card" href="<%= studentPath('/student/assessments') %>"><span class="resource-card-icon">◎</span><span class="resource-card-kind">SKILL CHECK</span><h3>Assessments &amp; skill gaps</h3><p>Check your understanding, review scores, and focus on the skills your target role needs.</p><span class="resource-card-link">Check your skills <b aria-hidden="true">→</b></span></a>
+    </div>
+  </section>
+
+  <section class="resources-group" id="pdf-notes">
+    <div class="resources-group-heading"><div><p class="eyebrow">DOWNLOADABLE STUDY NOTES</p><h2>PDF notes library</h2></div><span class="resources-count">11 PDFs</span></div>
+    <p class="resources-group-intro">Open a book in your browser or save the PDF for offline study. Start with the section you need and use the practice links above to apply it.</p>
+    <div class="resources-pdf-subgroup"><h3>Web &amp; frontend</h3><div class="resource-card-grid">
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">HTML</span><span class="resource-card-kind">PDF · 1.5 MB</span><h3>HTML5 Notes for Professionals</h3><p>HTML structure, semantic elements, forms, and browser markup references.</p><div class="resource-file-actions"><a href="/downloads/resources/html5-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/html5-notes-for-professionals.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">CSS</span><span class="resource-card-kind">PDF · 3.3 MB</span><h3>CSS Notes for Professionals</h3><p>CSS selectors, layout, responsive styling, and visual presentation notes.</p><div class="resource-file-actions"><a href="/downloads/resources/css-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/css-notes-for-professionals.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">JS</span><span class="resource-card-kind">PDF · 4.1 MB</span><h3>JavaScript Notes for Professionals</h3><p>JavaScript language concepts, functions, objects, async code, and browser APIs.</p><div class="resource-file-actions"><a href="/downloads/resources/javascript-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/javascript-notes-for-professionals.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">⚛</span><span class="resource-card-kind">PDF · 1.0 MB</span><h3>ReactJS Notes for Professionals</h3><p>React component patterns, UI state, and common frontend concepts.</p><div class="resource-file-actions"><a href="/downloads/resources/reactjs-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/reactjs-notes-for-professionals.pdf" download>Download</a></div></article>
+    </div></div>
+    <div class="resources-pdf-subgroup"><h3>Backend &amp; databases</h3><div class="resource-card-grid">
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">Node</span><span class="resource-card-kind">PDF · 2.8 MB</span><h3>Node.js Notes for Professionals</h3><p>Node runtime concepts, modules, asynchronous work, and server-side JavaScript.</p><div class="resource-file-actions"><a href="/downloads/resources/nodejs-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/nodejs-notes-for-professionals.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">Ex</span><span class="resource-card-kind">PDF · 1.2 MB</span><h3>The Express.js Handbook</h3><p>Express application setup, routes, middleware, and HTTP request handling.</p><div class="resource-file-actions"><a href="/downloads/resources/expressjs-handbook.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/expressjs-handbook.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">DB</span><span class="resource-card-kind">PDF · 964 KB</span><h3>MongoDB Notes for Professionals</h3><p>Document database concepts, queries, collections, and practical MongoDB references.</p><div class="resource-file-actions"><a href="/downloads/resources/mongodb-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/mongodb-notes-for-professionals.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">SQL</span><span class="resource-card-kind">PDF · 1.5 MB</span><h3>SQL Notes for Professionals</h3><p>SQL query syntax, data operations, joins, and relational database fundamentals.</p><div class="resource-file-actions"><a href="/downloads/resources/sql-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/sql-notes-for-professionals.pdf" download>Download</a></div></article>
+    </div></div>
+    <div class="resources-pdf-subgroup"><h3>Programming &amp; problem solving</h3><div class="resource-card-grid">
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">Java</span><span class="resource-card-kind">PDF · 7.0 MB</span><h3>Java Notes for Professionals</h3><p>Java syntax, object-oriented programming, collections, and language references.</p><div class="resource-file-actions"><a href="/downloads/resources/java-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/java-notes-for-professionals.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">⌘</span><span class="resource-card-kind">PDF · 2.6 MB</span><h3>Algorithms Notes for Professionals</h3><p>Algorithmic thinking, common techniques, and problem-solving references.</p><div class="resource-file-actions"><a href="/downloads/resources/algorithms-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/algorithms-notes-for-professionals.pdf" download>Download</a></div></article>
+      <article class="resource-card resource-pdf-card"><span class="resource-card-icon">Git</span><span class="resource-card-kind">PDF · 2.5 MB</span><h3>Git Notes for Professionals</h3><p>Version control concepts, everyday commands, branches, and collaboration workflows.</p><div class="resource-file-actions"><a href="/downloads/resources/git-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/git-notes-for-professionals.pdf" download>Download</a></div></article>
+    </div></div>
+  </section>
+
+  <section class="resources-group" id="web">
+    <div class="resources-group-heading"><div><p class="eyebrow">BUILD FOR THE WEB</p><h2>Frontend &amp; web development</h2></div><span class="resources-count">3 resources</span></div>
+    <div class="resource-card-grid">
+      <a class="resource-card" href="https://developer.mozilla.org/en-US/docs/Learn_web_development" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">⌘</span><span class="resource-card-kind">GUIDED CURRICULUM</span><h3>MDN Learn Web Development</h3><p>Structured beginner-friendly modules covering web fundamentals, HTML, CSS, JavaScript, and practical skills.</p><span class="resource-card-link">Open MDN <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="https://react.dev/learn" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">⚛</span><span class="resource-card-kind">OFFICIAL DOCUMENTATION</span><h3>React Learn</h3><p>Learn components, JSX, events, state, and the core ideas used to build React interfaces.</p><span class="resource-card-link">Open React Learn <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">▣</span><span class="resource-card-kind">INTERACTIVE LESSONS</span><h3>freeCodeCamp</h3><p>Practice coding with guided curriculum, browser-based challenges, and project work.</p><span class="resource-card-link">Browse curriculum <b aria-hidden="true">↗</b></span></a>
+    </div>
+  </section>
+
+  <section class="resources-group" id="backend">
+    <div class="resources-group-heading"><div><p class="eyebrow">SERVERS &amp; DATA</p><h2>Backend engineering</h2></div><span class="resources-count">3 resources</span></div>
+    <div class="resource-card-grid">
+      <a class="resource-card" href="https://nodejs.org/learn" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">⬡</span><span class="resource-card-kind">OFFICIAL GUIDES</span><h3>Node.js Learn</h3><p>Explore Node fundamentals, HTTP, asynchronous work, files, testing, and security.</p><span class="resource-card-link">Open Node.js Learn <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="https://expressjs.com/en/starter/hello-world.html" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">Ex</span><span class="resource-card-kind">OFFICIAL DOCUMENTATION</span><h3>Express.js starter guide</h3><p>Start with a minimal server and continue into routes, middleware, and application structure.</p><span class="resource-card-link">Open Express guide <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="https://sqlbolt.com/" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">▦</span><span class="resource-card-kind">INTERACTIVE SQL</span><h3>SQLBolt</h3><p>Practice SQL queries, filtering, joins, aggregation, and table operations in interactive lessons.</p><span class="resource-card-link">Start SQL lessons <b aria-hidden="true">↗</b></span></a>
+    </div>
+  </section>
+
+  <section class="resources-group" id="data">
+    <div class="resources-group-heading"><div><p class="eyebrow">WORK WITH DATA</p><h2>Python, data science &amp; AI</h2></div><span class="resources-count">2 resources</span></div>
+    <div class="resource-card-grid">
+      <a class="resource-card" href="https://docs.python.org/3/tutorial/" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">Py</span><span class="resource-card-kind">OFFICIAL TUTORIAL</span><h3>Python tutorial</h3><p>Learn the language fundamentals, data structures, functions, modules, and error handling.</p><span class="resource-card-link">Open Python tutorial <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="https://www.kaggle.com/learn/" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">K</span><span class="resource-card-kind">PRACTICAL MICRO-COURSES</span><h3>Kaggle Learn</h3><p>Short, hands-on lessons for Python, pandas, data visualization, and machine learning.</p><span class="resource-card-link">Browse Kaggle Learn <b aria-hidden="true">↗</b></span></a>
+    </div>
+  </section>
+
+  <section class="resources-group" id="practice">
+    <div class="resources-group-heading"><div><p class="eyebrow">MAKE IT STICK</p><h2>Practice, Git &amp; career prep</h2></div><span class="resources-count">3 resources</span></div>
+    <div class="resource-card-grid">
+      <a class="resource-card" href="https://exercism.org/" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">⌨</span><span class="resource-card-kind">CODING PRACTICE</span><h3>Exercism</h3><p>Strengthen a programming language through focused exercises and community feedback.</p><span class="resource-card-link">Choose a language <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="https://github.com/skills" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">GH</span><span class="resource-card-kind">INTERACTIVE GIT &amp; GITHUB</span><h3>GitHub Skills</h3><p>Practice GitHub workflows through guided exercises that run in real repositories.</p><span class="resource-card-link">Open GitHub Skills <b aria-hidden="true">↗</b></span></a>
+      <a class="resource-card" href="https://leetcode.com/studyplan/" target="_blank" rel="noopener noreferrer"><span class="resource-card-icon">⌘</span><span class="resource-card-kind">INTERVIEW PRACTICE</span><h3>LeetCode Study Plans</h3><p>Follow topic-based problem sets to build consistency for coding interviews.</p><span class="resource-card-link">Browse study plans <b aria-hidden="true">↗</b></span></a>
+    </div>
+  </section>
+
+  <aside class="resources-bottom-cta"><div><p class="eyebrow">READY TO MAKE A PLAN?</p><h2>Learn one thing. Build something with it.</h2><p>Use your target role to choose what to study next, then track your progress in UPSHIFT.</p></div><a class="landing-primary" href="/signup">Get started <span aria-hidden="true">→</span></a></aside>
+</section>

@@ -1,11 +1,12 @@
 const { Server } = require("socket.io");
+const getAppBaseUrl = require("./appBaseUrl");
 
 let ioInstance = null;
 
 const initSocket = (httpServer, sessionMiddleware) => {
   ioInstance = new Server(httpServer, {
     cors: {
-      origin: process.env.APP_BASE_URL || "http://localhost:8090",
+      origin: getAppBaseUrl(),
       credentials: true,
     },
   });

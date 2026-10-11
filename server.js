@@ -206,6 +206,8 @@ app.get("/mentorship", (req, res) => {
   res.redirect("/login");
 });
 
+app.use("/", require("./routes/publicPageRoutes"));
+
 // 404 Route Handler
 app.use((req, res) => {
   if (req.xhr || req.get("accept")?.includes("application/json")) {

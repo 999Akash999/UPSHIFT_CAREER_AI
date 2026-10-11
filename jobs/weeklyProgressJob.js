@@ -3,6 +3,7 @@ const DailyTask = require("../models/DailyTask");
 const EmployabilitySnapshot = require("../models/EmployabilitySnapshot");
 const { sendSystemEmail } = require("../services/emailService");
 const { sendNotification } = require("../services/notificationService");
+const getAppBaseUrl = require("../config/appBaseUrl");
 
 const weeklyProgressJob = async () => {
   console.log("⚡ [Job: WeeklyProgress] Compiling weekly learning summaries...");
@@ -60,7 +61,7 @@ const weeklyProgressJob = async () => {
             <li style="margin-bottom: 8px;">🎯 <strong>Target Role:</strong> ${student.targetRole || "Software Engineer"}</li>
           </ul>
           <p>${needsSupport ? "It looks like this week's plan may have been hard to fit in. Choose one small task to restart, or adjust your available study time in your roadmap." : "Review your custom curriculum and step into the new week with focus."}</p>
-          <a href="${process.env.APP_BASE_URL || "http://localhost:8090"}/student/dashboard"
+          <a href="${getAppBaseUrl()}/student/dashboard"
              style="background-color: #2563eb; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
              Open Dashboard
           </a>

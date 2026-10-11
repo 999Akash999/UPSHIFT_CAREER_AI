@@ -7,7 +7,7 @@
   <title><%= typeof title !== 'undefined' ? title : 'Dashboard | UPSHIFT CAREER' %></title>
   
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/images/logos/m1.jpg">
+  <link rel="icon" type="image/x-icon" href="/images/logos/m1.png">
 
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,7 +60,13 @@
       <!-- App Bottom Bar -->
       <footer class="dashboard-footer">
         <div>&copy; <%= new Date().getFullYear() %> UPSHIFT CAREER. Operating System for Student Engineers.</div>
-        <div style="display: flex; gap: 1rem;">
+        <div class="dashboard-footer-links" style="display: flex; gap: 1rem; flex-wrap:wrap;">
+          <a href="/about" style="color: inherit; text-decoration: none;">About</a>
+          <a href="/team" style="color: inherit; text-decoration: none;">Team</a>
+          <a href="/resources" style="color: inherit; text-decoration: none;">Free resources</a>
+          <a href="/privacy" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="/terms" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="/help" style="color: inherit; text-decoration: none;">Help</a>
           <a href="/student/settings" style="color: inherit; text-decoration: none;">Settings</a>
           <a href="mailto:support@upshiftcareer.com" style="color: inherit; text-decoration: none;">Helpdesk</a>
         </div>
