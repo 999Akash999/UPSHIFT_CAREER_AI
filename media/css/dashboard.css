@@ -88,6 +88,23 @@
 }
 /* Skill gap analysis */
 .skill-gap-page { max-width: 1160px; margin: 0 auto; color: #302749; }
+.role-skill-score-section { margin: 0 0 1rem; padding: clamp(1rem,2.5vw,1.5rem); border: 1px solid #ebe5f4; border-radius: 18px; background: #fff; box-shadow: 0 8px 26px rgba(52,36,86,.04); }
+.role-skill-score-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.role-skill-score-heading h2 { margin: .15rem 0; color: #302749; font-size: 1.15rem; }
+.role-skill-score-heading p:not(.skill-gap-eyebrow) { margin: .15rem 0 0; color: #8a8097; font-size: .75rem; }
+.role-skill-score-heading > a { flex: 0 0 auto; color: #7050ae; font-size: .75rem; font-weight: 800; text-decoration: none; }
+.role-skill-score-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,230px),1fr)); gap: .65rem; }
+.role-skill-score-card { min-width: 0; padding: .85rem; border: 1px solid #eee9f4; border-radius: 12px; background: #fdfcff; }
+.role-skill-score-card-top, .role-skill-score-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.role-skill-score-card-top strong { color: #443953; font-size: .82rem; }
+.role-skill-score-card-top > span { color: #7050ae; font-size: .8rem; font-weight: 850; }
+.role-skill-progress-track { height: 6px; overflow: hidden; margin: .65rem 0 .5rem; border-radius: 99px; background: #eeeaf3; }
+.role-skill-progress-track > span { display: block; height: 100%; border-radius: inherit; background: #d99a3c; transition: width .25s ease; }
+.role-skill-score-card.status-strong .role-skill-progress-track > span { background: #42a276; }
+.role-skill-score-card-bottom > span { color: #97661d; font-size: .67rem; font-weight: 800; }
+.role-skill-score-card.status-strong .role-skill-score-card-bottom > span { color: #32815b; }
+.role-skill-score-card-bottom small { color: #92899e; font-size: .62rem; text-align: right; }
+.role-skill-score-card.status-not-tested .role-skill-score-card-bottom > span { color: #81778f; }
 .skill-gap-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.25rem; margin: 0 0 1.35rem; }
 .skill-gap-eyebrow { margin: 0 0 .35rem; color: #8b70c3; font-size: .66rem; font-weight: 850; letter-spacing: .13em; }
 .skill-gap-heading h1 { margin: 0; color: #302749; font-size: clamp(1.55rem,3vw,2.15rem); line-height: 1.15; letter-spacing: -.045em; }
@@ -143,11 +160,15 @@
 .skill-gap-next-step > a { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .5rem; padding: .65rem .8rem; border-radius: 9px; background: #7954c8; color: #fff; font-size: .7rem; font-weight: 750; }
 .skill-gap-next-step > a:hover { background: #6541b3; color: #fff; }
 @media (max-width: 760px) {
+  .role-skill-score-heading { align-items: flex-start; flex-direction: column; gap: .45rem; }
   .skill-gap-summary { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .skill-gap-role-stat { grid-column: 1 / -1; min-height: 78px; }
   .skill-gap-columns { grid-template-columns: 1fr; }
 }
 @media (max-width: 520px) {
+  .role-skill-score-grid { grid-template-columns: 1fr; }
+  .role-skill-score-card-bottom { align-items: flex-start; flex-direction: column; gap: .2rem; }
+  .role-skill-score-card-bottom small { text-align: left; }
   .skill-gap-heading { align-items: flex-start; flex-direction: column; gap: .8rem; }
   .skill-gap-edit-link { min-height: 40px; }
   .skill-gap-stat, .skill-gap-role-stat { min-height: 82px; padding: .8rem; }
@@ -169,3 +190,5 @@
   .next-step-copy { flex-basis: calc(100% - 52px); }
   .skill-gap-next-step > a { margin-left: 46px; }
 }
+.market-gap-evidence{margin:1rem 0 1.4rem;padding:1.1rem 1.2rem;border:1px solid #e9e2f2;border-radius:14px;background:#fff}.market-gap-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}.market-gap-heading h2{margin:.2rem 0;color:#302641;font-size:1.05rem}.market-gap-heading>span{flex:none;padding:.35rem .6rem;border-radius:999px;background:#f3effb;color:#7252ad;font-size:.72rem;font-weight:750}.market-gap-note{margin:.55rem 0;color:#81768e;font-size:.78rem;line-height:1.5}.market-gap-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.5rem;margin:.8rem 0 0;padding:0;list-style:none}.market-gap-list li{display:grid;grid-template-columns:1fr auto;gap:.25rem .5rem;padding:.65rem .75rem;border:1px solid #f0ebf5;border-radius:9px}.market-gap-list strong{color:#40344f;font-size:.8rem}.market-gap-list span{color:#7964a2;font-size:.72rem;font-weight:700}.market-gap-list em{grid-column:1/-1;color:#a3545d;font-size:.68rem;font-style:normal}.market-gap-list em.market-skill-have{color:#438165}
+.ats-analysis{margin-top:1rem;padding:1.1rem 1.25rem;border:1px solid #e9e2f2;border-radius:14px;background:#fff}.ats-analysis h3{margin:0;color:#3d3150;font-size:1rem}.ats-analysis-score{display:block;margin:.6rem 0;color:#6943aa;font-size:2rem}.ats-analysis p{margin:.35rem 0;color:#6f657c;font-size:.82rem;line-height:1.5}.ats-analysis small{display:block;margin-top:.6rem;color:#898096;font-size:.72rem;line-height:1.45}

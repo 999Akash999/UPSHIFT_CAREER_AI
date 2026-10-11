@@ -9,6 +9,8 @@ router.use(requireAuth, requireStudent);
 
 router.get("/", roadmapController.getRoadmap);
 router.post("/generate", aiLimiter, roadmapController.createRoadmap);
+router.post("/:roadmapId/week/:weekNumber/day/:dayIndex/learn", aiLimiter, roadmapController.getDailyLesson);
+router.patch("/:roadmapId/week/:weekNumber/day/:dayIndex", roadmapController.toggleDailyTask);
 router.patch("/:roadmapId/week/:weekNumber/milestone/:milestoneIndex", roadmapController.toggleMilestone);
 
 module.exports = router;

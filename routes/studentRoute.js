@@ -8,7 +8,8 @@ const aiCoachController = require("../controllers/aiCoachController");
 const interviewController = require("../controllers/interviewController");
 const upload = require("../middlewares/upload");
 const resumeBuilderController = require("../controllers/resumeBuilderController");
-const { aiLimiter } = require("../middlewares/rateLimiter");
+const { aiLimiter, apiLimiter } = require("../middlewares/rateLimiter");
+const recruiterEngagementController = require("../controllers/recruiterEngagementController");
 
 router.use(requireAuth, requireStudent);
 
@@ -34,6 +35,11 @@ router.get("/employability", workspaceController.getEmployability);
 router.get("/ai-coach", aiCoachController.renderCoach);
 router.get("/interview", interviewController.renderInterview);
 router.get("/applications", workspaceController.getApplications);
+router.get("/messages", recruiterEngagementController.getStudentInbox);
+router.get("/messages/:conversationId", recruiterEngagementController.openStudentConversation);
+router.post("/messages/:conversationId", apiLimiter, recruiterEngagementController.sendStudentMessage);
+router.get("/interviews/:interviewId/messages", recruiterEngagementController.openStudentInterviewConversation);
+router.post("/interviews/:interviewId/respond", apiLimiter, recruiterEngagementController.respondToInterview);
 router.get("/doubts", workspaceController.getDoubts);
 router.get("/doubts/:id", workspaceController.getDoubt);
 router.get("/mentorship", workspaceController.getMentorship);

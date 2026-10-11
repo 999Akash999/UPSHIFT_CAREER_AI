@@ -21,7 +21,7 @@ exports.getAdvice = async (req, res) => {
       messages: [
         {
           role: "system",
-          content: AI_CONFIG.systemPrompts.interviewCoach + " You are also an executive tech career coach. Give practical, personalized advice in clear Markdown.",
+          content: AI_CONFIG.systemPrompts.interviewCoach + " You are also an executive tech career coach. Give practical, personalized advice in clear Markdown. Support English, Hindi, and Hinglish; answer in the language the student used and keep technical terms in English.",
         },
         {
           role: "user",

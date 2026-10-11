@@ -1,89 +1,62 @@
 <% layout('layouts/dashboardLayout') %>
+<% const tutorConversationError = typeof conversationError !== 'undefined' ? conversationError : ''; %>
+<% const tutorMessages = typeof messages !== 'undefined' && Array.isArray(messages) ? messages : []; %>
+<% const tutorStudent = typeof student !== 'undefined' ? student : null; %>
 
 <section class="tutor-page">
-  <header class="tutor-heading"><div><p class="eyebrow">YOUR STUDY SPACE</p><h1>AI Engineering Tutor</h1><p>Ask a question, paste code, and work through the reasoning step by step.</p></div><span class="ai-tag">✦ Powered by AI</span></header>
-  <section class="tutor-shell" aria-label="Tutor conversation">
-    <div id="aiTutorFeed" class="chat-history" aria-live="polite">
-      <div class="chat-bubble assistant">👋 Hi<%= currUser?.name ? ` ${currUser.name.split(' ')[0]}` : '' %>! Share a concept or code sample. I’ll explain it clearly and help you reason it out.</div>
-      <% (messages || []).forEach(message => { %><div class="chat-bubble <%= message.role === 'assistant' ? 'assistant' : 'user' %>"><%= message.content %></div><% }) %>
+  <header class="tutor-heading">
+    <div><p class="tutor-eyebrow">YOUR PERSONAL STUDY SPACE</p><h1>AI Engineering Tutor</h1><p>Understand the idea, work through an example, then try it yourself.</p></div>
+    <div class="tutor-role-pill"><span aria-hidden="true">✦</span><span>Learning for <strong><%= tutorStudent?.targetRole || 'your next role' %></strong></span></div>
+  </header>
+
+  <% if (tutorConversationError) { %><p class="tutor-history-notice" role="status"><span aria-hidden="true">ⓘ</span><%= tutorConversationError %></p><% } %>
+
+  <section class="tutor-shell" aria-label="AI tutor conversation">
+    <header class="tutor-chat-header">
+      <div class="tutor-avatar" aria-hidden="true">✦</div>
+      <div><strong>UPSHIFT Tutor</strong><span><i></i> Ready to help · English and Hinglish</span></div>
+      <span class="tutor-history-label">Your conversation is saved</span>
+    </header>
+
+    <div id="aiTutorFeed" class="tutor-feed" aria-live="polite" aria-relevant="additions text">
+      <article class="tutor-message tutor-message-assistant">
+        <span class="tutor-message-avatar" aria-hidden="true">✦</span>
+        <div class="tutor-message-main"><span class="tutor-message-author">UPSHIFT Tutor</span><div class="tutor-message-content">Hi<%= currUser?.name ? ` ${currUser.name.split(' ')[0]}` : '' %>! Ask about a concept or share a code sample. I’ll explain the idea, walk through an example, and give you a small question to check your understanding.</div></div>
+      </article>
+      <% tutorMessages.forEach((message) => { %>
+        <article class="tutor-message tutor-message-<%= message.role === 'assistant' ? 'assistant' : 'user' %>">
+          <span class="tutor-message-avatar" aria-hidden="true"><%= message.role === 'assistant' ? '✦' : (currUser?.name?.charAt(0)?.toUpperCase() || 'Y') %></span>
+          <div class="tutor-message-main"><span class="tutor-message-author"><%= message.role === 'assistant' ? 'UPSHIFT Tutor' : 'You' %></span><div class="tutor-message-content"><%= message.content %></div></div>
+        </article>
+      <% }) %>
     </div>
+
+    <div class="tutor-suggestions" aria-label="Suggested questions">
+      <span>Try asking</span>
+      <button type="button" data-tutor-suggestion="Explain closures in JavaScript with a small example">Explain a concept</button>
+      <button type="button" data-tutor-suggestion="Review this code and help me understand the bug">Understand a code bug</button>
+      <button type="button" data-tutor-suggestion="Teach me this topic step by step, then quiz me">Learn step by step</button>
+    </div>
+
     <form id="aiTutorForm" class="tutor-composer">
-      <label for="aiTutorInput">Your question</label>
-      <textarea id="aiTutorInput" rows="3" maxlength="6000" placeholder="Why does this query become slow as the table grows?" required></textarea>
-      <details class="tutor-code-details"><summary>Add code (optional)</summary><textarea id="aiTutorCode" rows="5" maxlength="12000" placeholder="Paste a focused code sample here"></textarea></details>
-      <div class="tutor-submit-row"><span id="aiTutorStatus" role="status" aria-live="polite">Enter to send · Shift + Enter for a new line</span><button id="aiTutorSend" class="button-primary" type="submit">Ask Tutor <span>→</span></button></div>
+      <label class="tutor-input-label" for="aiTutorInput">Your question</label>
+      <textarea id="aiTutorInput" rows="3" maxlength="6000" placeholder="Ask anything about coding, backend, data science, or your roadmap…" required></textarea>
+      <details class="tutor-code-details">
+        <summary><span aria-hidden="true">＋</span> Add a code sample <small>Optional · up to 12,000 characters</small></summary>
+        <div class="tutor-code-fields">
+          <label for="aiTutorCodeLanguage">Language
+            <select id="aiTutorCodeLanguage"><option value="javascript">JavaScript</option><option value="typescript">TypeScript</option><option value="python">Python</option><option value="java">Java</option><option value="cpp">C++</option><option value="sql">SQL</option><option value="html">HTML</option><option value="css">CSS</option><option value="text">Other / plain text</option></select>
+          </label>
+          <label for="aiTutorCode">Paste a focused snippet<textarea id="aiTutorCode" rows="6" maxlength="12000" placeholder="Paste the smallest useful code sample here…"></textarea></label>
+        </div>
+      </details>
+      <div class="tutor-composer-footer">
+        <span id="aiTutorStatus" role="status" aria-live="polite">Enter to send · Shift + Enter for a new line</span>
+        <span id="aiTutorCharacterCount" class="tutor-character-count">0 / 6,000</span>
+        <button id="aiTutorSend" class="tutor-send-button" type="submit"><span>Ask tutor</span><span aria-hidden="true">↑</span></button>
+      </div>
     </form>
   </section>
+  <p class="tutor-privacy-note">Your questions and tutor replies are saved to your account so you can continue learning later.</p>
 </section>
-<style>
-  .tutor-page{max-width:1000px;margin:auto}.tutor-heading{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}.tutor-heading h1{margin:.2rem 0;color:#2d2440;font-size:clamp(1.6rem,4vw,2.1rem)}.tutor-heading p:last-child{margin:.25rem 0;color:#756b83}.tutor-shell{height:min(760px,calc(100dvh - 190px));min-height:440px;display:flex;flex-direction:column;overflow:hidden;border:1px solid #e8e1f0;border-radius:16px;background:#fff;box-shadow:0 12px 32px #3424500b}.tutor-shell .chat-history{flex:1;gap:.8rem;padding:clamp(1rem,3vw,1.5rem)}.tutor-shell .chat-bubble{max-width:min(88%,760px);white-space:pre-wrap;overflow-wrap:anywhere}.tutor-shell .chat-bubble.user{background:#7954c8;border-color:#7954c8}.tutor-composer{padding:1rem clamp(1rem,3vw,1.5rem);border-top:1px solid #eee9f5;background:#fcfbfe}.tutor-composer>label{display:block;margin-bottom:.35rem;color:#4a405a;font-size:.8rem;font-weight:750}.tutor-composer textarea{width:100%;resize:vertical;border:1px solid #ded7e9;border-radius:10px;padding:.75rem .85rem;background:#fff;color:#302749;font:inherit;line-height:1.55}.tutor-composer textarea:focus{outline:3px solid #7954c822;border-color:#7954c8}.tutor-code-details{margin-top:.5rem;color:#7253b1;font-size:.78rem}.tutor-code-details summary{cursor:pointer;font-weight:700}.tutor-code-details textarea{margin-top:.5rem;font-family:var(--font-mono);font-size:.8rem}.tutor-submit-row{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:.7rem}.tutor-submit-row span{color:#867d91;font-size:.72rem}.tutor-submit-row button:disabled{opacity:.65;cursor:wait}.tutor-error{border-color:#f3cbd2!important;background:#fff8f8!important;color:#9f3147!important}@media(max-width:600px){.tutor-heading{align-items:flex-start}.tutor-heading .ai-tag{display:none}.tutor-shell{height:calc(100dvh - 210px);min-height:400px}.tutor-shell .chat-bubble{max-width:95%}.tutor-submit-row{align-items:stretch;flex-direction:column}.tutor-submit-row button{width:100%}}
-</style>
-
-<script>
-  const tutorForm = document.getElementById('aiTutorForm');
-  tutorForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const input = document.getElementById('aiTutorInput');
-    const feed = document.getElementById('aiTutorFeed');
-    const sendButton = document.getElementById('aiTutorSend');
-    const prompt = input.value.trim();
-    const codeSnippet = document.getElementById('aiTutorCode').value.trim();
-    const status = document.getElementById('aiTutorStatus');
-    if (!prompt || sendButton.disabled) return;
-
-    // Append User Bubble
-    const userMsg = document.createElement('div');
-    userMsg.className = 'chat-bubble user';
-    userMsg.style.cssText = "align-self: flex-end; max-width: 85%; background: #2563eb; color: #ffffff; border-radius: 14px; padding: 1.25rem; font-size: 0.95rem; line-height: 1.6;";
-    userMsg.textContent = prompt;
-    feed.appendChild(userMsg);
-    feed.scrollTop = feed.scrollHeight;
-
-    // Loader
-    const aiMsg = document.createElement('div');
-    aiMsg.className = 'chat-bubble assistant';
-    aiMsg.className = 'chat-bubble assistant';
-    aiMsg.textContent = "Synthesizing explanation...";
-    feed.appendChild(aiMsg);
-    sendButton.disabled = true;
-    sendButton.textContent = 'Thinking…';
-    status.textContent = 'Tutor is working on your question…';
-    feed.scrollTop = feed.scrollHeight;
-
-    try {
-      const res = await fetch('/ai/tutor/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ prompt, codeSnippet })
-      });
-      const responseText = await res.text();
-      let data;
-      try {
-        data = JSON.parse(responseText);
-      } catch {
-        throw new Error(`Tutor request failed (HTTP ${res.status}). Please sign in again or check the server.`);
-      }
-      if (!res.ok) throw new Error(data.error || data.message || `Tutor request failed (HTTP ${res.status}).`);
-      aiMsg.style.color = '#0f172a';
-      aiMsg.textContent = data.reply || "Could not generate reply.";
-      input.value = '';
-      document.getElementById('aiTutorCode').value = '';
-      status.textContent = data.saved === false ? 'Reply received, but chat history could not be saved.' : 'Reply received. Ask a follow-up whenever you’re ready.';
-    } catch (e) {
-      aiMsg.classList.add('tutor-error');
-      aiMsg.style.color = '#b91c1c';
-      aiMsg.textContent = e.name === 'TypeError'
-        ? 'Could not reach the server. Check your connection and try again.'
-        : (e.message || 'Network error. Please try again.');
-      status.textContent = 'Your question is still here. Fix the issue and retry.';
-    } finally {
-      sendButton.disabled = false;
-      sendButton.textContent = 'Ask Tutor';
-      input.focus();
-    }
-    feed.scrollTop = feed.scrollHeight;
-  });
-  document.getElementById('aiTutorInput').addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); tutorForm.requestSubmit(); }
-  });
-</script>
+<script src="/js/ai-tutor.js" defer></script>

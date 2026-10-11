@@ -45,14 +45,31 @@ exports.saveEducation = async (req, res) => {
 exports.saveSkills = async (req, res) => {
   try {
     const { skills } = req.body;
-    const skillList = Array.isArray(skills)
+    const submittedSkills = Array.isArray(skills)
       ? skills
-      : String(skills || "").split(",").map((s) => s.trim()).filter(Boolean);
+      : String(skills || "").split(/[\n,]/);
+    const skillList = [...new Map(submittedSkills
+      .map((skill) => String(skill || "").trim().replace(/\s+/g, " ").slice(0, 50))
+      .filter(Boolean)
+      .map((skill) => [skill.toLocaleLowerCase(), skill])).values()];
+    if (!skillList.length) {
+      req.flash("error", "Add at least one skill before continuing.");
+      return res.redirect("/onboarding/skills");
+    }
+    if (skillList.length > 30) {
+      req.flash("error", "You can add up to 30 skills.");
+      return res.redirect("/onboarding/skills");
+    }
 
-    await Student.findOneAndUpdate(
+    const student = await Student.findOneAndUpdate(
       { user: req.user._id },
-      { skills: skillList }
+      { $set: { skills: skillList } },
+      { new: true, runValidators: true }
     );
+    if (!student) {
+      req.flash("error", "Student profile was not found. Please restart onboarding.");
+      return res.redirect("/onboarding/welcome");
+    }
     res.redirect("/onboarding/career-goal");
   } catch (err) {
     req.flash("error", "Failed to save skills.");

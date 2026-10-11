@@ -143,7 +143,7 @@
         <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Today’s focus</h3>
         <p style="font-size: 0.8rem; color: #64748b; margin: 0.2rem 0 0;">Complete a task to update your score and activity streak.</p>
       </div>
-      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;"><button class="daily-save-button" id="dailyTaskSaveButton" type="button" onclick="saveDailyTasks()" disabled>Progress saved</button><a href="/student/daily-tasks" style="font-size: 0.8rem; font-weight: 700; color: #2563eb; text-decoration: none;">View All →</a></div>
+      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;"><button class="daily-save-button" id="dailyTaskSaveButton" type="button" disabled>Progress saved</button><a href="/student/daily-tasks" style="font-size: 0.8rem; font-weight: 700; color: #2563eb; text-decoration: none;">View All →</a></div>
     </div>
 
     <div class="task-progress-summary"><strong id="taskProgressCount"><%= completedTasksCount %> / <%= todayTasks.length %> complete</strong><span id="taskProgressPercent"><%= todayTaskProgress %>%</span></div>
@@ -159,7 +159,6 @@
                 <%= task.isCompleted ? 'checked' : '' %> 
                 data-daily-task-checkbox data-task-id="<%= task._id %>"
                 data-saved-checked="<%= task.isCompleted %>"
-                onchange="stageDailyTask(this)" 
                 aria-label="Mark <%= task.title %> complete"
                 style="width: 18px; height: 18px; accent-color: #7954c8; cursor: pointer;"
               >

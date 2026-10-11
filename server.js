@@ -165,16 +165,16 @@ app.use("/student/projects", require("./routes/projectRoutes"));
 app.use("/student/dsa", require("./routes/dsaRoutes"));
 app.use("/student/events", require("./routes/eventRoutes"));
 app.use("/student/daily-tasks", require("./routes/dailyTaskRoutes"));
+app.use("/student/roadmap", require("./routes/roadmapRoutes"));
+app.use("/student/skill-gap", require("./routes/skillGapRoutes"));
+app.use("/student/employability", require("./routes/employabilityRoutes"));
 app.use("/student", require("./routes/studentRoute"));
 app.use("/applications", require("./routes/resumeRoutes"));
-app.use("/student/roadmap", require("./routes/roadmapRoutes"));
 app.use("/roadmap", require("./routes/roadmapRoutes"));
 app.use("/student/ai-tutor", require("./routes/aiTutorRoutes"));
 app.use("/student/ai-coach", require("./routes/aiCoachRoutes"));
 app.use("/ai/tutor", require("./routes/aiTutorRoutes"));
 app.use("/ai/coach", require("./routes/aiCoachRoutes"));
-app.use("/student/skill-gap", require("./routes/skillGapRoutes"));
-app.use("/student/employability", require("./routes/employabilityRoutes"));
 app.use("/student/assessments", require("./routes/assessmentRoutes"));
 app.use("/student/interview", require("./routes/interviewRoutes"));
 app.use("/student/applications", require("./routes/applicationRoutes"));
@@ -208,6 +208,9 @@ app.get("/mentorship", (req, res) => {
 
 // 404 Route Handler
 app.use((req, res) => {
+  if (req.xhr || req.get("accept")?.includes("application/json")) {
+    return res.status(404).json({ success: false, error: "The requested API endpoint was not found. Please refresh the page and try again." });
+  }
   res.status(404).render("errors/404", {
     title: "404 - Not Found",
     message: "Endpoint does not map to any active workspace controller."

@@ -1,130 +1,46 @@
 <% layout('layouts/dashboardLayout') %>
-
-<section class="interview-page">
-  <header class="interview-heading">
-    <p class="eyebrow">PRACTICE ROOM</p>
-    <h1>AI Mock Interview</h1>
-    <p>The interviewer asks each question aloud, listens to your answer, and gives feedback after 10 questions.</p>
+<main class="mock-interview-page">
+  <header class="mock-interview-heading">
+    <div><p class="mock-eyebrow">PRACTICE ROOM · AI COACH</p><h1>Mock interview</h1><p>Practice role-specific questions, get clear feedback, and build confidence one answer at a time.</p></div>
+    <div class="mock-session-length"><span aria-hidden="true">◷</span><div><strong>10 questions</strong><small>Usually 15–25 minutes</small></div></div>
   </header>
-  <section class="interview-panel">
-    <div class="interview-setup" id="interviewSetup">
-      <label for="roleType">Interview role</label>
-      <input id="roleType" value="Software Engineer" maxlength="100" placeholder="e.g. Frontend Developer">
-      <button class="button-primary" id="startInterviewButton" type="button">Start 10-question interview</button>
-      <p id="setupStatus" role="status">Camera and screen sharing are optional. Your browser will ask before granting access.</p>
-    </div>
 
-    <div id="interviewRoom" hidden>
-      <div class="video-grid">
-        <div class="video-wrap"><video id="cameraVideo" autoplay muted playsinline></video><div class="video-placeholder" id="cameraPlaceholder">Camera preview</div><span class="video-label">Camera · local preview</span></div>
-        <div class="video-wrap"><video id="screenVideo" autoplay muted playsinline></video><div class="video-placeholder" id="screenPlaceholder">Shared screen preview</div><span class="video-label">Screen · local preview</span></div>
+  <section class="mock-interview-shell">
+    <section class="mock-setup" id="interviewSetup">
+      <div class="mock-setup-copy"><p class="mock-eyebrow">BEFORE YOU BEGIN</p><h2>Set up your interview room</h2><p>Camera access and sharing your <strong>entire monitor</strong> are required before questions begin. This helps you practise in a focused interview setting.</p></div>
+      <div class="mock-requirements">
+        <article><span class="mock-requirement-icon">◉</span><div><strong>Camera required</strong><small>Allow camera access and keep it on during the session.</small></div></article>
+        <article><span class="mock-requirement-icon">▣</span><div><strong>Entire screen required</strong><small>Choose your full monitor in the browser prompt. Window or tab sharing will not start the interview.</small></div></article>
       </div>
-      <div class="device-controls">
-        <button class="button-secondary" id="cameraButton" type="button">Turn on camera</button>
-        <button class="button-secondary" id="screenButton" type="button">Share entire screen</button>
-        <button class="button-secondary" id="micButton" type="button">Answer with microphone</button>
-        <span id="deviceStatus" role="status">Screen/video are shown here only and are not uploaded.</span>
+      <div class="mock-disclosure"><span aria-hidden="true">ⓘ</span><p>Your camera and screen previews stay in this browser. Video and screen content are not uploaded or recorded; interview answers and monitoring warnings are saved with your practice result.</p></div>
+      <div class="mock-form-grid">
+        <label for="roleType">Interview role<input id="roleType" value="<%= targetRole %>" maxlength="100" placeholder="e.g. Backend Developer"></label>
+        <label for="interviewLanguage">Interview language<select id="interviewLanguage"><option value="en-IN">English</option><option value="hi-IN">Hindi / Hinglish</option></select></label>
       </div>
-      <div class="progress-row"><strong id="questionProgress">Question 1 of 10</strong><span id="interviewStatus" role="status">Listen to the question, then answer.</span></div>
-      <div class="question-card"><span>AI INTERVIEWER</span><p id="mockQuestion"></p><button class="speak-button" id="repeatQuestionButton" type="button">▶ Repeat question</button></div>
-      <label class="answer-label" for="mockAnswerText">Your answer</label>
-      <textarea id="mockAnswerText" rows="6" placeholder="Speak using the microphone or type your answer…"></textarea>
-      <div class="answer-actions"><span>Your answer is evaluated when you submit it.</span><button class="button-primary" id="submitAnswerButton" type="button">Submit answer →</button></div>
-      <section id="mockFeedbackBox" class="interview-feedback" aria-live="polite" hidden></section>
-      <section id="finalScoreBox" class="final-score" aria-live="polite" hidden></section>
-    </div>
+      <label class="mock-consent"><input id="monitoringConsent" type="checkbox"><span>I understand that camera and full-screen sharing must remain active during this practice interview.</span></label>
+      <button class="mock-button mock-button-primary mock-start-button" id="startInterviewButton" type="button" disabled><span aria-hidden="true">↗</span> Enable devices and start</button>
+      <p class="mock-status" id="setupStatus" role="status" aria-live="polite">Allow access in your browser. Choose “Entire Screen” when the screen-sharing prompt appears.</p>
+    </section>
+
+    <section class="mock-room" id="interviewRoom" hidden>
+      <div class="mock-room-topbar"><div><p class="mock-eyebrow">LIVE PRACTICE SESSION</p><h2 id="roomRoleTitle">Interview practice</h2></div><span class="mock-live-indicator"><i></i> In progress</span></div>
+      <div class="mock-device-status" id="deviceStatusBar"><span class="mock-device-pill" id="cameraDevicePill">Camera connected</span><span class="mock-device-pill" id="screenDevicePill">Entire monitor shared</span><span class="mock-status-copy" id="deviceStatus" role="status">Your video stays in this browser and is not uploaded.</span></div>
+      <div class="mock-video-grid">
+        <div class="mock-video-card"><div class="mock-video-wrap"><video id="cameraVideo" autoplay muted playsinline></video><div class="mock-video-placeholder" id="cameraPlaceholder"><span>◉</span><strong>Camera preview</strong></div><span class="mock-video-label">YOU · CAMERA</span></div></div>
+        <div class="mock-video-card"><div class="mock-video-wrap"><video id="screenVideo" autoplay muted playsinline></video><div class="mock-video-placeholder" id="screenPlaceholder"><span>▣</span><strong>Shared monitor preview</strong></div><span class="mock-video-label">YOUR ENTIRE SCREEN</span></div></div>
+      </div>
+
+      <section class="mock-device-gate" id="deviceRecovery" hidden><div><strong>Interview paused</strong><p id="deviceRecoveryText">Restore camera and entire-screen sharing before answering.</p></div><button class="mock-button mock-button-secondary" id="restoreDevicesButton" type="button">Restore devices</button></section>
+      <section class="mock-warning-panel" id="warningPanel" aria-live="polite" hidden><div class="mock-warning-heading"><span>!</span><div><strong id="warningTitle">Interview room warning</strong><p id="warningCountText">Please keep the interview tab visible.</p></div></div><ul id="warningList"></ul></section>
+
+      <div class="mock-question-progress"><div><span>QUESTION</span><strong id="questionProgress">1 <small>/ 10</small></strong></div><div class="mock-progress-track"><span id="questionProgressFill"></span></div><span id="interviewStatus" role="status" aria-live="polite">Listen to the question, then share your answer.</span></div>
+      <section class="mock-question-card"><div class="mock-question-card-top"><span class="mock-ai-avatar">✦</span><div><p class="mock-eyebrow">AI INTERVIEWER</p><strong>Your next question</strong></div></div><p id="mockQuestion"></p><button class="mock-repeat-button" id="repeatQuestionButton" type="button">▶ <span>Repeat question</span></button></section>
+      <label class="mock-answer-label" for="mockAnswerText">Your answer <span>Be specific. Explain your decisions and results.</span></label>
+      <textarea id="mockAnswerText" rows="6" maxlength="5000" placeholder="Type your answer, or use voice input…" disabled></textarea>
+      <div class="mock-answer-actions"><button class="mock-button mock-button-secondary" id="micButton" type="button" disabled>🎙 Answer with microphone</button><span>Your answer is sent to the AI interviewer for feedback.</span><button class="mock-button mock-button-primary" id="submitAnswerButton" type="button" disabled>Submit answer <span aria-hidden="true">→</span></button></div>
+      <section id="mockFeedbackBox" class="mock-feedback" aria-live="polite" hidden></section>
+      <section id="finalScoreBox" class="mock-final-score" aria-live="polite" hidden></section>
+    </section>
   </section>
-</section>
-
-<style>
-  .interview-page{max-width:1000px;margin:auto}.interview-heading{margin-bottom:1.25rem}.interview-heading h1{margin:.25rem 0;color:#241b35;font-size:clamp(1.65rem,4vw,2.2rem)}.interview-heading>p:last-child{color:#71677e;margin:.35rem 0}.eyebrow,.question-card>span{font-size:.72rem;letter-spacing:.09em;font-weight:800;color:#7954c8}.interview-panel{background:#fff;border:1px solid #e9e2f2;border-radius:18px;padding:clamp(1rem,3vw,1.5rem);box-shadow:0 12px 36px #3924520d}.interview-setup{max-width:560px;margin:1rem auto;display:grid;gap:.8rem}.interview-setup label,.answer-label{font-size:.88rem;font-weight:750;color:#302641}.interview-setup input,.interview-panel textarea{width:100%;border:1px solid #ded6e9;border-radius:10px;padding:.8rem;font:inherit;color:#302641}.interview-panel textarea{display:block;resize:vertical;min-height:130px;line-height:1.55}.interview-setup input:focus,.interview-panel textarea:focus{outline:3px solid #7954c822;border-color:#7954c8}.interview-setup p,.device-controls>span,.progress-row>span{font-size:.82rem;color:#746b80}.button-primary,.button-secondary,.speak-button{border:0;border-radius:9px;padding:.72rem 1rem;font:inherit;font-weight:750;cursor:pointer}.button-primary{background:#7954c8;color:#fff}.button-secondary,.speak-button{background:#f2edf8;color:#4a3568}.button-primary:disabled,.button-secondary:disabled{opacity:.6;cursor:wait}.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}.video-wrap{position:relative;background:#211a2b;border-radius:12px;aspect-ratio:16/9;overflow:hidden}.video-wrap video{width:100%;height:100%;object-fit:contain}.video-placeholder{position:absolute;inset:0;display:grid;place-items:center;color:#ded5e8;font-size:.9rem}.video-placeholder[hidden]{display:none}.video-label{position:absolute;bottom:8px;left:8px;background:#211a2bd9;color:white;padding:.3rem .55rem;border-radius:99px;font-size:.72rem}.device-controls{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.8rem 0 1rem}.progress-row{display:flex;justify-content:space-between;gap:1rem;align-items:center;margin:1rem 0}.progress-row strong{color:#4a3568}.question-card{padding:1rem 1.1rem;background:#f6f2fb;border:1px solid #ebe3f5;border-radius:12px;margin-bottom:1.1rem}.question-card p{color:#302641;font-weight:650;line-height:1.6;margin:.45rem 0}.speak-button{padding:.45rem .7rem;font-size:.82rem}.answer-label{display:block;margin-bottom:.45rem}.answer-actions{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:.85rem}.answer-actions>span{font-size:.82rem;color:#746b80}.interview-feedback,.final-score{margin-top:1.1rem;padding:1rem;background:#fbf9fe;border:1px solid #e8def4;border-radius:12px;color:#382c49;line-height:1.6}.interview-feedback[hidden],.final-score[hidden]{display:none}.feedback-score{display:inline-flex;background:#eee7f8;color:#61439b;font-weight:800;border-radius:99px;padding:.25rem .65rem}.interview-feedback h3{font-size:1rem;margin:.8rem 0 .25rem}.interview-feedback ul{padding-left:1.2rem;margin:.3rem 0}.final-score{text-align:center;background:#f3edfc}.final-score strong{display:block;font-size:2rem;color:#61439b}.interview-error{color:#a42d44;background:#fff5f6;border-color:#ffd7dd}@media(max-width:640px){.video-grid{grid-template-columns:1fr}.video-wrap{aspect-ratio:16/10}.device-controls>*{flex:1 1 auto}.progress-row,.answer-actions{align-items:stretch;flex-direction:column}.answer-actions .button-primary{width:100%}}
-</style>
-
-<script>
-(() => {
-  const $ = (id) => document.getElementById(id);
-  const setup = $('interviewSetup'), room = $('interviewRoom'), questionEl = $('mockQuestion'), answerEl = $('mockAnswerText');
-  const feedbackBox = $('mockFeedbackBox'), finalBox = $('finalScoreBox'), submitButton = $('submitAnswerButton');
-  let sessionId = null, questionNumber = 1, cameraStream = null, screenStream = null, recognition = null, isListening = false;
-  const escapeHTML = (value) => String(value || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const speak = (text) => {
-    if (!('speechSynthesis' in window)) { $('interviewStatus').textContent = 'Speech playback is unavailable in this browser. Read the question on screen.'; return; }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text); utterance.rate = 0.95;
-    window.speechSynthesis.speak(utterance);
-  };
-  const setQuestion = (question, number) => {
-    questionEl.textContent = question; questionNumber = number;
-    $('questionProgress').textContent = `Question ${number} of 10`;
-    speak(question);
-  };
-  const postJSON = async (url, body) => {
-    const response = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(body) });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error || `Request failed (${response.status})`);
-    return data;
-  };
-  $('startInterviewButton').addEventListener('click', async (event) => {
-    const button = event.currentTarget; button.disabled = true; $('setupStatus').textContent = 'Starting your interview…';
-    try {
-      const data = await postJSON('/student/interview/start', { roleType:$('roleType').value.trim() || 'Software Engineer' });
-      sessionId = data.sessionId; setup.hidden = true; room.hidden = false;
-      setQuestion(data.question, data.questionNumber || 1); $('interviewStatus').textContent = 'The interviewer is asking. Your turn after the question.';
-    } catch (error) { $('setupStatus').textContent = error.message; button.disabled = false; }
-  });
-  $('repeatQuestionButton').addEventListener('click', () => speak(questionEl.textContent));
-  $('cameraButton').addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    if (cameraStream) { cameraStream.getTracks().forEach((track) => track.stop()); cameraStream = null; $('cameraVideo').srcObject = null; $('cameraPlaceholder').hidden = false; button.textContent = 'Turn on camera'; return; }
-    try { cameraStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false}); $('cameraVideo').srcObject = cameraStream; $('cameraPlaceholder').hidden = true; button.textContent = 'Turn off camera'; }
-    catch (error) { $('deviceStatus').textContent = error.name === 'NotAllowedError' ? 'Camera permission denied; allow it in browser settings.' : 'Camera unavailable. You can continue without it.'; }
-  });
-  $('screenButton').addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    if (screenStream) { screenStream.getTracks().forEach((track) => track.stop()); screenStream = null; $('screenVideo').srcObject = null; $('screenPlaceholder').hidden = false; button.textContent = 'Share entire screen'; return; }
-    if (!navigator.mediaDevices?.getDisplayMedia) { $('deviceStatus').textContent = 'Screen sharing needs browser support and HTTPS or localhost.'; return; }
-    try {
-      screenStream = await navigator.mediaDevices.getDisplayMedia({video:true,audio:false});
-      $('screenVideo').srcObject = screenStream; $('screenPlaceholder').hidden = true; button.textContent = 'Stop screen share';
-      screenStream.getVideoTracks()[0].addEventListener('ended', () => { screenStream = null; $('screenVideo').srcObject = null; $('screenPlaceholder').hidden = false; button.textContent = 'Share entire screen'; });
-      $('deviceStatus').textContent = 'Screen preview is local to this page; it is not sent to the AI or saved.';
-    } catch (error) { $('deviceStatus').textContent = error.name === 'NotAllowedError' ? 'Screen sharing cancelled. Choose Entire Screen in the browser prompt to mirror it here.' : 'Could not start screen sharing.'; }
-  });
-  $('micButton').addEventListener('click', () => {
-    if (isListening) { try { recognition?.stop(); } catch (_) {} isListening = false; $('micButton').textContent = 'Answer with microphone'; return; }
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) { $('deviceStatus').textContent = 'Speech recognition is not supported here. Type your answer instead.'; return; }
-    recognition = new SpeechRecognition(); recognition.lang = 'en-IN'; recognition.interimResults = true; recognition.continuous = true;
-    recognition.onresult = (event) => { let text = ''; for (let i = 0; i < event.results.length; i++) text += event.results[i][0].transcript + ' '; answerEl.value = text.trim(); };
-    recognition.onerror = () => { $('deviceStatus').textContent = 'Microphone transcription stopped. You can type your answer.'; };
-    recognition.onend = () => { isListening = false; $('micButton').textContent = 'Answer with microphone'; };
-    try { recognition.start(); isListening = true; $('micButton').textContent = 'Stop microphone'; $('deviceStatus').textContent = 'Listening… click Stop microphone when you finish speaking.'; }
-    catch (_) { isListening = false; $('micButton').textContent = 'Answer with microphone'; }
-  });
-  function renderFeedback(feedback) {
-    const list = (items) => Array.isArray(items) && items.length ? `<ul>${items.map((item) => `<li>${escapeHTML(item)}</li>`).join('')}</ul>` : '<p>—</p>';
-    feedbackBox.innerHTML = `<span class="feedback-score">Score ${Number(feedback.score) || 0}/100</span><h3>What worked</h3>${list(feedback.strengths)}<h3>Try improving</h3>${list(feedback.improvements)}${feedback.sampleAnswer ? `<h3>Example improvement</h3><p>${escapeHTML(feedback.sampleAnswer)}</p>` : ''}`;
-    feedbackBox.hidden = false;
-  }
-  submitButton.addEventListener('click', async () => {
-    const answer = answerEl.value.trim();
-    if (!answer) { $('interviewStatus').textContent = 'Pehle bolkar ya type karke apna answer do.'; answerEl.focus(); return; }
-    if (recognition) { try { recognition.stop(); } catch (_) {} }
-    submitButton.disabled = true; submitButton.textContent = 'Analyzing answer…'; $('interviewStatus').textContent = `AI is analyzing answer ${questionNumber} of 10…`; feedbackBox.hidden = true; feedbackBox.classList.remove('interview-error');
-    try {
-      const data = await postJSON('/student/interview/answer', { sessionId, answer });
-      renderFeedback(data.feedback || {}); answerEl.value = '';
-      if (data.completed) {
-        $('questionProgress').textContent = 'Interview complete'; $('interviewStatus').textContent = data.saved === false ? 'Score calculated, but the interview history could not be saved.' : 'All 10 answers have been reviewed.';
-        finalBox.innerHTML = `<strong>${Number(data.finalScore) || 0}/100</strong><b>Final interview score</b><p>Average score across all 10 answers.</p>`; finalBox.hidden = false;
-        questionEl.textContent = 'Interview complete — review your feedback and final score.'; window.speechSynthesis?.cancel(); submitButton.hidden = true;
-      } else {
-        setQuestion(data.nextQuestion, (data.questionNumber || questionNumber) + 1);
-        $('interviewStatus').textContent = `Answer ${data.questionNumber} analyzed. Listen to question ${questionNumber}.`;
-      }
-    } catch (error) { feedbackBox.hidden = false; feedbackBox.classList.add('interview-error'); feedbackBox.textContent = error.message || 'Could not analyze your answer. Please retry.'; $('interviewStatus').textContent = 'Your typed answer is still here; you can retry.'; }
-    finally { submitButton.disabled = false; submitButton.textContent = 'Submit answer →'; }
-  });
-  window.addEventListener('pagehide', () => { window.speechSynthesis?.cancel(); cameraStream?.getTracks().forEach((track) => track.stop()); screenStream?.getTracks().forEach((track) => track.stop()); try { recognition?.stop(); } catch (_) {} });
-})();
-</script>
+</main>
+<script src="/js/interview.js" defer></script>

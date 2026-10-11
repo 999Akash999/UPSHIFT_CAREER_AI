@@ -16,8 +16,8 @@ const jobApplicationSchema = new mongoose.Schema(
     },
     resumeUrl: {
       type: String,
-      required: [true, "Resume document link is required"],
       trim: true,
+      default: "",
     },
     coverNote: {
       type: String,
@@ -32,7 +32,7 @@ const jobApplicationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["applied", "shortlisted", "interviewing", "offered", "rejected", "withdrawn"],
+      enum: ["applied", "shortlisted", "interviewing", "offered", "offer-accepted", "offer-declined", "rejected", "withdrawn"],
       default: "applied",
       index: true,
     },

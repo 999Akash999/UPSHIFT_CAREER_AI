@@ -3,6 +3,12 @@ const JobApplication = require("../models/JobApplication");
 const RecruiterProfile = require("../models/RecruiterProfile");
 const Student = require("../models/Student");
 const EmployabilitySnapshot = require("../models/EmployabilitySnapshot");
+const Project = require("../models/Project");
+const Roadmap = require("../models/Roadmap");
+const SkillAssessment = require("../models/SkillAssessment");
+const RecruiterInterview = require("../models/RecruiterInterview");
+const RecruiterConversation = require("../models/RecruiterConversation");
+const { getRoleSkillProgress } = require("../services/skillGapService");
 
 exports.getDashboard = async (req, res) => {
   const profile = await RecruiterProfile.findOne({ user: req.user._id }).populate("company");
@@ -62,10 +68,35 @@ exports.getApplication = async (req, res) => {
 
 exports.getCandidate = async (req, res) => {
   const candidate = await Student.findById(req.params.studentId).populate("user", "name email avatar");
-  if (!candidate) return res.status(404).render("errors/404", { title: "Candidate not found" });
-  const snapshot = await EmployabilitySnapshot.findOne({ student: candidate._id }).sort({ createdAt: -1 });
-  const projects = await require("../models/Project").find({ student: candidate.user._id }).sort({ createdAt: -1 });
-  res.render("recruiter/candidate-profile", { title: "Candidate Profile", candidate, snapshot, projects });
+  if (!candidate?.user) return res.status(404).render("errors/404", { title: "Candidate not found" });
+  const recruiterJobs = await Job.find({ recruiter: req.user._id }).select("_id title status").sort({ createdAt: -1 }).lean();
+  const jobIds = recruiterJobs.map((job) => job._id);
+  const [snapshot, projects, roadmap, skillProgress, assessments, applications, interviews, conversation] = await Promise.all([
+    EmployabilitySnapshot.findOne({ student: candidate._id }).sort({ createdAt: -1 }).lean(),
+    Project.find({ student: candidate.user._id }).sort({ createdAt: -1 }).lean(),
+    Roadmap.findOne({ student: candidate._id, status: "in-progress" }).sort({ createdAt: -1 }).select("title targetRole completionPercentage weeks updatedAt").lean(),
+    getRoleSkillProgress(candidate.user._id, candidate.targetRole).catch((error) => {
+      console.error("Candidate skill assessment breakdown unavailable:", error.message);
+      return [];
+    }),
+    SkillAssessment.find({ student: candidate.user._id }).populate("assessment", "title domain").sort({ createdAt: -1 }).limit(20).lean(),
+    JobApplication.find({ student: candidate.user._id, job: { $in: jobIds } }).populate({ path: "job", populate: { path: "company" } }).sort({ updatedAt: -1 }).lean(),
+    RecruiterInterview.find({ recruiter: req.user._id, student: candidate.user._id }).populate("job", "title").sort({ scheduledAt: -1 }).lean(),
+    RecruiterConversation.findOne({ recruiter: req.user._id, student: candidate.user._id }).select("_id"),
+  ]);
+  res.render("recruiter/candidate-profile", {
+    title: "Candidate Profile",
+    candidate,
+    snapshot,
+    projects,
+    roadmap,
+    skillProgress,
+    assessments,
+    applications,
+    interviews,
+    recruiterJobs,
+    conversationId: conversation?._id || null,
+  });
 };
 
 exports.renderPostJob = (req, res) => {

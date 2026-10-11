@@ -1,6 +1,7 @@
 const JobApplication = require("../models/JobApplication");
 const Job = require("../models/Job");
 const EmployabilitySnapshot = require("../models/EmployabilitySnapshot");
+const Notification = require("../models/Notification");
 const path = require("path");
 
 exports.applyToJob = async (req, res) => {
@@ -45,6 +46,14 @@ exports.updateStatus = async (req, res) => {
     }
     application.status = status;
     await application.save();
+    await Notification.create({
+      recipient: application.student,
+      sender: req.user._id,
+      title: status === "offered" ? "You received a job offer" : "Application status updated",
+      message: `${application.job?.title || "Your application"}: status changed to ${status.replaceAll("-", " ")}.`,
+      category: status === "offered" ? "offer" : "application",
+      actionUrl: "/student/applications",
+    });
     if (req.accepts("html")) {
       req.flash("success", "Application status updated.");
       return res.redirect(`/recruiter/applications/${application._id}`);

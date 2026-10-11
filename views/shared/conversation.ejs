@@ -1,0 +1,26 @@
+<% layout('layouts/dashboardLayout') %>
+<main class="engagement-page conversation-page">
+  <a class="engagement-back" href="<%= backUrl %>">← Back to messages</a>
+  <section class="conversation-shell">
+    <header class="conversation-header">
+      <img src="<%= otherUser?.avatar || '/images/avatars/default.png' %>" alt="">
+      <div><p class="engagement-eyebrow"><%= mode === 'recruiter' ? 'RECRUITER CONVERSATION' : 'HIRING CONVERSATION' %></p><h1><%= otherUser?.name || (mode === 'recruiter' ? 'Student' : 'Recruiter') %></h1><p><%= conversation.job?.title || 'General career conversation' %><% if (otherUser?.email) { %> · <%= otherUser.email %><% } %></p></div>
+    </header>
+    <div class="conversation-messages" aria-live="polite" data-conversation-id="<%= conversation._id %>" data-current-user-id="<%= currentUser._id %>">
+      <% if (conversation.messages.length) { %>
+        <% conversation.messages.forEach((message) => { const mine = String(message.sender?._id || message.sender) === String(currentUser._id); %>
+          <article class="conversation-message <%= mine ? 'is-mine' : '' %>">
+            <div class="conversation-message-meta"><strong><%= mine ? 'You' : (message.sender?.name || (mode === 'recruiter' ? 'Student' : 'Recruiter')) %></strong><time><%= new Date(message.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) %></time></div>
+            <p><%= message.body %></p>
+          </article>
+        <% }) %>
+      <% } else { %><p class="conversation-empty">Start with a clear introduction and the job or opportunity you want to discuss.</p><% } %>
+    </div>
+    <form class="conversation-composer" action="<%= replyUrl %>" method="POST">
+      <label for="conversationMessage">Your message</label>
+      <textarea id="conversationMessage" name="body" rows="4" maxlength="2000" required placeholder="Write a respectful, job-related message…"></textarea>
+      <div><span>Up to 2,000 characters</span><button class="engagement-primary" type="submit">Send message</button></div>
+    </form>
+  </section>
+</main>
+<script src="/js/recruiter-messages.js" defer></script>

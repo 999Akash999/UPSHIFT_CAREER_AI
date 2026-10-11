@@ -6,17 +6,29 @@
       <%= roadmap ? roadmap.title : 'Personalized Learning Curriculum' %>
     </h2>
     <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
-      Target: <strong><%= roadmap ? roadmap.targetRole : student.targetRole %></strong> &bull; Completion: <%= roadmap ? roadmap.completionPercentage : 0 %>%
+      Target: <strong><%= roadmap ? roadmap.targetRole : student.targetRole %></strong> &bull; Completion: <span id="roadmapCompletionPercentage"><%= roadmap ? roadmap.completionPercentage : 0 %></span>%
+      <% if (roadmap) { %>&bull; <%= roadmap.hoursPerDay || 2 %> hours/day, <%= roadmap.daysPerWeek || 5 %> study days/week<% } %>
     </p>
   </div>
 
-  <form action="/roadmap/generate" method="POST" style="display: flex; gap: 0.5rem;">
-    <input type="hidden" name="targetRole" value="<%= student.targetRole %>">
-    <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
-      ⚡ Regenerate AI Roadmap
-    </button>
-  </form>
+  <button id="openRoadmapChat" type="button" data-default-role="<%= student.targetRole || 'Full Stack Developer' %>" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
+    ✨ <%= roadmap ? 'Rebuild my roadmap' : 'Plan with Career Coach' %>
+  </button>
 </div>
+
+<section id="roadmapChatPanel" aria-label="Roadmap planning chat" style="display:none;background:#fff;border:1px solid #e8e1f1;border-radius:16px;padding:1.25rem;margin:0 0 1.5rem;box-shadow:0 12px 32px #3424500a;">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.8rem;">
+    <div><strong style="color:#302749;font-size:1.05rem;">Let's plan your six months</strong><p style="margin:.2rem 0 0;color:#81768e;font-size:.82rem;">I’ll ask a few quick questions, then build a week-by-week plan with daily tasks.</p></div>
+    <button id="closeRoadmapChat" type="button" aria-label="Close planning chat" style="border:0;background:#f3effb;border-radius:8px;padding:.45rem .7rem;cursor:pointer;color:#6546a5;font-weight:800;">Close</button>
+  </div>
+  <div id="roadmapChatMessages" aria-live="polite" style="display:grid;gap:.6rem;max-height:280px;overflow:auto;padding:.5rem 0 .8rem;"></div>
+  <form id="roadmapChatAnswerForm" style="display:flex;align-items:flex-end;gap:.6rem;flex-wrap:wrap;border-top:1px solid #f0ebf5;padding-top:.9rem;">
+    <div id="roadmapChatInput" style="flex:1 1 250px;"></div>
+    <button id="roadmapChatContinue" type="submit" style="border:0;border-radius:9px;padding:.7rem 1rem;background:#7954c8;color:#fff;font-weight:800;cursor:pointer;">Continue</button>
+  </form>
+  <p id="roadmapChatStatus" role="status" aria-live="polite" style="margin:.7rem 0 0;color:#a33b50;font-size:.82rem;"></p>
+</section>
+<p id="roadmapTaskSaveStatus" role="status" aria-live="polite" style="min-height:1.2rem;margin:-.75rem 0 1rem;color:#5b8a6c;font-size:.82rem;"></p>
 
 <% if (roadmap && roadmap.weeks && roadmap.weeks.length > 0) { %>
   <div class="roadmap-container" style="position: relative; padding-left: 2rem;">
@@ -30,33 +42,26 @@
           <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0;"><%= week.theme %></h3>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-          <% week.milestones.forEach((milestone, mIdx) => { %>
-            <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 0.85rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-            <div style="display: flex; align-items: flex-start; gap: 0.75rem; min-width:0;">
-                <input 
-                  type="checkbox" 
-                  <%= milestone.isCompleted ? 'checked' : '' %> 
-                  onchange="toggleMilestone('<%= roadmap._id %>', '<%= week.weekNumber %>', '<%= mIdx %>', this)"
-                  style="width: 18px; height: 18px; accent-color: #2563eb; cursor: pointer;"
-                >
-                <span style="font-size: 0.95rem; font-weight: 600; color: <%= milestone.isCompleted ? '#94a3b8' : '#0f172a' %>; text-decoration: <%= milestone.isCompleted ? 'line-through' : 'none' %>;">
-                  <%= milestone.title %>
-                  <% if (milestone.lesson || milestone.example || milestone.practice) { %>
-                    <details style="margin-top:.65rem;font-weight:400;text-decoration:none;color:#5f566b;line-height:1.6">
-                      <summary style="cursor:pointer;color:#7954c8;font-weight:700">Learn this topic</summary>
-                      <% if (milestone.lesson) { %><p style="margin:.55rem 0"><%= milestone.lesson %></p><% } %>
-                      <% if (milestone.keyConcepts && milestone.keyConcepts.length) { %><strong>Key ideas</strong><ul style="margin:.25rem 0;padding-left:1.2rem"><% milestone.keyConcepts.forEach(concept => { %><li><%= concept %></li><% }) %></ul><% } %>
-                      <% if (milestone.example) { %><p style="margin:.5rem 0"><strong>Example:</strong> <%= milestone.example %></p><% } %>
-                      <% if (milestone.practice) { %><p style="margin:.5rem 0"><strong>Try it:</strong> <%= milestone.practice %></p><% } %>
-                    </details>
-                  <% } %>
-                </span>
-              </div>
-              <span style="font-size: 0.75rem; font-weight: 700; color: #2563eb; background: rgba(37,99,235,0.08); padding: 0.2rem 0.5rem; border-radius: 4px;">Milestone</span>
-            </div>
-          <% }) %>
-        </div>
+        <section style="margin:0 0 1rem;padding:1rem;border:1px solid #eee8f5;border-radius:10px;background:#fcfbfe;">
+          <h4 style="margin:0 0 .6rem;color:#493b60;font-size:.92rem;">Daily plan</h4>
+          <ol style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.55rem 1rem;margin:0;padding-left:1.4rem;">
+            <% (week.dailyTasks || []).forEach((task, dayIndex) => { %>
+              <% const isRestDay = /^Rest day/i.test(task); %>
+              <li class="roadmap-day-task <%= week.dailyTaskCompletions?.[dayIndex] ? 'is-complete' : '' %>" style="list-style:none;margin-left:-1.4rem;padding:.4rem .5rem;border-radius:8px;color:#655b73;font-size:.82rem;line-height:1.5;">
+                <% if (!isRestDay) { %>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;cursor:pointer;">
+                  <input type="checkbox" data-roadmap-day-task data-roadmap-id="<%= roadmap._id %>" data-week-number="<%= week.weekNumber %>" data-day-index="<%= dayIndex %>" <%= week.dailyTaskCompletions?.[dayIndex] ? 'checked' : '' %> aria-label="Mark week <%= week.weekNumber %> day <%= dayIndex + 1 %> complete" style="margin-top:.2rem;accent-color:#7954c8;flex:0 0 auto;">
+                  <span class="roadmap-day-task-title" style="<%= week.dailyTaskCompletions?.[dayIndex] ? 'text-decoration:line-through;color:#958ba3;' : '' %>"><strong style="color:#7954c8;">Day <%= dayIndex + 1 %>:</strong> <%= task %></span>
+                </label>
+                <button type="button" class="daily-learn-button" data-daily-learn data-roadmap-id="<%= roadmap._id %>" data-week-number="<%= week.weekNumber %>" data-day-index="<%= dayIndex %>">Learn this topic</button>
+                <div class="daily-learning-content" data-learning-content hidden></div>
+                <% } else { %>
+                  <span style="color:#81768e;"><strong style="color:#7954c8;">Day <%= dayIndex + 1 %>:</strong> <%= task %></span>
+                <% } %>
+              </li>
+            <% }) %>
+          </ol>
+        </section>
 
       </div>
     <% }) %>
@@ -65,14 +70,10 @@
   <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 4rem 2rem; text-align: center;">
     <div style="font-size: 3rem; margin-bottom: 1rem;">🧭</div>
     <h3 style="font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">No Active Roadmap Initialized</h3>
-    <p style="color: #64748b; max-width: 480px; margin: 0 auto 2rem;">Let our Gemini career architect build a tailored curriculum based on your target role and identified skill gaps.</p>
-    <form action="/roadmap/generate" method="POST">
-      <input type="hidden" name="targetRole" value="<%= student.targetRole || 'Full Stack Engineer' %>">
-      <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.9rem 2rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer;">
-        Generate Custom Curriculum Now
-      </button>
-    </form>
+    <p style="color: #64748b; max-width: 480px; margin: 0 auto 2rem;">Chat with the career coach about your target role and available study time. It will build a role-specific roadmap with a task for every study day.</p>
+    <button type="button" data-start-roadmap-chat style="background: #2563eb; color: #ffffff; border: none; padding: 0.9rem 2rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer;">Plan with Career Coach</button>
   </div>
 <% } %>
 
-<script src="/js/roadmap.js"></script>
+<script src="/js/roadmap.js" defer></script>
+<script src="/js/learning.js" defer></script>

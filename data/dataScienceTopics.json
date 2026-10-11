@@ -1,0 +1,2317 @@
+[
+  {
+    "number": 1,
+    "title": "Introduction to Python",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 2,
+    "title": "Installing Python and Jupyter Notebook",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 3,
+    "title": "Variables and Constants",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 4,
+    "title": "Data Types",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 5,
+    "title": "Operators",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 6,
+    "title": "Conditional Statements",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 7,
+    "title": "For and While Loops",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 8,
+    "title": "Strings and String Methods",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 9,
+    "title": "Lists",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 10,
+    "title": "Tuples",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 11,
+    "title": "Sets",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 12,
+    "title": "Dictionaries",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 13,
+    "title": "Functions",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 14,
+    "title": "Lambda Functions",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 15,
+    "title": "List Comprehensions",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 16,
+    "title": "Exception Handling",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 17,
+    "title": "File Handling",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 18,
+    "title": "Modules and Packages",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 19,
+    "title": "Object-Oriented Programming",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 20,
+    "title": "Iterators and Generators",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 21,
+    "title": "Virtual Environments and pip",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 22,
+    "title": "Working with CSV and JSON",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 23,
+    "title": "Git and GitHub",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 24,
+    "title": "Python Practice Projects",
+    "section": "Python Fundamentals"
+  },
+  {
+    "number": 25,
+    "title": "Arithmetic and Algebra Refresher",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 26,
+    "title": "Functions and Graphs",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 27,
+    "title": "Linear Equations",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 28,
+    "title": "Exponents and Logarithms",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 29,
+    "title": "Vectors",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 30,
+    "title": "Matrices",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 31,
+    "title": "Matrix Operations",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 32,
+    "title": "Dot Product",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 33,
+    "title": "Mean, Median and Mode",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 34,
+    "title": "Range and Percentiles",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 35,
+    "title": "Variance and Standard Deviation",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 36,
+    "title": "Probability Fundamentals",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 37,
+    "title": "Conditional Probability",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 38,
+    "title": "Bayes' Theorem",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 39,
+    "title": "Probability Distributions",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 40,
+    "title": "Normal Distribution",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 41,
+    "title": "Binomial Distribution",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 42,
+    "title": "Sampling and Population",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 43,
+    "title": "Permutations and Combinations",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 44,
+    "title": "Covariance",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 45,
+    "title": "Correlation",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 46,
+    "title": "Derivatives",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 47,
+    "title": "Partial Derivatives",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 48,
+    "title": "Gradient Descent",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 49,
+    "title": "Statistical Inference",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 50,
+    "title": "Confidence Intervals",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 51,
+    "title": "Hypothesis Testing",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 52,
+    "title": "P-values",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 53,
+    "title": "Type I and Type II Errors",
+    "section": "Mathematics for Data Science"
+  },
+  {
+    "number": 54,
+    "title": "Introduction to NumPy",
+    "section": "NumPy"
+  },
+  {
+    "number": 55,
+    "title": "Creating Arrays",
+    "section": "NumPy"
+  },
+  {
+    "number": 56,
+    "title": "Array Dimensions and Shapes",
+    "section": "NumPy"
+  },
+  {
+    "number": 57,
+    "title": "Indexing and Slicing",
+    "section": "NumPy"
+  },
+  {
+    "number": 58,
+    "title": "Reshaping Arrays",
+    "section": "NumPy"
+  },
+  {
+    "number": 59,
+    "title": "Array Data Types",
+    "section": "NumPy"
+  },
+  {
+    "number": 60,
+    "title": "Vectorization",
+    "section": "NumPy"
+  },
+  {
+    "number": 61,
+    "title": "Broadcasting",
+    "section": "NumPy"
+  },
+  {
+    "number": 62,
+    "title": "Mathematical Operations",
+    "section": "NumPy"
+  },
+  {
+    "number": 63,
+    "title": "Aggregation Functions",
+    "section": "NumPy"
+  },
+  {
+    "number": 64,
+    "title": "Axis Parameter",
+    "section": "NumPy"
+  },
+  {
+    "number": 65,
+    "title": "Sorting and Searching",
+    "section": "NumPy"
+  },
+  {
+    "number": 66,
+    "title": "Boolean Masking",
+    "section": "NumPy"
+  },
+  {
+    "number": 67,
+    "title": "Random Number Generation",
+    "section": "NumPy"
+  },
+  {
+    "number": 68,
+    "title": "Linear Algebra with NumPy",
+    "section": "NumPy"
+  },
+  {
+    "number": 69,
+    "title": "Handling Missing and Invalid Values",
+    "section": "NumPy"
+  },
+  {
+    "number": 70,
+    "title": "NumPy Performance Optimization",
+    "section": "NumPy"
+  },
+  {
+    "number": 71,
+    "title": "Introduction to Pandas",
+    "section": "Pandas"
+  },
+  {
+    "number": 72,
+    "title": "Series and DataFrames",
+    "section": "Pandas"
+  },
+  {
+    "number": 73,
+    "title": "Reading CSV, Excel and JSON",
+    "section": "Pandas"
+  },
+  {
+    "number": 74,
+    "title": "Inspecting Datasets",
+    "section": "Pandas"
+  },
+  {
+    "number": 75,
+    "title": "Selecting Rows and Columns",
+    "section": "Pandas"
+  },
+  {
+    "number": 76,
+    "title": "loc and iloc",
+    "section": "Pandas"
+  },
+  {
+    "number": 77,
+    "title": "Filtering Data",
+    "section": "Pandas"
+  },
+  {
+    "number": 78,
+    "title": "Sorting Data",
+    "section": "Pandas"
+  },
+  {
+    "number": 79,
+    "title": "Adding and Removing Columns",
+    "section": "Pandas"
+  },
+  {
+    "number": 80,
+    "title": "Handling Missing Values",
+    "section": "Pandas"
+  },
+  {
+    "number": 81,
+    "title": "Removing Duplicates",
+    "section": "Pandas"
+  },
+  {
+    "number": 82,
+    "title": "Data Type Conversion",
+    "section": "Pandas"
+  },
+  {
+    "number": 83,
+    "title": "String Operations",
+    "section": "Pandas"
+  },
+  {
+    "number": 84,
+    "title": "Date and Time Operations",
+    "section": "Pandas"
+  },
+  {
+    "number": 85,
+    "title": "groupby()",
+    "section": "Pandas"
+  },
+  {
+    "number": 86,
+    "title": "Aggregation",
+    "section": "Pandas"
+  },
+  {
+    "number": 87,
+    "title": "apply() and Vectorized Operations",
+    "section": "Pandas"
+  },
+  {
+    "number": 88,
+    "title": "Merging DataFrames",
+    "section": "Pandas"
+  },
+  {
+    "number": 89,
+    "title": "Joining DataFrames",
+    "section": "Pandas"
+  },
+  {
+    "number": 90,
+    "title": "Concatenation",
+    "section": "Pandas"
+  },
+  {
+    "number": 91,
+    "title": "Pivot Tables",
+    "section": "Pandas"
+  },
+  {
+    "number": 92,
+    "title": "Crosstabulation",
+    "section": "Pandas"
+  },
+  {
+    "number": 93,
+    "title": "MultiIndex",
+    "section": "Pandas"
+  },
+  {
+    "number": 94,
+    "title": "Exporting Processed Data",
+    "section": "Pandas"
+  },
+  {
+    "number": 95,
+    "title": "Data Cleaning Projects",
+    "section": "Pandas"
+  },
+  {
+    "number": 96,
+    "title": "Database Fundamentals",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 97,
+    "title": "Tables, Rows and Columns",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 98,
+    "title": "SELECT and DISTINCT",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 99,
+    "title": "WHERE and Filtering",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 100,
+    "title": "ORDER BY",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 101,
+    "title": "LIMIT",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 102,
+    "title": "Aggregate Functions",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 103,
+    "title": "GROUP BY",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 104,
+    "title": "HAVING",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 105,
+    "title": "CASE WHEN",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 106,
+    "title": "String Functions",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 107,
+    "title": "Date Functions",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 108,
+    "title": "NULL Handling",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 109,
+    "title": "INNER JOIN",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 110,
+    "title": "LEFT JOIN",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 111,
+    "title": "RIGHT JOIN",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 112,
+    "title": "FULL OUTER JOIN",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 113,
+    "title": "Self Joins",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 114,
+    "title": "Subqueries",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 115,
+    "title": "Common Table Expressions (CTEs)",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 116,
+    "title": "UNION and UNION ALL",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 117,
+    "title": "Window Functions",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 118,
+    "title": "ROW_NUMBER(), RANK() and DENSE_RANK()",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 119,
+    "title": "LAG() and LEAD()",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 120,
+    "title": "Query Optimization",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 121,
+    "title": "Indexes",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 122,
+    "title": "Database Normalization",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 123,
+    "title": "SQL Interview Questions",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 124,
+    "title": "Real-World SQL Case Studies",
+    "section": "SQL for Data Science"
+  },
+  {
+    "number": 125,
+    "title": "What Is Data Cleaning?",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 126,
+    "title": "Structured vs Unstructured Data",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 127,
+    "title": "Data Quality Dimensions",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 128,
+    "title": "Missing Data Analysis",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 129,
+    "title": "Duplicate Detection",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 130,
+    "title": "Outlier Detection",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 131,
+    "title": "Inconsistent Values",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 132,
+    "title": "Data Type Validation",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 133,
+    "title": "Data Transformation",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 134,
+    "title": "Data Normalization",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 135,
+    "title": "Standardization",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 136,
+    "title": "Categorical Encoding",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 137,
+    "title": "One-Hot Encoding",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 138,
+    "title": "Label Encoding",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 139,
+    "title": "Feature Scaling",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 140,
+    "title": "Data Integration",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 141,
+    "title": "Handling Imbalanced Datasets",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 142,
+    "title": "Train, Validation and Test Splits",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 143,
+    "title": "Data Leakage",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 144,
+    "title": "Reproducible Data Pipelines",
+    "section": "Data Cleaning and Preparation"
+  },
+  {
+    "number": 145,
+    "title": "What Is EDA?",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 146,
+    "title": "Understanding Business Questions",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 147,
+    "title": "Univariate Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 148,
+    "title": "Bivariate Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 149,
+    "title": "Multivariate Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 150,
+    "title": "Distribution Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 151,
+    "title": "Frequency Tables",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 152,
+    "title": "Outlier Investigation",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 153,
+    "title": "Correlation Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 154,
+    "title": "Cross-Tabulation",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 155,
+    "title": "Segmentation Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 156,
+    "title": "Trend Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 157,
+    "title": "Cohort Analysis",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 158,
+    "title": "Missing-Value Visualization",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 159,
+    "title": "Feature Relationships",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 160,
+    "title": "Finding Patterns and Anomalies",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 161,
+    "title": "Writing EDA Reports",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 162,
+    "title": "Turning Data into Business Insights",
+    "section": "Exploratory Data Analysis (EDA)"
+  },
+  {
+    "number": 163,
+    "title": "Matplotlib Fundamentals",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 164,
+    "title": "Figure and Axes",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 165,
+    "title": "Line Charts",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 166,
+    "title": "Bar Charts",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 167,
+    "title": "Histograms",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 168,
+    "title": "Scatter Plots",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 169,
+    "title": "Box Plots",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 170,
+    "title": "Violin Plots",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 171,
+    "title": "Heatmaps",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 172,
+    "title": "Pie Charts and Their Limitations",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 173,
+    "title": "Subplots",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 174,
+    "title": "Labels, Legends and Titles",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 175,
+    "title": "Choosing the Right Chart",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 176,
+    "title": "Avoiding Misleading Visualizations",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 177,
+    "title": "Seaborn",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 178,
+    "title": "Statistical Visualization",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 179,
+    "title": "Interactive Charts with Plotly",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 180,
+    "title": "Data Storytelling",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 181,
+    "title": "Building a Visualization Report",
+    "section": "Data Visualization"
+  },
+  {
+    "number": 182,
+    "title": "Excel Interface and Data Types",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 183,
+    "title": "Sorting and Filtering",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 184,
+    "title": "Conditional Formatting",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 185,
+    "title": "Data Validation",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 186,
+    "title": "Basic Formulas",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 187,
+    "title": "IF and Nested IF",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 188,
+    "title": "SUMIF and SUMIFS",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 189,
+    "title": "COUNTIF and COUNTIFS",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 190,
+    "title": "XLOOKUP and VLOOKUP",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 191,
+    "title": "INDEX and MATCH",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 192,
+    "title": "Text Functions",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 193,
+    "title": "Date Functions",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 194,
+    "title": "Pivot Tables",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 195,
+    "title": "Pivot Charts",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 196,
+    "title": "Power Query",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 197,
+    "title": "Data Cleaning in Excel",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 198,
+    "title": "Excel Dashboard",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 199,
+    "title": "Business Reporting",
+    "section": "Excel for Data Analysis"
+  },
+  {
+    "number": 200,
+    "title": "Introduction to Business Intelligence",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 201,
+    "title": "Power BI Desktop",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 202,
+    "title": "Connecting Data Sources",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 203,
+    "title": "Power Query Editor",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 204,
+    "title": "Data Transformation",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 205,
+    "title": "Data Modeling",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 206,
+    "title": "Relationships Between Tables",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 207,
+    "title": "Star Schema",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 208,
+    "title": "Fact and Dimension Tables",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 209,
+    "title": "Introduction to DAX",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 210,
+    "title": "Calculated Columns vs Measures",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 211,
+    "title": "CALCULATE()",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 212,
+    "title": "Filter Context and Row Context",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 213,
+    "title": "Time Intelligence",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 214,
+    "title": "KPI Cards",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 215,
+    "title": "Interactive Charts",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 216,
+    "title": "Slicers and Filters",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 217,
+    "title": "Dashboard Design",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 218,
+    "title": "Publishing Reports",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 219,
+    "title": "Row-Level Security",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 220,
+    "title": "Building a Business Intelligence Dashboard",
+    "section": "Business Intelligence with Power BI"
+  },
+  {
+    "number": 221,
+    "title": "Descriptive Statistics",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 222,
+    "title": "Inferential Statistics",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 223,
+    "title": "Sampling Techniques",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 224,
+    "title": "Sampling Bias",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 225,
+    "title": "Central Limit Theorem",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 226,
+    "title": "Standard Error",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 227,
+    "title": "Confidence Intervals",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 228,
+    "title": "Hypothesis Formulation",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 229,
+    "title": "One-Sample Tests",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 230,
+    "title": "Two-Sample Tests",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 231,
+    "title": "T-Tests",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 232,
+    "title": "Chi-Square Tests",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 233,
+    "title": "ANOVA",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 234,
+    "title": "Nonparametric Tests",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 235,
+    "title": "Effect Size",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 236,
+    "title": "Statistical Power",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 237,
+    "title": "Multiple Testing",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 238,
+    "title": "A/B Testing",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 239,
+    "title": "Experimental Design",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 240,
+    "title": "Correlation vs Causation",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 241,
+    "title": "Interpreting Statistical Results",
+    "section": "Statistics and Experimentation"
+  },
+  {
+    "number": 242,
+    "title": "What Is Machine Learning?",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 243,
+    "title": "AI vs ML vs Deep Learning",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 244,
+    "title": "Supervised Learning",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 245,
+    "title": "Unsupervised Learning",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 246,
+    "title": "Reinforcement Learning Overview",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 247,
+    "title": "Features and Labels",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 248,
+    "title": "Regression vs Classification",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 249,
+    "title": "Training and Inference",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 250,
+    "title": "Model Parameters",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 251,
+    "title": "Loss Functions",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 252,
+    "title": "Training, Validation and Test Sets",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 253,
+    "title": "Baseline Models",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 254,
+    "title": "Bias-Variance Trade-Off",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 255,
+    "title": "Overfitting and Underfitting",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 256,
+    "title": "Cross-Validation",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 257,
+    "title": "Data Leakage Prevention",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 258,
+    "title": "Scikit-learn Fundamentals",
+    "section": "Machine Learning Fundamentals"
+  },
+  {
+    "number": 259,
+    "title": "Linear Regression",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 260,
+    "title": "Multiple Linear Regression",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 261,
+    "title": "Polynomial Regression",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 262,
+    "title": "Regularization",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 263,
+    "title": "Ridge Regression",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 264,
+    "title": "Lasso Regression",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 265,
+    "title": "Logistic Regression",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 266,
+    "title": "K-Nearest Neighbors",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 267,
+    "title": "Decision Trees",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 268,
+    "title": "Random Forest",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 269,
+    "title": "Extra Trees",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 270,
+    "title": "Support Vector Machines",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 271,
+    "title": "Naive Bayes",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 272,
+    "title": "Gradient Boosting",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 273,
+    "title": "XGBoost and Other Boosting Libraries",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 274,
+    "title": "Classification Thresholds",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 275,
+    "title": "Regression Model Comparison",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 276,
+    "title": "Classification Model Comparison",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 277,
+    "title": "Hyperparameter Tuning",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 278,
+    "title": "Grid Search",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 279,
+    "title": "Randomized Search",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 280,
+    "title": "Model Selection",
+    "section": "Supervised Machine Learning"
+  },
+  {
+    "number": 281,
+    "title": "Clustering Fundamentals",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 282,
+    "title": "K-Means",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 283,
+    "title": "Hierarchical Clustering",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 284,
+    "title": "DBSCAN",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 285,
+    "title": "Cluster Evaluation",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 286,
+    "title": "Silhouette Score",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 287,
+    "title": "Dimensionality Reduction",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 288,
+    "title": "Principal Component Analysis (PCA)",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 289,
+    "title": "t-SNE Concepts",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 290,
+    "title": "UMAP Concepts",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 291,
+    "title": "Anomaly Detection",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 292,
+    "title": "Association Rule Mining",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 293,
+    "title": "Market Basket Analysis",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 294,
+    "title": "Customer Segmentation",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 295,
+    "title": "Unsupervised Learning Project",
+    "section": "Unsupervised Learning"
+  },
+  {
+    "number": 296,
+    "title": "Feature Selection",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 297,
+    "title": "Filter Methods",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 298,
+    "title": "Wrapper Methods",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 299,
+    "title": "Embedded Methods",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 300,
+    "title": "Mutual Information",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 301,
+    "title": "Feature Importance",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 302,
+    "title": "Permutation Importance",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 303,
+    "title": "SHAP Fundamentals",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 304,
+    "title": "Missing-Value Imputation",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 305,
+    "title": "Scaling and Encoding Pipelines",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 306,
+    "title": "Precision and Recall",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 307,
+    "title": "F1-Score",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 308,
+    "title": "Confusion Matrix",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 309,
+    "title": "ROC Curve",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 310,
+    "title": "AUC",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 311,
+    "title": "Precision-Recall Curve",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 312,
+    "title": "MAE, MSE and RMSE",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 313,
+    "title": "R-squared",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 314,
+    "title": "Calibration",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 315,
+    "title": "Error Analysis",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 316,
+    "title": "Model Interpretability",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 317,
+    "title": "Fairness and Bias",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 318,
+    "title": "Building Reliable Evaluation Pipelines",
+    "section": "Feature Engineering and Model Evaluation"
+  },
+  {
+    "number": 319,
+    "title": "Time Series Fundamentals",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 320,
+    "title": "Trend and Seasonality",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 321,
+    "title": "Time-Based Indexing",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 322,
+    "title": "Resampling",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 323,
+    "title": "Moving Averages",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 324,
+    "title": "Rolling Statistics",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 325,
+    "title": "Stationarity",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 326,
+    "title": "Autocorrelation",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 327,
+    "title": "ARIMA Concepts",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 328,
+    "title": "Seasonal ARIMA Concepts",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 329,
+    "title": "Forecasting with ML",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 330,
+    "title": "Time-Based Train-Test Splits",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 331,
+    "title": "Forecast Evaluation",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 332,
+    "title": "Avoiding Temporal Data Leakage",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 333,
+    "title": "Demand Forecasting Project",
+    "section": "Time Series Analysis"
+  },
+  {
+    "number": 334,
+    "title": "Neural Network Fundamentals",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 335,
+    "title": "Artificial Neurons",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 336,
+    "title": "Activation Functions",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 337,
+    "title": "Forward Propagation",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 338,
+    "title": "Backpropagation",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 339,
+    "title": "Gradient Descent",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 340,
+    "title": "Optimizers",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 341,
+    "title": "Learning Rate",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 342,
+    "title": "Batch Size and Epochs",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 343,
+    "title": "Loss Functions",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 344,
+    "title": "Regularization and Dropout",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 345,
+    "title": "PyTorch Fundamentals",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 346,
+    "title": "Tensors and Autograd",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 347,
+    "title": "Training Loops",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 348,
+    "title": "Model Saving and Loading",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 349,
+    "title": "GPU Training Basics",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 350,
+    "title": "Neural Network Evaluation",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 351,
+    "title": "Introduction to CNNs",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 352,
+    "title": "Recurrent Neural Networks Overview",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 353,
+    "title": "LSTM and GRU Concepts",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 354,
+    "title": "Transformers Overview",
+    "section": "Deep Learning"
+  },
+  {
+    "number": 355,
+    "title": "Introduction to NLP",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 356,
+    "title": "Text Preprocessing",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 357,
+    "title": "Tokenization",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 358,
+    "title": "Stemming and Lemmatization",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 359,
+    "title": "Bag of Words",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 360,
+    "title": "TF-IDF",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 361,
+    "title": "N-Grams",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 362,
+    "title": "Word Embeddings",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 363,
+    "title": "Word2Vec Concepts",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 364,
+    "title": "Text Classification",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 365,
+    "title": "Sentiment Analysis",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 366,
+    "title": "Named Entity Recognition",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 367,
+    "title": "Topic Modeling",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 368,
+    "title": "Text Similarity",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 369,
+    "title": "Text Summarization",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 370,
+    "title": "NLP Evaluation",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 371,
+    "title": "NLP Project with Scikit-learn",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 372,
+    "title": "Transformer-Based NLP",
+    "section": "Natural Language Processing"
+  },
+  {
+    "number": 373,
+    "title": "Generative AI Fundamentals",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 374,
+    "title": "Large Language Models",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 375,
+    "title": "Tokens and Context Windows",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 376,
+    "title": "Prompt Engineering",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 377,
+    "title": "System and User Prompts",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 378,
+    "title": "Structured JSON Output",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 379,
+    "title": "Calling LLM APIs",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 380,
+    "title": "Embeddings and Semantic Similarity",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 381,
+    "title": "Retrieval-Augmented Generation (RAG)",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 382,
+    "title": "Document Chunking",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 383,
+    "title": "Vector Databases",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 384,
+    "title": "Semantic Search",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 385,
+    "title": "RAG Evaluation",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 386,
+    "title": "LLM Hallucinations",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 387,
+    "title": "Prompt Injection and Security",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 388,
+    "title": "AI-Assisted Data Analysis",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 389,
+    "title": "Natural Language to SQL",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 390,
+    "title": "Building a Data Analyst Copilot",
+    "section": "Generative AI for Data Scientists"
+  },
+  {
+    "number": 391,
+    "title": "Data Engineering vs Data Science",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 392,
+    "title": "ETL and ELT",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 393,
+    "title": "Batch Processing",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 394,
+    "title": "Streaming Concepts",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 395,
+    "title": "Data Warehouses",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 396,
+    "title": "Data Lakes",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 397,
+    "title": "Data Lakehouses",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 398,
+    "title": "Data Modeling",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 399,
+    "title": "Dimensional Modeling",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 400,
+    "title": "Apache Spark Fundamentals",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 401,
+    "title": "PySpark DataFrames",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 402,
+    "title": "Distributed Data Processing",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 403,
+    "title": "Data Pipelines",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 404,
+    "title": "Workflow Scheduling",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 405,
+    "title": "Data Quality Checks",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 406,
+    "title": "Pipeline Monitoring",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 407,
+    "title": "Cloud Data Fundamentals",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 408,
+    "title": "Building an ETL Pipeline",
+    "section": "Data Engineering Fundamentals"
+  },
+  {
+    "number": 409,
+    "title": "Saving ML Models",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 410,
+    "title": "Joblib and Pickle",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 411,
+    "title": "Model Serialization Risks",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 412,
+    "title": "Building APIs with FastAPI",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 413,
+    "title": "Request and Response Validation",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 414,
+    "title": "Deploying an ML API",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 415,
+    "title": "Batch vs Real-Time Inference",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 416,
+    "title": "Docker Fundamentals",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 417,
+    "title": "Model and Dataset Versioning",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 418,
+    "title": "Experiment Tracking",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 419,
+    "title": "MLflow",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 420,
+    "title": "CI/CD for ML",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 421,
+    "title": "Automated Model Testing",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 422,
+    "title": "Model Monitoring",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 423,
+    "title": "Data Drift",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 424,
+    "title": "Concept Drift",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 425,
+    "title": "Retraining Strategies",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 426,
+    "title": "Model Rollback",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 427,
+    "title": "Logging and Metrics",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 428,
+    "title": "Cloud Deployment",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 429,
+    "title": "Building a Production ML Service",
+    "section": "Deployment and MLOps"
+  },
+  {
+    "number": 430,
+    "title": "Student Performance Analysis",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 431,
+    "title": "Sales Analysis Dashboard",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 432,
+    "title": "E-Commerce Customer Analysis",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 433,
+    "title": "Customer Churn Prediction",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 434,
+    "title": "House Price Prediction",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 435,
+    "title": "Loan Default Risk Modeling",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 436,
+    "title": "Customer Segmentation",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 437,
+    "title": "Fraud Detection",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 438,
+    "title": "Demand Forecasting",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 439,
+    "title": "Recommendation System",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 440,
+    "title": "Resume and Job Skill Analysis",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 441,
+    "title": "College Placement Analytics",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 442,
+    "title": "Employability Score Analysis",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 443,
+    "title": "AI-Based Learning Analytics",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 444,
+    "title": "End-to-End ML Deployment Project",
+    "section": "Data Science Projects"
+  },
+  {
+    "number": 445,
+    "title": "Git and GitHub Portfolio",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 446,
+    "title": "Writing Project READMEs",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 447,
+    "title": "Jupyter Notebook Best Practices",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 448,
+    "title": "Data Cleaning Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 449,
+    "title": "SQL Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 450,
+    "title": "Python Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 451,
+    "title": "Statistics Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 452,
+    "title": "Probability Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 453,
+    "title": "Machine Learning Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 454,
+    "title": "Model Evaluation Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 455,
+    "title": "Feature Engineering Interview Questions",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 456,
+    "title": "Business Case Studies",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 457,
+    "title": "Exploratory Data Analysis Assignments",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 458,
+    "title": "Communicating Insights to Stakeholders",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 459,
+    "title": "Resume and Project Presentation",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 460,
+    "title": "Mock Interviews",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 461,
+    "title": "Internship Applications",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 462,
+    "title": "Data Analyst vs Data Scientist Career Paths",
+    "section": "Portfolio, Interviews and Career Preparation"
+  },
+  {
+    "number": 463,
+    "title": "Building a Job-Ready Portfolio",
+    "section": "Portfolio, Interviews and Career Preparation"
+  }
+]

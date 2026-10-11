@@ -36,7 +36,18 @@
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || 'Submission failed.');
-      result.textContent = `Your score: ${payload.score}%${payload.passed ? ' — Passed!' : ''}`;
+      const testedSkills = (payload.skillProgress || []).filter((item) => item.latestScore !== null);
+      const skillScores = testedSkills.map((item) => `${item.skill} ${item.latestScore}%`).join(' · ');
+      result.textContent = `Your score: ${payload.score}%${payload.passed ? ' — Passed!' : ''}${skillScores ? ` | ${skillScores}` : ''}`;
+      let gapsLink = document.getElementById('assessment-skill-gaps-link');
+      if (!gapsLink) {
+        gapsLink = document.createElement('a');
+        gapsLink.id = 'assessment-skill-gaps-link';
+        gapsLink.href = '/student/skill-gap';
+        gapsLink.textContent = 'View updated skill gaps →';
+        gapsLink.style.cssText = 'display:block;margin-top:.5rem;color:#7954c8;';
+        result.insertAdjacentElement('afterend', gapsLink);
+      }
     } catch (error) {
       result.textContent = error.message;
     }

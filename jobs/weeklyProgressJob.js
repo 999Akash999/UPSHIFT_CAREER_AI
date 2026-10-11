@@ -21,6 +21,11 @@ const weeklyProgressJob = async () => {
       isCompleted: true,
       completedAt: { $gte: sevenDaysAgo },
     });
+    const plannedCount = await DailyTask.countDocuments({
+      student: student._id,
+      dueDate: { $gte: sevenDaysAgo, $lte: new Date() },
+    });
+    const needsSupport = plannedCount >= 3 && completedCount / plannedCount < 0.5;
 
     // 2. Fetch current employability score
     const latestScoreRecord = await EmployabilitySnapshot.findOne({
@@ -32,8 +37,10 @@ const weeklyProgressJob = async () => {
     // 3. Dispatch in-app notification
     await sendNotification({
       recipientId: student.user._id,
-      title: "📊 Your Weekly Progress Report",
-      message: `You crushed ${completedCount} task(s) this week! Current Employability Score: ${currentScore}/100.`,
+      title: needsSupport ? "🌱 Your roadmap may need a reset" : "📊 Your Weekly Progress Report",
+      message: needsSupport
+        ? `You completed ${completedCount} of ${plannedCount} scheduled tasks this week. Try one small task today, or adjust your study time in your roadmap.`
+        : `You completed ${completedCount} of ${plannedCount} scheduled task(s) this week. Current Employability Score: ${currentScore}/100.`,
       category: "system",
       actionUrl: "/student/employability",
     });
@@ -47,12 +54,12 @@ const weeklyProgressJob = async () => {
           <h2>Your Weekly Progress Snapshot</h2>
           <p>Hi ${student.user.name}, here is your weekly accomplishment summary:</p>
           <ul style="list-style-type: none; padding-left: 0;">
-            <li style="margin-bottom: 8px;">✅ <strong>Completed Tasks:</strong> ${completedCount}</li>
+            <li style="margin-bottom: 8px;">✅ <strong>Completed Tasks:</strong> ${completedCount} of ${plannedCount} scheduled</li>
             <li style="margin-bottom: 8px;">🔥 <strong>Active Streak:</strong> ${student.streak} Days</li>
             <li style="margin-bottom: 8px;">📈 <strong>Employability Score:</strong> ${currentScore} / 100</li>
             <li style="margin-bottom: 8px;">🎯 <strong>Target Role:</strong> ${student.targetRole || "Software Engineer"}</li>
           </ul>
-          <p>Review your custom curriculum and step into the new week with focus.</p>
+          <p>${needsSupport ? "It looks like this week's plan may have been hard to fit in. Choose one small task to restart, or adjust your available study time in your roadmap." : "Review your custom curriculum and step into the new week with focus."}</p>
           <a href="${process.env.APP_BASE_URL || "http://localhost:8090"}/student/dashboard"
              style="background-color: #2563eb; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
              Open Dashboard

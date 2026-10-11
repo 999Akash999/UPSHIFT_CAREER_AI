@@ -1,21 +1,39 @@
 <% layout('layouts/dashboardLayout') %>
+<main class="job-detail-page">
+  <a class="job-back-link" href="/student/jobs">← Back to open roles</a>
+  <div class="job-detail-layout">
+    <div class="job-detail-main">
+      <section class="job-detail-hero">
+        <div class="job-detail-company-mark"><%= (job.company?.name || 'U').trim().charAt(0).toUpperCase() %></div>
+        <div><p class="jobs-eyebrow"><%= job.company?.name || 'Partner company' %></p><h1><%= job.title %></h1><div class="job-detail-meta"><span><%= job.location || 'Location not specified' %></span><span><%= job.type || 'Engineering role' %></span><span><%= job.salary || 'Salary not listed' %></span></div></div>
+      </section>
+      <section class="job-detail-card"><p class="jobs-eyebrow">THE OPPORTUNITY</p><h2>About this role</h2><p class="job-description"><%= job.description || 'The recruiter has not added a full description yet.' %></p></section>
+      <section class="job-detail-card"><p class="jobs-eyebrow">WHAT YOU’LL NEED</p><h2>Required skills</h2><% if (job.requiredSkills?.length) { %><div class="job-tags job-detail-tags"><% job.requiredSkills.forEach((skill) => { %><span><%= skill %></span><% }) %></div><% } else { %><p class="job-description">No specific skills listed. Open the application to introduce your experience.</p><% } %></section>
+    </div>
 
-<main style="max-width:850px;margin:0 auto;background:#fff;padding:2rem;border:1px solid #e2e8f0;border-radius:14px;">
-  <a href="/student/jobs" style="color:#2563eb;">← Open jobs</a>
-  <p style="margin-bottom:.25rem;color:#2563eb;font-weight:700;"><%= job.company ? job.company.name : 'Hiring company' %> · <%= job.location %></p>
-  <h1 style="margin:.25rem 0;color:#0f172a;"><%= job.title %></h1>
-  <p style="color:#64748b;"><%= job.type %> · <%= job.salary || 'Salary not listed' %></p>
-  <p style="white-space:pre-line;line-height:1.65;color:#334155;"><%= job.description %></p>
-  <h3>Required skills</h3>
-  <p><%= (job.requiredSkills || []).join(', ') %></p>
-  <% if (existingApplication) { %>
-    <p style="padding:1rem;background:#f0fdf4;color:#166534;border-radius:8px;">You have already applied for this role.</p>
-  <% } else { %>
-    <form action="/student/applications" method="POST" enctype="multipart/form-data" style="display:grid;gap:1rem;margin-top:1.5rem;">
-      <input type="hidden" name="jobId" value="<%= job._id %>">
-      <label>Resume (PDF, max 5 MB)<input type="file" name="resume" accept="application/pdf" required></label>
-      <label>Cover note<textarea name="coverNote" rows="4" maxlength="2000"></textarea></label>
-      <button type="submit" style="padding:.8rem 1rem;background:#2563eb;color:#fff;border:0;border-radius:8px;font-weight:700;">Submit application</button>
-    </form>
-  <% } %>
+    <aside class="job-apply-panel">
+      <div class="job-apply-panel-heading"><p class="jobs-eyebrow">YOUR NEXT STEP</p><h2>Apply for this role</h2><p>Your application will be shared with the recruiter who posted this position.</p></div>
+      <% if (existingApplication) { %>
+        <div class="job-applied-state"><span aria-hidden="true">✓</span><div><strong>Application submitted</strong><p>You’ve already applied. You can track updates in My Applications.</p></div></div><a class="jobs-button jobs-button-primary jobs-button-wide" href="/student/applications">View my applications</a>
+      <% } else { %>
+        <form class="job-apply-form" action="/student/applications" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="jobId" value="<%= job._id %>">
+          <label class="job-upload-control" for="jobResume"><span class="job-upload-icon" aria-hidden="true">↑</span><strong>Upload your resume</strong><small>PDF format · Maximum 5 MB</small><span class="job-file-name" id="jobFileName">Choose a file</span><input id="jobResume" type="file" name="resume" accept="application/pdf,.pdf" required></label>
+          <label class="job-cover-label" for="jobCoverNote">Cover note <span>Optional</span></label>
+          <textarea id="jobCoverNote" name="coverNote" rows="5" maxlength="2000" placeholder="Share a short note about why this role interests you and what you can bring."></textarea>
+          <p class="job-privacy-note">Your resume and note will be visible to this job’s recruiter.</p>
+          <button class="jobs-button jobs-button-primary jobs-button-wide" type="submit">Submit application <span aria-hidden="true">→</span></button>
+        </form>
+      <% } %>
+    </aside>
+  </div>
 </main>
+<script>
+  const resumeInput = document.getElementById('jobResume');
+  resumeInput?.addEventListener('change', () => {
+    const file = resumeInput.files?.[0];
+    const label = document.getElementById('jobFileName');
+    if (label) label.textContent = file ? file.name : 'Choose a file';
+    resumeInput.closest('.job-upload-control')?.classList.toggle('has-file', Boolean(file));
+  });
+</script>

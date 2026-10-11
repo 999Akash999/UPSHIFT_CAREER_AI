@@ -1,23 +1,115 @@
 <% layout('layouts/dashboardLayout') %>
+<% const education = candidate.academicDetails || {}; const career = candidate.careerDetails || {}; const social = candidate.socialProfiles?.toObject?.() || candidate.socialProfiles || {}; const breakdown = snapshot?.breakdown || {}; %>
+<main class="candidate-page">
+  <a class="candidate-back" href="/recruiter/candidates">← Candidate search</a>
 
-<main style="max-width:950px;margin:0 auto;">
-  <a href="/recruiter/candidates" style="color:#2563eb;">← Candidate search</a>
-  <section style="margin-top:1rem;padding:1.5rem;background:#fff;border:1px solid #e2e8f0;border-radius:12px;">
-    <h1 style="margin:0;color:#0f172a;"><%= candidate.user ? candidate.user.name : 'Candidate' %></h1>
-    <p style="color:#64748b;"><%= candidate.user ? candidate.user.email : '' %></p>
-    <p><strong>Target role:</strong> <%= candidate.targetRole || 'Not specified' %></p>
-    <p><strong>Employability score:</strong> <%= snapshot ? snapshot.overallScore : 'Not assessed' %></p>
-    <p><strong>Education:</strong> <%= candidate.academicDetails.degree || 'Not provided' %> · <%= candidate.academicDetails.college || 'Not provided' %></p>
-    <p><strong>Skills:</strong> <%= (candidate.skills || []).join(', ') || 'Not provided' %></p>
-    <% if (candidate.bio) { %><p><%= candidate.bio %></p><% } %>
+  <section class="candidate-hero">
+    <div class="candidate-identity">
+      <img class="candidate-avatar" src="<%= candidate.user.avatar || '/images/avatars/default.png' %>" alt="<%= candidate.user.name %>">
+      <div><p class="candidate-eyebrow">CANDIDATE PROFILE</p><h1><%= candidate.user.name %></h1><p class="candidate-role"><%= candidate.targetRole || 'Target role not specified' %><% if (candidate.primaryDomain) { %> · <%= candidate.primaryDomain %><% } %></p><p class="candidate-bio"><%= candidate.bio || 'This student has not added a profile summary yet.' %></p></div>
+    </div>
+    <div class="candidate-actions">
+      <a class="candidate-button candidate-button-primary" href="/recruiter/candidate/<%= candidate._id %>/messages">Message student</a>
+      <a class="candidate-button candidate-button-secondary" href="#scheduleInterview">Schedule interview</a>
+      <a class="candidate-button candidate-button-secondary" href="#sendOffer">Send job offer</a>
+    </div>
   </section>
-  <h2 style="color:#0f172a;">Projects</h2>
-  <% if (projects.length) { %>
-    <% projects.forEach(project => { %>
-      <article style="margin:.75rem 0;padding:1rem;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
-        <h3 style="margin:.2rem 0;"><%= project.title %></h3><p><%= project.description %></p>
-        <p style="color:#64748b;"><%= (project.techStack || []).join(', ') %></p>
-      </article>
-    <% }) %>
-  <% } else { %><p>No projects provided.</p><% } %>
+
+  <section class="candidate-stats" aria-label="Candidate highlights">
+    <article><span>Employability score</span><strong><%= snapshot ? `${snapshot.overallScore}/100` : 'Not assessed' %></strong><small><%= snapshot ? `Updated ${new Date(snapshot.createdAt).toLocaleDateString('en-IN')}` : 'No score available' %></small></article>
+    <article><span>Experience</span><strong><%= Number(career.experienceYears || 0) %> years</strong><small><%= career.availability || 'Availability not provided' %></small></article>
+    <article><span>Projects</span><strong><%= projects.length %></strong><small><%= projects.filter((project) => project.isVerified).length %> verified</small></article>
+    <article><span>Roadmap progress</span><strong><%= roadmap ? `${roadmap.completionPercentage || 0}%` : 'Not started' %></strong><small><%= roadmap ? roadmap.title : 'No active roadmap' %></small></article>
+  </section>
+
+  <div class="candidate-grid">
+    <div class="candidate-main-column">
+      <section class="candidate-card">
+        <div class="candidate-card-heading"><div><p class="candidate-eyebrow">STUDENT PROFILE</p><h2>About and career preferences</h2></div></div>
+        <div class="candidate-detail-grid">
+          <div><span>Email</span><a href="mailto:<%= candidate.user.email %>"><%= candidate.user.email %></a></div>
+          <div><span>Preferred location</span><strong><%= career.preferredLocation || 'Not provided' %></strong></div>
+          <div><span>Work preference</span><strong><%= career.workMode || 'Not provided' %></strong></div>
+          <div><span>Availability</span><strong><%= career.availability || 'Not provided' %></strong></div>
+          <div><span>Target role</span><strong><%= candidate.targetRole || 'Not provided' %></strong></div>
+          <div><span>Career domain</span><strong><%= candidate.primaryDomain || 'Not provided' %></strong></div>
+        </div>
+        <div class="candidate-subsection"><h3>Education</h3><p><strong><%= education.degree || 'Degree not provided' %></strong><% if (education.college) { %> · <%= education.college %><% } %></p><div class="candidate-meta-row"><span>Graduation: <%= education.graduationYear || 'Not provided' %></span><span>CGPA: <%= Number.isFinite(Number(education.cgpa)) && education.cgpa !== undefined ? `${education.cgpa}/10` : 'Not provided' %></span></div></div>
+        <% if (career.certifications?.length) { %><div class="candidate-subsection"><h3>Certifications</h3><div class="candidate-tags"><% career.certifications.forEach((certification) => { %><span><%= certification %></span><% }) %></div></div><% } %>
+        <div class="candidate-subsection"><h3>Skills</h3><div class="candidate-tags"><% if (candidate.skills?.length) { candidate.skills.forEach((skill) => { %><span><%= skill %></span><% }); } else { %><span class="candidate-muted-tag">No skills added</span><% } %></div></div>
+        <% if (candidate.identifiedGaps?.length) { %><div class="candidate-subsection"><h3>Self-identified learning priorities</h3><div class="candidate-tags candidate-gap-tags"><% candidate.identifiedGaps.forEach((gap) => { %><span><%= gap %></span><% }) %></div></div><% } %>
+        <div class="candidate-subsection"><h3>Professional links</h3><div class="candidate-links">
+          <% [['GitHub', social.github], ['LinkedIn', social.linkedin], ['Portfolio', social.portfolio], ['LeetCode', social.leetcode]].forEach(([label, url]) => { if (url) { %><a href="<%= url %>" target="_blank" rel="noopener noreferrer"><%= label %> ↗</a><% } }) %>
+          <% if (!social.github && !social.linkedin && !social.portfolio && !social.leetcode) { %><span class="candidate-muted">No professional links provided</span><% } %>
+        </div></div>
+      </section>
+
+      <section class="candidate-card">
+        <div class="candidate-card-heading"><div><p class="candidate-eyebrow">PORTFOLIO</p><h2>Projects and proof of work</h2></div><span class="candidate-count"><%= projects.length %></span></div>
+        <% if (projects.length) { %><div class="candidate-project-list">
+          <% projects.forEach((project) => { %><article class="candidate-project"><div class="candidate-project-heading"><h3><%= project.title %></h3><% if (project.isVerified) { %><span class="candidate-verified">Verified</span><% } %></div><p><%= project.description %></p><div class="candidate-tags"><% (project.techStack || []).forEach((tech) => { %><span><%= tech %></span><% }) %></div><div class="candidate-links"><% if (project.githubUrl) { %><a href="<%= project.githubUrl %>" target="_blank" rel="noopener noreferrer">Source code ↗</a><% } %><% if (project.liveDemoUrl) { %><a href="<%= project.liveDemoUrl %>" target="_blank" rel="noopener noreferrer">Live demo ↗</a><% } %></div></article><% }) %>
+        </div><% } else { %><p class="candidate-empty-text">No projects have been added to this profile yet.</p><% } %>
+      </section>
+
+      <section class="candidate-card">
+        <div class="candidate-card-heading"><div><p class="candidate-eyebrow">ASSESSMENTS</p><h2>Role skill evidence</h2></div></div>
+        <% if (skillProgress.length) { %><div class="candidate-skill-list"><% skillProgress.forEach((item) => { %><div class="candidate-skill-row"><div><strong><%= item.skill %></strong><span><%= item.status %><% if (item.attempts) { %> · <%= item.attempts %> attempt<%= item.attempts === 1 ? '' : 's' %><% } %></span></div><b><%= item.score === null ? 'Not tested' : `${item.score}%` %></b><% if (item.score !== null) { %><div class="candidate-score-track"><i style="width:<%= Math.max(0, Math.min(100, item.score)) %>%"></i></div><% } %></div><% }) %></div><% } else { %><p class="candidate-empty-text">No role-matched assessment data is available yet.</p><% } %>
+        <% if (assessments.length) { %><details class="candidate-assessment-history"><summary>Recent assessment history (<%= assessments.length %>)</summary><ul><% assessments.forEach((attempt) => { %><li><span><%= attempt.assessment?.title || 'Assessment' %><small><%= attempt.assessment?.domain || 'Technical skills' %> · <%= new Date(attempt.createdAt).toLocaleDateString('en-IN') %></small></span><strong><%= attempt.score %>%</strong></li><% }) %></ul></details><% } %>
+        <div class="candidate-score-breakdown"><% [['Technical', breakdown.technical], ['Projects', breakdown.projects], ['Problem solving', breakdown.problemSolving], ['Roadmap', breakdown.roadmapProgress], ['Soft skills', breakdown.softSkills]].forEach(([label, value]) => { if (value !== undefined) { %><span><%= label %><b><%= value %>/100</b></span><% } }) %></div>
+      </section>
+
+      <section class="candidate-card">
+        <div class="candidate-card-heading"><div><p class="candidate-eyebrow">LEARNING</p><h2>Current roadmap</h2></div></div>
+        <% if (roadmap) { %><p class="candidate-roadmap-title"><%= roadmap.title %></p><div class="candidate-progress"><span style="width:<%= Math.max(0, Math.min(100, roadmap.completionPercentage || 0)) %>%"></span></div><p class="candidate-roadmap-note"><%= roadmap.completionPercentage || 0 %>% complete · Updated <%= new Date(roadmap.updatedAt).toLocaleDateString('en-IN') %></p><div class="candidate-tags"><% [...new Set((roadmap.weeks || []).slice(0, 6).map((week) => week.theme))].forEach((theme) => { %><span><%= theme %></span><% }) %></div><% } else { %><p class="candidate-empty-text">No active learning roadmap has been shared yet.</p><% } %>
+      </section>
+
+      <section class="candidate-card">
+        <div class="candidate-card-heading"><div><p class="candidate-eyebrow">YOUR HIRING PIPELINE</p><h2>Applications to your jobs</h2></div></div>
+        <% if (applications.length) { %><div class="candidate-application-list"><% applications.forEach((application) => { %><article><div><strong><%= application.job?.title || 'Job opening' %></strong><span class="candidate-status candidate-status-<%= application.status %>"><%= application.status.replaceAll('-', ' ') %></span></div><p><%= application.job?.company?.name || 'Your company' %> · Applied <%= new Date(application.createdAt).toLocaleDateString('en-IN') %> · Score at submission <%= application.employabilityScoreAtApplication %>/100</p><% if (application.coverNote && application.coverNote !== 'Direct recruiter offer') { %><blockquote><%= application.coverNote %></blockquote><% } %><% if (application.resumeUrl) { %><a class="candidate-inline-link" href="<%= application.resumeUrl %>" target="_blank" rel="noopener noreferrer">Open candidate resume ↗</a><% } %><% if (application.status === 'offered') { %><p class="candidate-offer-waiting">Offer sent — waiting for the student’s response.</p><% } %></article><% }) %></div><% } else { %><p class="candidate-empty-text">No applications to your jobs yet. You can still send an offer or interview invitation below.</p><% } %>
+      </section>
+    </div>
+
+    <aside class="candidate-side-column">
+      <section class="candidate-card candidate-action-card" id="sendOffer">
+        <p class="candidate-eyebrow">HIRING</p><h2>Send a job offer</h2><p>Choose one of your active roles. The student will see the offer in My Applications and can accept or decline it.</p>
+        <% if (recruiterJobs.some((job) => job.status === 'active')) { %><form action="/recruiter/candidate/<%= candidate._id %>/offers" method="POST" class="candidate-action-form"><label for="offerJob">Active role</label><select id="offerJob" name="jobId" required><option value="">Choose a job</option><% recruiterJobs.filter((job) => job.status === 'active').forEach((job) => { %><option value="<%= job._id %>"><%= job.title %></option><% }) %></select><button class="candidate-button candidate-button-primary" type="submit">Send offer</button></form><% } else { %><p class="candidate-empty-text">Post an active job before sending an offer.</p><a href="/recruiter/post-job" class="candidate-inline-link">Post a job →</a><% } %>
+      </section>
+
+      <section class="candidate-card candidate-action-card" id="scheduleInterview">
+        <p class="candidate-eyebrow">NEXT STEP</p><h2>Schedule an interview</h2><p>Send a time, format, and meeting details. The student can confirm or decline the invitation.</p>
+        <% if (recruiterJobs.some((job) => job.status === 'active')) { %><form action="/recruiter/candidate/<%= candidate._id %>/interviews" method="POST" class="candidate-action-form">
+          <label for="interviewJob">Job</label><select id="interviewJob" name="jobId" required><option value="">Choose a job</option><% recruiterJobs.filter((job) => job.status === 'active').forEach((job) => { %><option value="<%= job._id %>"><%= job.title %></option><% }) %></select>
+          <label for="interviewDate">Date and time (India)</label><input id="interviewDate" name="scheduledAt" type="datetime-local" required>
+          <div class="candidate-form-split"><div><label for="interviewDuration">Duration</label><select id="interviewDuration" name="durationMinutes"><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option><option value="15">15 minutes</option></select></div><div><label for="interviewFormat">Format</label><select id="interviewFormat" name="format"><option value="video">Video</option><option value="phone">Phone</option><option value="onsite">On-site</option></select></div></div>
+          <label for="interviewLocation">Meeting link or location</label><input id="interviewLocation" name="locationOrLink" maxlength="500" placeholder="https://meet.google.com/…" required>
+          <label for="interviewNotes">Agenda or preparation notes</label><textarea id="interviewNotes" name="notes" rows="3" maxlength="1500" placeholder="Topics to prepare, interviewer names, or anything the student should know"></textarea>
+          <button class="candidate-button candidate-button-primary" type="submit">Send interview invitation</button>
+        </form><% } else { %><p class="candidate-empty-text">Post an active job before scheduling an interview.</p><% } %>
+      </section>
+
+      <section class="candidate-card">
+        <div class="candidate-card-heading"><div><p class="candidate-eyebrow">INTERVIEW ACTIVITY</p><h2>Scheduled interviews</h2></div></div>
+        <% if (interviews.length) { %><div class="candidate-interview-list"><% interviews.forEach((interview) => { %><article><div><strong><%= interview.job?.title || 'Interview' %></strong><span class="candidate-status candidate-status-<%= interview.status %>"><%= interview.status %></span></div><p><%= new Date(interview.scheduledAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) %> · <%= interview.durationMinutes %> minutes · <%= interview.format %></p><% if (interview.locationOrLink) { %><a class="candidate-inline-link" href="<%= interview.format === 'video' ? interview.locationOrLink : '#' %>" <%= interview.format === 'video' ? 'target="_blank" rel="noopener noreferrer"' : '' %>><%= interview.locationOrLink %></a><% } %><% if (interview.notes) { %><p><%= interview.notes %></p><% } %><% if (['scheduled','accepted'].includes(interview.status)) { %><button class="candidate-cancel-interview" type="button" data-cancel-interview="<%= interview._id %>">Cancel invitation</button><% } %></article><% }) %></div><% } else { %><p class="candidate-empty-text">No interview invitations yet.</p><% } %>
+      </section>
+
+      <section class="candidate-card candidate-contact-card"><p class="candidate-eyebrow">DIRECT CONTACT</p><h2>Keep the conversation going</h2><p>Ask about project decisions, availability, or role expectations before the next hiring step.</p><a class="candidate-button candidate-button-primary" href="/recruiter/candidate/<%= candidate._id %>/messages"><%= conversationId ? 'Open conversation' : 'Message student' %></a></section>
+    </aside>
+  </div>
 </main>
+<script>
+  document.querySelectorAll('[data-cancel-interview]').forEach((button) => button.addEventListener('click', async () => {
+    if (!window.confirm('Cancel this interview invitation? The student will be notified.')) return;
+    button.disabled = true;
+    try {
+      const response = await fetch(`/recruiter/interviews/${button.dataset.cancelInterview}/cancel`, { method: 'POST', headers: { Accept: 'application/json' } });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || 'Could not cancel the interview.');
+      window.location.reload();
+    } catch (error) { window.alert(error.message); button.disabled = false; }
+  }));
+  const interviewDate = document.getElementById('interviewDate');
+  if (interviewDate) {
+    const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
+    interviewDate.min = now.toISOString().slice(0, 16);
+  }
+</script>

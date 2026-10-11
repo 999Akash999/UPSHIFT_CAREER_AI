@@ -29,6 +29,7 @@ const skillAssessmentSchema = new mongoose.Schema(
         questionIndex: Number,
         selectedOption: Number,
         isCorrect: Boolean,
+        skill: { type: String, trim: true },
       },
     ],
   },

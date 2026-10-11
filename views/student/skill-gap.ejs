@@ -1,6 +1,8 @@
 <% layout('layouts/dashboardLayout') %>
-<% const acquiredSkills = Array.isArray(student.skills) ? student.skills : []; %>
-<% const gaps = Array.isArray(topGaps) ? topGaps.filter(Boolean) : []; %>
+<% const acquiredSkills = Array.isArray(student?.skills) ? student.skills : []; %>
+<% const safeRoleSkillProgress = typeof roleSkillProgress !== 'undefined' && Array.isArray(roleSkillProgress) ? roleSkillProgress : []; %>
+<% const roleGaps = safeRoleSkillProgress.filter((item) => item.improvementNeeded).map((item) => item.skill); %>
+<% const gaps = [...new Set([...(Array.isArray(topGaps) ? topGaps.filter(Boolean) : []), ...roleGaps])]; %>
 
 <section class="skill-gap-page">
   <header class="skill-gap-heading">
@@ -27,6 +29,38 @@
       <small>Recommendations are based on your saved profile.</small>
     </article>
   </div>
+
+  <section class="market-gap-evidence" aria-labelledby="market-gap-title">
+    <div class="market-gap-heading">
+      <div><p class="skill-gap-eyebrow">JOB MARKET SIGNAL</p><h2 id="market-gap-title">Skills requested in active platform jobs</h2></div>
+      <span><%= typeof marketJobsAnalyzed === 'number' ? marketJobsAnalyzed : 0 %> matching job postings</span>
+    </div>
+    <% if (Array.isArray(marketSkills) && marketSkills.length) { %>
+      <p class="market-gap-note">Counts show how many matching active postings list each skill. A skill is marked as a gap when it is not on your saved profile.</p>
+      <ul class="market-gap-list">
+        <% marketSkills.slice(0, 8).forEach((item) => { %>
+          <li><strong><%= item.skill %></strong><span><%= item.jobCount %> <%= item.jobCount === 1 ? 'job' : 'jobs' %></span><% if (!acquiredSkills.some((skill) => String(skill).toLowerCase().trim() === item.skill.toLowerCase().trim())) { %><em>Missing from profile</em><% } else { %><em class="market-skill-have">In your profile</em><% } %></li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p class="market-gap-note">No active job postings matched this role yet. Your assessment scores and saved profile skills are still shown below; job-market counts will appear when matching postings are available.</p>
+    <% } %>
+  </section>
+
+  <% if (safeRoleSkillProgress.length) { %>
+    <section class="role-skill-score-section" aria-labelledby="role-skill-score-title">
+      <div class="role-skill-score-heading"><div><p class="skill-gap-eyebrow">ASSESSMENT TRACKER</p><h2 id="role-skill-score-title">Skills for <%= student.targetRole || 'your target role' %></h2><p>Best score from your tests. Scores of 75% or higher are marked strong.</p></div><a href="/student/assessments">Take a test →</a></div>
+      <div class="role-skill-score-grid">
+        <% safeRoleSkillProgress.forEach((item) => { %>
+          <article class="role-skill-score-card status-<%= item.status.toLowerCase().replace(/\s+/g, '-') %>">
+            <div class="role-skill-score-card-top"><strong><%= item.skill %></strong><span><%= item.score === null ? 'Not tested' : item.score + '%' %></span></div>
+            <div class="role-skill-progress-track" role="progressbar" aria-label="<%= item.skill %> assessment score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<%= item.score === null ? 0 : item.score %>"><span style="width:<%= item.score === null ? 0 : item.score %>%"></span></div>
+            <div class="role-skill-score-card-bottom"><span><%= item.status %></span><small><%= item.score === null ? 'Take a related assessment to measure this skill.' : item.improvementNeeded ? 'Improvement recommended' : 'No immediate improvement needed' %></small></div>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  <% } %>
 
   <div class="skill-gap-columns">
     <section class="skill-gap-card acquired-card">

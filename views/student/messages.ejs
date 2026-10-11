@@ -1,0 +1,15 @@
+<% layout('layouts/dashboardLayout') %>
+<main class="engagement-page">
+  <header class="engagement-heading"><div><p class="engagement-eyebrow">STUDENT WORKSPACE</p><h1>Recruiter messages</h1><p>Keep hiring conversations and role details in one place.</p></div><a class="engagement-secondary" href="/student/applications">My applications</a></header>
+  <section class="engagement-list">
+    <% if (conversations.length) { %>
+      <% conversations.forEach((conversation) => { const latest = conversation.messages?.[conversation.messages.length - 1]; const unread = (conversation.messages || []).filter((message) => String(message.sender?._id || message.sender) !== String(currUser?._id) && !message.readAt).length; %>
+        <a class="engagement-list-item" href="/student/messages/<%= conversation._id %>">
+          <img src="<%= conversation.recruiter?.avatar || '/images/avatars/default.png' %>" alt="">
+          <div class="engagement-list-copy"><strong><%= conversation.recruiter?.name || 'Recruiter' %></strong><span><%= conversation.job?.title || 'Career conversation' %></span><p><%= latest?.body || 'Discuss the role, interview details, or next steps.' %></p></div>
+          <div class="engagement-list-meta"><time><%= latest ? new Date(latest.createdAt).toLocaleDateString('en-IN') : '' %></time><% if (unread) { %><b><%= unread %></b><% } %></div>
+        </a>
+      <% }) %>
+    <% } else { %><div class="engagement-empty"><h2>No recruiter messages yet</h2><p>Recruiter outreach and replies will appear here. Keep your profile and project links up to date.</p><a class="engagement-primary" href="/student/profile">Review my profile</a></div><% } %>
+  </section>
+</main>

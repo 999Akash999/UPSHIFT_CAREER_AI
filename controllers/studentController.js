@@ -6,6 +6,7 @@ const JobApplication = require("../models/JobApplication");
 const Project = require("../models/Project");
 const User = require("../models/User");
 const { calculateEmployability } = require("../services/employabilityService");
+const { getTodayRoadmapPlan } = require("../services/roadmapDailyTaskService");
 const { getDayBoundsIST, getDateKeyIST } = require("../utils/timeHelpers");
 
 exports.getDashboard = async (req, res) => {
@@ -22,11 +23,7 @@ exports.getDashboard = async (req, res) => {
     // 1. Fetch Today's Tasks
     const { start: startOfDay, end: nextDay } = getDayBoundsIST();
     const endOfDay = new Date(nextDay.getTime() - 1);
-
-    const todayTasks = await DailyTask.find({
-      student: student._id,
-      dueDate: { $gte: startOfDay, $lte: endOfDay },
-    }).sort({ isCompleted: 1, dueDate: 1 }).catch((error) => {
+    const todayTasks = await getTodayRoadmapPlan(student._id, { start: startOfDay, end: nextDay }).then((plan) => plan.tasks).catch((error) => {
       console.error("Dashboard daily tasks unavailable:", error.message);
       return [];
     });
@@ -74,37 +71,42 @@ exports.getDashboard = async (req, res) => {
       console.error("Dashboard activity or project data unavailable:", activityError.message);
     }
 
-    const activityCounts = new Map();
-    const localDateKey = getDateKeyIST;
-    for (const item of recentCompletions) {
-      const key = localDateKey(new Date(item.completedAt));
-      activityCounts.set(key, (activityCounts.get(key) || 0) + 1);
-    }
-
-    const activityWeeks = [];
-    const heatmapCursor = new Date(heatmapStart);
-    while (heatmapCursor <= endOfDay) {
-      const days = [];
-      for (let day = 0; day < 7; day += 1) {
-        const date = new Date(heatmapCursor);
-        const key = localDateKey(date);
-        const dateInIST = new Date(`${key}T00:00:00+05:30`);
-        const count = activityCounts.get(key) || 0;
-        days.push({
-          key,
-          count,
-          level: count === 0 ? 0 : Math.min(4, count),
-          label: dateInIST.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata", month: "short", day: "numeric" }),
-          future: date > endOfDay,
-          today: key === todayKey,
-        });
-        heatmapCursor.setTime(heatmapCursor.getTime() + 24 * 60 * 60 * 1000);
+    let activityWeeks = [];
+    let activityTotal = 0;
+    try {
+      const activityCounts = new Map();
+      for (const item of recentCompletions) {
+        const key = getDateKeyIST(new Date(item.completedAt));
+        activityCounts.set(key, (activityCounts.get(key) || 0) + 1);
       }
-      const firstDate = new Date(`${days[0].key}T00:00:00`);
-      const monthStart = days.map((day) => new Date(`${day.key}T00:00:00`)).find((date) => date.getDate() === 1);
-      activityWeeks.push({ days, month: monthStart?.toLocaleDateString("en", { month: "short" }) || (!activityWeeks.length ? firstDate.toLocaleDateString("en", { month: "short" }) : "") });
+
+      const heatmapCursor = new Date(heatmapStart);
+      while (heatmapCursor <= endOfDay) {
+        const days = [];
+        for (let day = 0; day < 7; day += 1) {
+          const date = new Date(heatmapCursor);
+          const key = getDateKeyIST(date);
+          const dateInIST = new Date(`${key}T00:00:00+05:30`);
+          const count = activityCounts.get(key) || 0;
+          days.push({
+            key,
+            count,
+            level: count === 0 ? 0 : Math.min(4, count),
+            label: dateInIST.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata", month: "short", day: "numeric" }),
+            future: date > endOfDay,
+            today: key === todayKey,
+          });
+          heatmapCursor.setTime(heatmapCursor.getTime() + 24 * 60 * 60 * 1000);
+        }
+        const firstDate = new Date(`${days[0].key}T00:00:00`);
+        const monthStart = days.map((day) => new Date(`${day.key}T00:00:00`)).find((date) => date.getDate() === 1);
+        activityWeeks.push({ days, month: monthStart?.toLocaleDateString("en", { month: "short" }) || (!activityWeeks.length ? firstDate.toLocaleDateString("en", { month: "short" }) : "") });
+      }
+      activityTotal = [...activityCounts.values()].reduce((sum, count) => sum + count, 0);
+    } catch (heatmapError) {
+      console.error("Dashboard heatmap generation failed:", heatmapError.stack || heatmapError);
+      activityWeeks = [];
     }
-    const activityTotal = [...activityCounts.values()].reduce((sum, count) => sum + count, 0);
     const todayTaskProgress = todayTasks.length ? Math.round((completedTasksCount / todayTasks.length) * 100) : 0;
     const yesterdayKey = getDateKeyIST(new Date(startOfDay.getTime() - 24 * 60 * 60 * 1000));
     const lastActivityKey = student.lastActivityDate ? getDateKeyIST(student.lastActivityDate) : null;
@@ -161,7 +163,10 @@ exports.getDashboard = async (req, res) => {
         activityWeeks.push({ days, month: monthStart?.toLocaleDateString("en", { month: "short" }) || (!activityWeeks.length ? firstDate.toLocaleDateString("en", { month: "short" }) : "") });
       }
       const currentStreak = [todayKey, yesterdayKey].includes(lastActivityKey) ? (fallbackStudent.streak || 0) : 0;
-      res.locals.error = ["Some dashboard data could not load. Your profile is still available; refresh to try again."];
+      console.error("Dashboard fallback used; likely runtime error:", err.message);
+      res.locals.error = [process.env.NODE_ENV === "development"
+        ? `Dashboard data issue: ${err.message}`
+        : "Some dashboard data could not load. Your profile is still available; refresh to try again."];
       return res.status(200).render("student/dashboard", {
         title: "Student Dashboard | UPSHIFT CAREER",
         student: fallbackStudent,
@@ -188,17 +193,33 @@ exports.getProfile = async (req, res) => {
       req.flash("error", "Student profile could not be found. Please complete onboarding again.");
       return res.redirect("/onboarding/welcome");
     }
-    const snapshot = await calculateEmployability(student._id).catch((error) => {
-      console.error("Profile employability summary unavailable:", error.message);
-      return { overallScore: 0, breakdown: { technical: 0, projects: 0, roadmapProgress: 0, softSkills: 0, problemSolving: 0 } };
-    });
-    return res.render("student/profile", { title: "My Career Profile", student, snapshot });
+    const [snapshot, projects] = await Promise.all([
+      calculateEmployability(student._id).catch((error) => {
+        console.error("Profile employability summary unavailable:", error.message);
+        return { overallScore: 0, breakdown: { technical: 0, projects: 0, roadmapProgress: 0, softSkills: 0, problemSolving: 0 } };
+      }),
+      Project.find({ student: req.user._id }).sort({ createdAt: -1 }).limit(4).catch((error) => {
+        console.error("Profile projects unavailable:", error.message);
+        return [];
+      }),
+    ]);
+    const profileSections = [
+      { label: "Career direction", complete: Boolean(student.targetRole && student.primaryDomain) },
+      { label: "Education", complete: Boolean(student.academicDetails?.college || student.academicDetails?.degree) },
+      { label: "Skills", complete: Boolean(student.skills?.length) },
+      { label: "About you", complete: Boolean(student.bio) },
+      { label: "Portfolio", complete: projects.length > 0 },
+      { label: "Professional links", complete: Boolean(Object.values(student.socialProfiles?.toObject?.() || student.socialProfiles || {}).some(Boolean)) },
+    ];
+    const profileCompletion = Math.round(profileSections.filter((section) => section.complete).length / profileSections.length * 100);
+    return res.render("student/profile", { title: "My Career Profile", student, snapshot, projects, profileSections, profileCompletion });
   } catch (error) {
     console.error("Student profile page failed:", error.stack || error);
     if (req.student) {
       return res.status(200).render("student/profile", {
         title: "My Career Profile", student: req.student,
         snapshot: { overallScore: 0, breakdown: { technical: 0, projects: 0, roadmapProgress: 0, softSkills: 0, problemSolving: 0 } },
+        projects: [], profileSections: [], profileCompletion: 0,
       });
     }
     return res.status(500).render("errors/500", { title: "Profile unavailable", message: "Your profile could not be loaded right now." });

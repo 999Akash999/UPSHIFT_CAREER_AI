@@ -4,9 +4,9 @@ const generateRoadmapSchema = Joi.object({
   targetRole: Joi.string().trim().min(2).max(100).required().messages({
     "string.empty": "Target role is required to build a curriculum",
   }),
-  durationWeeks: Joi.number().integer().min(4).max(24).default(8).messages({
+  durationWeeks: Joi.number().integer().min(4).max(26).default(26).messages({
     "number.min": "Curriculum must be at least 4 weeks",
-    "number.max": "Curriculum cannot exceed 24 weeks",
+    "number.max": "Curriculum cannot exceed 26 weeks",
   }),
 });
 

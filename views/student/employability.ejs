@@ -1,4 +1,5 @@
 <% layout('layouts/dashboardLayout') %>
+<% const safeLatestInterview = typeof latestInterview !== 'undefined' ? latestInterview : null; %>
 
 <div style="max-width: 1040px; margin: 0 auto;">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
@@ -43,6 +44,12 @@
 
   </div>
 
+  <section style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 2rem;padding:1.2rem 1.4rem;background:#fff;border:1px solid #e2e8f0;border-radius:12px;">
+    <div><span style="font-size:.75rem;font-weight:800;color:#64748b;text-transform:uppercase;">Interview readiness · measured</span><p style="margin:.3rem 0 0;color:#64748b;font-size:.85rem;"><% if (safeLatestInterview) { %>Latest completed 10-question mock interview for <strong><%= safeLatestInterview.roleType %></strong>.<% } else { %>Complete a mock interview to get your first measured score. Camera analytics are not included in this score.<% } %></p></div>
+    <strong style="font-size:1.8rem;color:#61439b;white-space:nowrap;"><%= safeLatestInterview ? `${safeLatestInterview.finalScore}%` : 'Not measured' %></strong>
+    <a href="/student/interview" style="color:#61439b;font-weight:750;font-size:.85rem;">Practice interview →</a>
+  </section>
+
   <!-- Score Weighting Breakdown -->
   <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
     <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1.5rem;">Scoring Factor Allocation</h3>
@@ -66,7 +73,7 @@
 
       <div>
         <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">
-          <span>Roadmap milestones (20%)</span>
+          <span>Roadmap milestones + daily tasks (20%)</span>
           <span style="color: #2563eb;"><%= snapshot?.breakdown?.roadmapProgress || 0 %>/100</span>
         </div>
         <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: <%= snapshot?.breakdown?.roadmapProgress || 0 %>%; height: 100%; background: #2563eb;"></div></div>

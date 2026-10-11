@@ -1,16 +1,14 @@
 const SkillAssessment = require("../models/SkillAssessment");
+const Assessment = require("../models/Assessment");
 
 const getRecommendedDifficulty = async (studentId, domain) => {
-  const history = await SkillAssessment.find({ student: studentId })
-    .populate({
-      path: "assessment",
-      match: { domain: new RegExp(domain, "i") },
-    })
-    .sort({ createdAt: -1 })
-    .limit(3);
-
-  const validAttempts = history.filter((h) => h.assessment !== null);
-  if (validAttempts.length === 0) return "Intermediate";
+  const safeDomain = String(domain || "").trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  if (!safeDomain) return null;
+  const assessmentIds = await Assessment.find({ domain: new RegExp(`^${safeDomain}$`, "i") }).distinct("_id");
+  if (!assessmentIds.length) return null;
+  const validAttempts = await SkillAssessment.find({ student: studentId, assessment: { $in: assessmentIds } })
+    .sort({ createdAt: -1 }).limit(3).select("score");
+  if (!validAttempts.length) return null;
 
   const avgScore = validAttempts.reduce((acc, curr) => acc + curr.score, 0) / validAttempts.length;
 

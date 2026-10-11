@@ -1,5 +1,6 @@
+<% const workspaceHome = currUser && ['student', 'recruiter', 'mentor', 'alumni', 'admin'].includes(currUser.role) ? `/${currUser.role}/dashboard` : '/'; %>
 <aside class="sidebar" id="appSidebar" aria-label="Main navigation">
-  <a class="sidebar-brand" href="/student/dashboard">
+  <a class="sidebar-brand" href="<%= workspaceHome %>">
     <span class="brand-badge">U</span>
     <span><strong>UPSHIFT</strong><small><%= currUser ? currUser.role.toUpperCase() : 'STUDENT' %> WORKSPACE</small></span>
   </a>
@@ -18,6 +19,7 @@
       <a href="/student/assessments" class="sidebar-link"><span>✓</span> Assessments</a>
       <a href="/student/projects" class="sidebar-link"><span>⌘</span> Projects</a>
       <a href="/student/applications" class="sidebar-link"><span>↗</span> Applications</a>
+      <a href="/student/messages" class="sidebar-link"><span>✉</span> Recruiter messages</a>
       <a href="/student/events" class="sidebar-link"><span>◇</span> Events</a>
       <a href="/student/my-courses" class="sidebar-link"><span>▣</span> My courses</a>
       <a href="/student/profile" class="sidebar-link"><span>◌</span> My profile</a>
@@ -26,6 +28,7 @@
       <a href="/recruiter/post-job" class="sidebar-link"><span>＋</span> Post a job</a>
       <a href="/recruiter/candidates" class="sidebar-link"><span>⌕</span> Find candidates</a>
       <a href="/recruiter/manage-jobs" class="sidebar-link"><span>▤</span> Manage jobs</a>
+      <a href="/recruiter/messages" class="sidebar-link"><span>✉</span> Candidate messages</a>
     <% } else if (currUser && currUser.role === 'mentor') { %>
       <a href="/mentor/dashboard" class="sidebar-link"><span>⌂</span> Dashboard</a>
       <a href="/mentor/slots" class="sidebar-link"><span>◷</span> Availability</a>

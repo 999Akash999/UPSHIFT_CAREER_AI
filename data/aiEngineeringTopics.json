@@ -1,0 +1,3172 @@
+[
+  {
+    "number": 1,
+    "title": "What is Artificial Intelligence?",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 2,
+    "title": "AI vs Machine Learning vs Deep Learning",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 3,
+    "title": "Generative AI vs Traditional AI",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 4,
+    "title": "Narrow AI vs General AI",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 5,
+    "title": "Rule-Based Systems vs AI Systems",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 6,
+    "title": "AI Applications in Real-World Products",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 7,
+    "title": "How AI Models Learn",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 8,
+    "title": "Training vs Inference",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 9,
+    "title": "Parameters vs Hyperparameters",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 10,
+    "title": "AI Model Limitations",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 11,
+    "title": "Deterministic vs Probabilistic Systems",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 12,
+    "title": "AI Engineer vs ML Engineer vs Data Scientist",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 13,
+    "title": "AI Engineer Career Roadmap",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 14,
+    "title": "AI Project Lifecycle",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 15,
+    "title": "Building Your First AI Application",
+    "section": "AI Fundamentals"
+  },
+  {
+    "number": 16,
+    "title": "Python Introduction and Installation",
+    "section": "Python for AI"
+  },
+  {
+    "number": 17,
+    "title": "Variables and Data Types",
+    "section": "Python for AI"
+  },
+  {
+    "number": 18,
+    "title": "Operators and Expressions",
+    "section": "Python for AI"
+  },
+  {
+    "number": 19,
+    "title": "Conditional Statements",
+    "section": "Python for AI"
+  },
+  {
+    "number": 20,
+    "title": "Loops",
+    "section": "Python for AI"
+  },
+  {
+    "number": 21,
+    "title": "Functions",
+    "section": "Python for AI"
+  },
+  {
+    "number": 22,
+    "title": "Lambda Functions",
+    "section": "Python for AI"
+  },
+  {
+    "number": 23,
+    "title": "Lists and Tuples",
+    "section": "Python for AI"
+  },
+  {
+    "number": 24,
+    "title": "Sets and Dictionaries",
+    "section": "Python for AI"
+  },
+  {
+    "number": 25,
+    "title": "List and Dictionary Comprehensions",
+    "section": "Python for AI"
+  },
+  {
+    "number": 26,
+    "title": "String Manipulation",
+    "section": "Python for AI"
+  },
+  {
+    "number": 27,
+    "title": "File Handling",
+    "section": "Python for AI"
+  },
+  {
+    "number": 28,
+    "title": "Exception Handling",
+    "section": "Python for AI"
+  },
+  {
+    "number": 29,
+    "title": "Modules and Packages",
+    "section": "Python for AI"
+  },
+  {
+    "number": 30,
+    "title": "Virtual Environments and pip",
+    "section": "Python for AI"
+  },
+  {
+    "number": 31,
+    "title": "Object-Oriented Programming",
+    "section": "Python for AI"
+  },
+  {
+    "number": 32,
+    "title": "Iterators and Generators",
+    "section": "Python for AI"
+  },
+  {
+    "number": 33,
+    "title": "Decorators",
+    "section": "Python for AI"
+  },
+  {
+    "number": 34,
+    "title": "Type Hints",
+    "section": "Python for AI"
+  },
+  {
+    "number": 35,
+    "title": "Working with JSON",
+    "section": "Python for AI"
+  },
+  {
+    "number": 36,
+    "title": "Python HTTP Requests",
+    "section": "Python for AI"
+  },
+  {
+    "number": 37,
+    "title": "Asyncio and Asynchronous Programming",
+    "section": "Python for AI"
+  },
+  {
+    "number": 38,
+    "title": "Python Project Structure",
+    "section": "Python for AI"
+  },
+  {
+    "number": 39,
+    "title": "Git and GitHub for AI Projects",
+    "section": "Python for AI"
+  },
+  {
+    "number": 40,
+    "title": "Scalars, Vectors and Matrices",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 41,
+    "title": "Matrix Operations",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 42,
+    "title": "Matrix Multiplication",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 43,
+    "title": "Dot Product",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 44,
+    "title": "Linear Algebra Applications",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 45,
+    "title": "Mean, Median and Mode",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 46,
+    "title": "Variance and Standard Deviation",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 47,
+    "title": "Probability Basics",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 48,
+    "title": "Conditional Probability",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 49,
+    "title": "Bayes' Theorem",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 50,
+    "title": "Probability Distributions",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 51,
+    "title": "Independent and Dependent Events",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 52,
+    "title": "Derivatives",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 53,
+    "title": "Partial Derivatives",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 54,
+    "title": "Gradients",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 55,
+    "title": "Chain Rule",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 56,
+    "title": "Gradient Descent Mathematics",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 57,
+    "title": "Loss Functions",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 58,
+    "title": "Optimization Basics",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 59,
+    "title": "Logarithms and Exponentials",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 60,
+    "title": "Mathematical Foundations of Neural Networks",
+    "section": "Mathematics for AI"
+  },
+  {
+    "number": 61,
+    "title": "What Is a Dataset?",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 62,
+    "title": "Structured vs Unstructured Data",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 63,
+    "title": "NumPy Arrays",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 64,
+    "title": "NumPy Indexing and Slicing",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 65,
+    "title": "Vectorized Operations",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 66,
+    "title": "Pandas Series and DataFrames",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 67,
+    "title": "Reading CSV, JSON and Excel",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 68,
+    "title": "Data Cleaning",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 69,
+    "title": "Missing Values",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 70,
+    "title": "Duplicate Data",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 71,
+    "title": "Outlier Detection",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 72,
+    "title": "Data Transformation",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 73,
+    "title": "Feature Engineering",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 74,
+    "title": "Data Visualization with Matplotlib",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 75,
+    "title": "Exploratory Data Analysis (EDA)",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 76,
+    "title": "Data Labeling",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 77,
+    "title": "Data Quality and Data Leakage",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 78,
+    "title": "Train, Validation and Test Datasets",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 79,
+    "title": "Data Preprocessing Pipelines",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 80,
+    "title": "Building an AI Dataset Preparation Project",
+    "section": "Data Analysis and Processing"
+  },
+  {
+    "number": 81,
+    "title": "What Is Machine Learning?",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 82,
+    "title": "Supervised Learning",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 83,
+    "title": "Unsupervised Learning",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 84,
+    "title": "Semi-Supervised Learning",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 85,
+    "title": "Reinforcement Learning Overview",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 86,
+    "title": "Features and Labels",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 87,
+    "title": "Regression vs Classification",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 88,
+    "title": "Linear Regression",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 89,
+    "title": "Logistic Regression",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 90,
+    "title": "Decision Trees",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 91,
+    "title": "Random Forest",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 92,
+    "title": "K-Nearest Neighbors",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 93,
+    "title": "Support Vector Machines",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 94,
+    "title": "Naive Bayes",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 95,
+    "title": "K-Means Clustering",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 96,
+    "title": "Dimensionality Reduction",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 97,
+    "title": "Principal Component Analysis (PCA)",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 98,
+    "title": "Feature Scaling and Normalization",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 99,
+    "title": "One-Hot Encoding",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 100,
+    "title": "Label Encoding",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 101,
+    "title": "Training an ML Model with Scikit-learn",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 102,
+    "title": "Model Prediction",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 103,
+    "title": "Model Evaluation",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 104,
+    "title": "Confusion Matrix",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 105,
+    "title": "Accuracy, Precision, Recall and F1-Score",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 106,
+    "title": "MAE, MSE and RMSE",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 107,
+    "title": "Overfitting and Underfitting",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 108,
+    "title": "Bias-Variance Trade-Off",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 109,
+    "title": "Cross-Validation",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 110,
+    "title": "Hyperparameter Tuning",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 111,
+    "title": "Grid Search and Random Search",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 112,
+    "title": "Saving Models with Joblib",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 113,
+    "title": "ML Pipeline Development",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 114,
+    "title": "End-to-End Machine Learning Project",
+    "section": "Machine Learning"
+  },
+  {
+    "number": 115,
+    "title": "What Is Deep Learning?",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 116,
+    "title": "Biological vs Artificial Neurons",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 117,
+    "title": "Perceptrons",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 118,
+    "title": "Weights and Biases",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 119,
+    "title": "Activation Functions",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 120,
+    "title": "Forward Propagation",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 121,
+    "title": "Loss Calculation",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 122,
+    "title": "Backpropagation",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 123,
+    "title": "Gradient Descent and Its Variants",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 124,
+    "title": "Stochastic Gradient Descent",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 125,
+    "title": "Adam Optimizer",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 126,
+    "title": "Learning Rate",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 127,
+    "title": "Epochs and Batch Size",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 128,
+    "title": "Neural Network Layers",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 129,
+    "title": "Multilayer Perceptrons",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 130,
+    "title": "Regularization and Dropout",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 131,
+    "title": "Batch Normalization",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 132,
+    "title": "Introduction to PyTorch",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 133,
+    "title": "Tensors and Tensor Operations",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 134,
+    "title": "Autograd and Automatic Differentiation",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 135,
+    "title": "Building a Neural Network in PyTorch",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 136,
+    "title": "GPU vs CPU Training",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 137,
+    "title": "Saving and Loading Neural Network Models",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 138,
+    "title": "Deep Learning Training Loop",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 139,
+    "title": "Model Evaluation and Debugging",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 140,
+    "title": "Deep Learning Project",
+    "section": "Deep Learning and Neural Networks"
+  },
+  {
+    "number": 141,
+    "title": "What Is Computer Vision?",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 142,
+    "title": "Pixels, Images and Image Tensors",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 143,
+    "title": "Image Preprocessing",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 144,
+    "title": "Image Classification",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 145,
+    "title": "Convolutional Neural Networks (CNNs)",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 146,
+    "title": "Convolution and Pooling",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 147,
+    "title": "Transfer Learning",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 148,
+    "title": "Image Embeddings",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 149,
+    "title": "Object Detection",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 150,
+    "title": "Image Segmentation",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 151,
+    "title": "OCR — Optical Character Recognition",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 152,
+    "title": "Document and Resume Parsing",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 153,
+    "title": "Image Augmentation",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 154,
+    "title": "Evaluating Vision Models",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 155,
+    "title": "Building an Image Classification Application",
+    "section": "Computer Vision"
+  },
+  {
+    "number": 156,
+    "title": "What Is NLP?",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 157,
+    "title": "Text Cleaning and Normalization",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 158,
+    "title": "Tokenization",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 159,
+    "title": "Stemming and Lemmatization",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 160,
+    "title": "Stop Words",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 161,
+    "title": "Bag of Words",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 162,
+    "title": "TF-IDF",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 163,
+    "title": "N-Grams",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 164,
+    "title": "Word Embeddings",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 165,
+    "title": "Word2Vec and GloVe Concepts",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 166,
+    "title": "Semantic Similarity",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 167,
+    "title": "Text Classification",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 168,
+    "title": "Sentiment Analysis",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 169,
+    "title": "Named Entity Recognition (NER)",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 170,
+    "title": "Text Summarization",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 171,
+    "title": "Keyword Extraction",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 172,
+    "title": "Language Detection",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 173,
+    "title": "Traditional NLP vs LLM-Based NLP",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 174,
+    "title": "Building an NLP Project",
+    "section": "Natural Language Processing (NLP)"
+  },
+  {
+    "number": 175,
+    "title": "What Is Generative AI?",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 176,
+    "title": "What Is a Large Language Model (LLM)?",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 177,
+    "title": "Tokens and Tokenization",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 178,
+    "title": "Context Window",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 179,
+    "title": "Pretraining vs Fine-Tuning",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 180,
+    "title": "Transformer Architecture",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 181,
+    "title": "Encoder vs Decoder",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 182,
+    "title": "Self-Attention",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 183,
+    "title": "Query, Key and Value",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 184,
+    "title": "Multi-Head Attention",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 185,
+    "title": "Positional Encoding",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 186,
+    "title": "Next-Token Prediction",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 187,
+    "title": "Temperature",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 188,
+    "title": "Top-K and Top-P Sampling",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 189,
+    "title": "Hallucinations",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 190,
+    "title": "Model Knowledge vs Live Information",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 191,
+    "title": "Model Context and Conversation History",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 192,
+    "title": "Open-Source vs Closed-Source Models",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 193,
+    "title": "Model Latency, Cost and Quality",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 194,
+    "title": "Choosing the Right Model for a Task",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 195,
+    "title": "LLM Limitations and Responsible Use",
+    "section": "Generative AI and LLM Fundamentals"
+  },
+  {
+    "number": 196,
+    "title": "What Is Prompt Engineering?",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 197,
+    "title": "System, Developer and User Instructions",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 198,
+    "title": "Zero-Shot Prompting",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 199,
+    "title": "One-Shot Prompting",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 200,
+    "title": "Few-Shot Prompting",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 201,
+    "title": "Role-Based Prompting",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 202,
+    "title": "Context-Aware Prompting",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 203,
+    "title": "Prompt Templates",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 204,
+    "title": "Delimiters and Structured Inputs",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 205,
+    "title": "Chain-of-Thought Concepts and Reasoning Controls",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 206,
+    "title": "Output Formatting",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 207,
+    "title": "JSON-Structured Outputs",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 208,
+    "title": "Schema Validation",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 209,
+    "title": "Prompt Injection Basics",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 210,
+    "title": "Prompt Versioning",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 211,
+    "title": "Reusable System Prompts",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 212,
+    "title": "Prompt Testing",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 213,
+    "title": "Prompt Evaluation",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 214,
+    "title": "Reducing Hallucinations",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 215,
+    "title": "Prompt Optimization",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 216,
+    "title": "Building a Prompt Library for UPSHIFT-CAREER",
+    "section": "Prompt Engineering"
+  },
+  {
+    "number": 217,
+    "title": "What Is an AI API?",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 218,
+    "title": "API Keys and Environment Variables",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 219,
+    "title": "REST APIs and JSON",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 220,
+    "title": "HTTP Status Codes",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 221,
+    "title": "API Authentication",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 222,
+    "title": "Rate Limits and Quotas",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 223,
+    "title": "Installing the OpenAI SDK",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 224,
+    "title": "Configuring OPENAI_API_KEY",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 225,
+    "title": "Calling an LLM from Node.js",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 226,
+    "title": "Calling an LLM from Python",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 227,
+    "title": "Choosing and Configuring a Model",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 228,
+    "title": "Sending Messages to a Model",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 229,
+    "title": "Parsing AI Responses",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 230,
+    "title": "Structured Output Integration",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 231,
+    "title": "Streaming Responses",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 232,
+    "title": "Conversation History",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 233,
+    "title": "Context Window Management",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 234,
+    "title": "Timeout and Retry Strategies",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 235,
+    "title": "Handling Rate-Limit Errors",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 236,
+    "title": "Token Usage and Cost Calculation",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 237,
+    "title": "Request Logging",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 238,
+    "title": "AI API Fallback Strategies",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 239,
+    "title": "Keeping API Keys on the Backend",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 240,
+    "title": "Building an AI Chat API",
+    "section": "AI APIs and Application Integration"
+  },
+  {
+    "number": 241,
+    "title": "What Are Embeddings?",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 242,
+    "title": "Text Embeddings vs Image Embeddings",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 243,
+    "title": "Semantic Representation",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 244,
+    "title": "Embedding Dimensions",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 245,
+    "title": "Cosine Similarity",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 246,
+    "title": "Euclidean Distance",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 247,
+    "title": "Similarity Search",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 248,
+    "title": "Dense vs Sparse Retrieval",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 249,
+    "title": "Vector Indexes",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 250,
+    "title": "Vector Database Fundamentals",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 251,
+    "title": "Metadata Filtering",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 252,
+    "title": "Chunking Strategies",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 253,
+    "title": "Chunk Size and Overlap",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 254,
+    "title": "Document IDs and Source Metadata",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 255,
+    "title": "Embedding Model Selection",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 256,
+    "title": "Embedding Cost and Caching",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 257,
+    "title": "Storing and Retrieving Embeddings",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 258,
+    "title": "MongoDB Vector Search Concepts",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 259,
+    "title": "Alternatives: FAISS, Chroma and Dedicated Vector Databases",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 260,
+    "title": "Building a Semantic Search Engine",
+    "section": "Embeddings and Vector Databases"
+  },
+  {
+    "number": 261,
+    "title": "What Is RAG?",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 262,
+    "title": "Why LLMs Need External Knowledge",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 263,
+    "title": "RAG vs Fine-Tuning",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 264,
+    "title": "Document Ingestion Pipeline",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 265,
+    "title": "PDF and DOCX Parsing",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 266,
+    "title": "HTML and Web Content Extraction",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 267,
+    "title": "Document Cleaning",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 268,
+    "title": "Chunking and Metadata",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 269,
+    "title": "Embedding Generation",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 270,
+    "title": "Vector Storage",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 271,
+    "title": "Query Embedding",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 272,
+    "title": "Similarity Retrieval",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 273,
+    "title": "Top-K Retrieval",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 274,
+    "title": "Metadata-Based Filtering",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 275,
+    "title": "Context Construction",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 276,
+    "title": "Grounded Answer Generation",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 277,
+    "title": "Source Citations",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 278,
+    "title": "Reranking Retrieved Documents",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 279,
+    "title": "Hybrid Search",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 280,
+    "title": "Query Rewriting",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 281,
+    "title": "Retrieval Quality Evaluation",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 282,
+    "title": "RAG Hallucination Reduction",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 283,
+    "title": "RAG Security and Document Permissions",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 284,
+    "title": "RAG Latency and Cost Optimization",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 285,
+    "title": "Building a PDF Question-Answering System",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 286,
+    "title": "Building an AI Tutor Using Course Materials",
+    "section": "RAG (Retrieval-Augmented Generation)"
+  },
+  {
+    "number": 287,
+    "title": "What Is LangChain?",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 288,
+    "title": "When to Use an LLM Framework",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 289,
+    "title": "Models and Chat Models",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 290,
+    "title": "Prompt Templates",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 291,
+    "title": "Output Parsers",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 292,
+    "title": "Document Loaders",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 293,
+    "title": "Text Splitters",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 294,
+    "title": "Embedding Integrations",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 295,
+    "title": "Vector Store Integrations",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 296,
+    "title": "Retrievers",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 297,
+    "title": "Retrieval Chains",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 298,
+    "title": "Runnable Pipelines",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 299,
+    "title": "Conversation Memory Strategies",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 300,
+    "title": "Tool Integration",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 301,
+    "title": "Callbacks and Tracing",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 302,
+    "title": "Error Handling in Chains",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 303,
+    "title": "LangGraph Fundamentals",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 304,
+    "title": "State and Nodes in LangGraph",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 305,
+    "title": "Conditional Edges",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 306,
+    "title": "Workflow Persistence",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 307,
+    "title": "Framework vs Direct API Calls",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 308,
+    "title": "Building a RAG Application with a Framework",
+    "section": "LangChain and LLM Application Frameworks"
+  },
+  {
+    "number": 309,
+    "title": "What Is an AI Agent?",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 310,
+    "title": "LLM Chatbot vs AI Agent",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 311,
+    "title": "Agent Goals and State",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 312,
+    "title": "Tools and Function Calling",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 313,
+    "title": "Tool Schemas and Parameter Validation",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 314,
+    "title": "Model-Selected Tool Execution",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 315,
+    "title": "Tool Result Handling",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 316,
+    "title": "Agent Planning",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 317,
+    "title": "Multi-Step Workflows",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 318,
+    "title": "Agent Loops and Stop Conditions",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 319,
+    "title": "Memory: Short-Term vs Long-Term",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 320,
+    "title": "Human-in-the-Loop Approval",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 321,
+    "title": "Multi-Agent Concepts",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 322,
+    "title": "Agent Orchestration",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 323,
+    "title": "Agent Error Recovery",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 324,
+    "title": "Preventing Infinite Tool Loops",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 325,
+    "title": "Tool Permission Boundaries",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 326,
+    "title": "Agent Observability",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 327,
+    "title": "Agent Evaluation",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 328,
+    "title": "Building a Career Guidance Agent",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 329,
+    "title": "Building a Learning Resource Search Agent",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 330,
+    "title": "Building a Multi-Step Interview Preparation Agent",
+    "section": "AI Agents and Tool Calling"
+  },
+  {
+    "number": 331,
+    "title": "Prompting vs RAG vs Fine-Tuning",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 332,
+    "title": "When Fine-Tuning Is Appropriate",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 333,
+    "title": "Preparing Training Examples",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 334,
+    "title": "Dataset Formatting",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 335,
+    "title": "Training and Validation Splits",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 336,
+    "title": "Data Quality and Deduplication",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 337,
+    "title": "Supervised Fine-Tuning (SFT)",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 338,
+    "title": "Fine-Tuning Evaluation",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 339,
+    "title": "Overfitting in Fine-Tuning",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 340,
+    "title": "LoRA Concepts",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 341,
+    "title": "QLoRA Concepts",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 342,
+    "title": "Parameter-Efficient Fine-Tuning",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 343,
+    "title": "Fine-Tuning Open Models with Hugging Face",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 344,
+    "title": "Hosted Fine-Tuning APIs",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 345,
+    "title": "Model Versioning",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 346,
+    "title": "Comparing Base and Fine-Tuned Models",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 347,
+    "title": "Fine-Tuning Cost and Hardware",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 348,
+    "title": "Safety Evaluation",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 349,
+    "title": "Model Deployment",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 350,
+    "title": "Building a Domain-Specific Fine-Tuning Experiment",
+    "section": "Fine-Tuning and Model Customization"
+  },
+  {
+    "number": 351,
+    "title": "Student Profile Data Modeling",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 352,
+    "title": "Branch, Semester and Education Context",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 353,
+    "title": "Career Goal and Target Role Modeling",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 354,
+    "title": "Skill Inventory and Proficiency Levels",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 355,
+    "title": "Initial Skill Assessment",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 356,
+    "title": "Baseline Knowledge Testing",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 357,
+    "title": "Job Description Skill Extraction",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 358,
+    "title": "Skill Taxonomy Design",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 359,
+    "title": "Current Skills vs Required Skills",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 360,
+    "title": "Skill Gap Scoring",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 361,
+    "title": "Prerequisite Graphs",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 362,
+    "title": "Learning Objective Mapping",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 363,
+    "title": "Course and Resource Mapping",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 364,
+    "title": "Milestone-Based Roadmap Generation",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 365,
+    "title": "Week-Wise Learning Plans",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 366,
+    "title": "Daily Micro-Task Generation",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 367,
+    "title": "Estimated Task Duration",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 368,
+    "title": "Difficulty and Priority Scoring",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 369,
+    "title": "Dependency-Aware Task Scheduling",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 370,
+    "title": "Deterministic Rules vs AI-Generated Plans",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 371,
+    "title": "Structured JSON Roadmap Output",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 372,
+    "title": "Roadmap Validation Before Saving",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 373,
+    "title": "Persisting Roadmaps in MongoDB",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 374,
+    "title": "Daily Task Completion Tracking",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 375,
+    "title": "Learning Activity Recording",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 376,
+    "title": "Quiz Scores and Performance History",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 377,
+    "title": "Detecting Weak Topics",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 378,
+    "title": "Adaptive Difficulty Adjustment",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 379,
+    "title": "Updating Roadmaps After Assessments",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 380,
+    "title": "Detecting Missed Tasks and Delays",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 381,
+    "title": "Rescheduling Incomplete Work",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 382,
+    "title": "Weekly Progress Summaries",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 383,
+    "title": "Goal Completion Predictions",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 384,
+    "title": "Roadmap Versioning and History",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 385,
+    "title": "Progress Tracking Dashboard",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 386,
+    "title": "Building the Complete AI Roadmap Engine",
+    "section": "AI Learning Roadmap Engine"
+  },
+  {
+    "number": 387,
+    "title": "Context-Aware AI Tutor",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 388,
+    "title": "Beginner-Friendly Concept Explanations",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 389,
+    "title": "Answering Questions from Course Material",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 390,
+    "title": "Explanation Depth and Difficulty Control",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 391,
+    "title": "Examples and Practice Question Generation",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 392,
+    "title": "Hint-First Learning Strategy",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 393,
+    "title": "Evaluating Student Answers",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 394,
+    "title": "Generating Quizzes",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 395,
+    "title": "Explaining Incorrect Answers",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 396,
+    "title": "Conversation Persistence",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 397,
+    "title": "User-Specific Tutor Context",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 398,
+    "title": "AI Career Coach Architecture",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 399,
+    "title": "Goal-Based Career Recommendations",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 400,
+    "title": "Weekly Career Action Plans",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 401,
+    "title": "Resume Improvement Suggestions",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 402,
+    "title": "Interview Preparation Plans",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 403,
+    "title": "Project Recommendations",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 404,
+    "title": "Internship Readiness Advice",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 405,
+    "title": "Skill Progress Summaries",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 406,
+    "title": "Separating Facts from Recommendations",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 407,
+    "title": "Escalating Important Decisions to Human Mentors",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 408,
+    "title": "Building the AI Tutor",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 409,
+    "title": "Building the AI Career Coach",
+    "section": "AI Tutor and Career Coach"
+  },
+  {
+    "number": 410,
+    "title": "Job Description Parsing",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 411,
+    "title": "Extracting Required Skills",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 412,
+    "title": "Resume Skill Extraction",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 413,
+    "title": "Mapping Skills to a Common Taxonomy",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 414,
+    "title": "Skill Proficiency Estimation",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 415,
+    "title": "Keyword Matching",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 416,
+    "title": "Semantic Skill Matching",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 417,
+    "title": "Missing Skill Identification",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 418,
+    "title": "Required vs Optional Skills",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 419,
+    "title": "Job-to-Candidate Matching",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 420,
+    "title": "Candidate-to-Job Matching",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 421,
+    "title": "Recommendation Ranking",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 422,
+    "title": "Employability Score Design",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 423,
+    "title": "Score Normalization",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 424,
+    "title": "Rule-Based vs ML-Based Scoring",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 425,
+    "title": "Combining Assessments and Project Evidence",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 426,
+    "title": "Score Explainability",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 427,
+    "title": "Historical Employability Snapshots",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 428,
+    "title": "Trend Analysis",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 429,
+    "title": "Bias and Fairness Checks",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 430,
+    "title": "Avoiding Unsupported Placement Predictions",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 431,
+    "title": "Building a Skill Gap Analyzer",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 432,
+    "title": "Building an Employability Dashboard",
+    "section": "Skill Gap and Employability Intelligence"
+  },
+  {
+    "number": 433,
+    "title": "Resume PDF Upload and Parsing",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 434,
+    "title": "Extracting Education and Experience",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 435,
+    "title": "Resume Data Normalization",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 436,
+    "title": "Resume and Job Description Matching",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 437,
+    "title": "ATS-Style Keyword Analysis",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 438,
+    "title": "Resume Quality Feedback",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 439,
+    "title": "Evidence-Based Resume Suggestions",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 440,
+    "title": "Detecting Missing Information",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 441,
+    "title": "Interview Question Generation",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 442,
+    "title": "Technical Interview Question Banks",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 443,
+    "title": "Behavioral Interview Questions",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 444,
+    "title": "Adaptive Interview Difficulty",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 445,
+    "title": "Text-Based Mock Interviews",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 446,
+    "title": "Speech-to-Text Fundamentals",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 447,
+    "title": "Text-to-Speech Fundamentals",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 448,
+    "title": "Interview Answer Evaluation Rubrics",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 449,
+    "title": "Technical Answer Correctness",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 450,
+    "title": "STAR Method for Behavioral Answers",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 451,
+    "title": "Communication Feedback",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 452,
+    "title": "Interview Session Storage",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 453,
+    "title": "Per-Session Feedback Reports",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 454,
+    "title": "Progress Across Multiple Sessions",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 455,
+    "title": "AI Interview Evaluation Testing",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 456,
+    "title": "Building the Mock Interview System",
+    "section": "AI Interview and Resume Systems"
+  },
+  {
+    "number": 457,
+    "title": "What Is Adaptive Learning?",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 458,
+    "title": "Static vs Dynamic Learning Plans",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 459,
+    "title": "Knowledge State Representation",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 460,
+    "title": "Quiz Performance Analysis",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 461,
+    "title": "Topic-Level Mastery Scores",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 462,
+    "title": "Learning Difficulty Estimation",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 463,
+    "title": "Spaced Repetition",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 464,
+    "title": "Forgetting Curve Concepts",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 465,
+    "title": "Revision Scheduling",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 466,
+    "title": "Prerequisite-Aware Recommendations",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 467,
+    "title": "Content-Based Filtering",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 468,
+    "title": "Collaborative Filtering",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 469,
+    "title": "Cosine Similarity for Recommendations",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 470,
+    "title": "Mentor Matching",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 471,
+    "title": "Job Recommendation Ranking",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 472,
+    "title": "Learning Resource Ranking",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 473,
+    "title": "Cold-Start Problem",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 474,
+    "title": "Recommendation Feedback Loops",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 475,
+    "title": "A/B Testing Recommendations",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 476,
+    "title": "Building the Adaptive Learning Engine",
+    "section": "Adaptive Learning and Recommendation Systems"
+  },
+  {
+    "number": 477,
+    "title": "Text-Only vs Multimodal Models",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 478,
+    "title": "Image Input to LLMs",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 479,
+    "title": "PDF and Document Understanding",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 480,
+    "title": "Audio Input and Transcription",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 481,
+    "title": "Speech Generation",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 482,
+    "title": "Voice-Based AI Tutor",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 483,
+    "title": "Real-Time Audio Conversations",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 484,
+    "title": "Video Summarization Concepts",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 485,
+    "title": "OCR Plus LLM Pipelines",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 486,
+    "title": "Structured Data Extraction from Images",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 487,
+    "title": "Multimodal Prompt Design",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 488,
+    "title": "Multimodal RAG",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 489,
+    "title": "Handling Unsupported File Formats",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 490,
+    "title": "File Size and Token Limits",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 491,
+    "title": "Multimodal Cost and Latency",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 492,
+    "title": "Privacy for Uploaded Files",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 493,
+    "title": "Building a Voice Interview Assistant",
+    "section": "Multimodal AI"
+  },
+  {
+    "number": 494,
+    "title": "AI Threat Modeling",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 495,
+    "title": "Prompt Injection",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 496,
+    "title": "Indirect Prompt Injection",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 497,
+    "title": "Jailbreak Risks",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 498,
+    "title": "Sensitive Data Exposure",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 499,
+    "title": "Personally Identifiable Information (PII)",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 500,
+    "title": "Secure Prompt Construction",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 501,
+    "title": "Input Validation",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 502,
+    "title": "Output Validation",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 503,
+    "title": "Structured Output Schema Enforcement",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 504,
+    "title": "Tool Calling Authorization",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 505,
+    "title": "Retrieval Permission Filtering",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 506,
+    "title": "Untrusted Document Handling",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 507,
+    "title": "API Key and Secret Protection",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 508,
+    "title": "Rate Limiting AI Endpoints",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 509,
+    "title": "AI Abuse Prevention",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 510,
+    "title": "Token and Spending Limits",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 511,
+    "title": "Content Moderation",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 512,
+    "title": "Hallucination Risk Management",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 513,
+    "title": "Human Review Workflows",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 514,
+    "title": "Fairness and Bias Evaluation",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 515,
+    "title": "Privacy and Data Retention",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 516,
+    "title": "AI Audit Logs",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 517,
+    "title": "Security Testing",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 518,
+    "title": "Building a Secure AI Application",
+    "section": "AI Security and Responsible AI"
+  },
+  {
+    "number": 519,
+    "title": "Unit Testing AI Services",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 520,
+    "title": "Mocking LLM API Calls",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 521,
+    "title": "Testing Structured Outputs",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 522,
+    "title": "Prompt Regression Testing",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 523,
+    "title": "Golden Test Datasets",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 524,
+    "title": "Expected vs Actual Outputs",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 525,
+    "title": "LLM-as-a-Judge: Uses and Limitations",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 526,
+    "title": "Human Evaluation",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 527,
+    "title": "Factual Accuracy",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 528,
+    "title": "Relevance and Completeness",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 529,
+    "title": "Groundedness and Citation Accuracy",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 530,
+    "title": "Retrieval Precision and Recall",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 531,
+    "title": "RAG Evaluation",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 532,
+    "title": "Agent Task Success Rate",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 533,
+    "title": "Tool Selection Accuracy",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 534,
+    "title": "Safety Test Cases",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 535,
+    "title": "Latency Benchmarks",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 536,
+    "title": "Token Consumption Benchmarks",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 537,
+    "title": "Cost per Successful Task",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 538,
+    "title": "Offline vs Online Evaluation",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 539,
+    "title": "User Feedback Analysis",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 540,
+    "title": "Continuous Evaluation Pipeline",
+    "section": "AI Testing and Evaluation"
+  },
+  {
+    "number": 541,
+    "title": "AI System Architecture",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 542,
+    "title": "Controller vs Service Responsibilities",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 543,
+    "title": "Dedicated AI Service Layer",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 544,
+    "title": "Provider Abstraction",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 545,
+    "title": "Model Configuration Management",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 546,
+    "title": "Prompt Template Management",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 547,
+    "title": "Conversation and Session Models",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 548,
+    "title": "MongoDB Schemas for AI Data",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 549,
+    "title": "AI Request Validation",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 550,
+    "title": "Authentication and Authorization for AI Routes",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 551,
+    "title": "User Quotas",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 552,
+    "title": "Token Budget Enforcement",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 553,
+    "title": "Request Timeouts",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 554,
+    "title": "Retry and Exponential Backoff",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 555,
+    "title": "Caching AI Responses",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 556,
+    "title": "Streaming Responses to the Frontend",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 557,
+    "title": "Server-Sent Events (SSE)",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 558,
+    "title": "WebSockets for Interactive AI",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 559,
+    "title": "Background AI Tasks",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 560,
+    "title": "AI Result Persistence",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 561,
+    "title": "Error Handling and Fallbacks",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 562,
+    "title": "Multi-Provider Architecture",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 563,
+    "title": "Separating Business Logic from Prompts",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 564,
+    "title": "Building a Production-Ready AI API",
+    "section": "AI Backend Architecture"
+  },
+  {
+    "number": 565,
+    "title": "AI Workload Characteristics",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 566,
+    "title": "Caching Repeated Requests",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 567,
+    "title": "Redis Fundamentals",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 568,
+    "title": "Cache Keys and Expiration",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 569,
+    "title": "Caching Embeddings",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 570,
+    "title": "Idempotency",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 571,
+    "title": "Queue Fundamentals",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 572,
+    "title": "BullMQ Integration",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 573,
+    "title": "Background Document Processing",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 574,
+    "title": "Asynchronous Embedding Generation",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 575,
+    "title": "Batch AI Requests",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 576,
+    "title": "Scheduled Roadmap Recalculation",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 577,
+    "title": "Daily Learning Reminders",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 578,
+    "title": "Weekly Progress Reports",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 579,
+    "title": "Retryable vs Non-Retryable Errors",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 580,
+    "title": "Failed Job Handling",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 581,
+    "title": "Dead-Letter Queue Concepts",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 582,
+    "title": "Job Monitoring",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 583,
+    "title": "Rate Limiting by User",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 584,
+    "title": "Building an Asynchronous AI Pipeline",
+    "section": "AI Data, Redis and Background Jobs"
+  },
+  {
+    "number": 585,
+    "title": "What Is MLOps?",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 586,
+    "title": "AI Application vs Model Deployment",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 587,
+    "title": "Development and Production Environments",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 588,
+    "title": "Environment Variables and Secret Management",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 589,
+    "title": "Docker for AI Applications",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 590,
+    "title": "Docker Compose",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 591,
+    "title": "Deploying Node.js AI Backends",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 592,
+    "title": "Deploying Python Model Services",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 593,
+    "title": "CPU vs GPU Hosting",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 594,
+    "title": "Cloud Model APIs vs Self-Hosted Models",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 595,
+    "title": "Model Artifact Storage",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 596,
+    "title": "Model Versioning",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 597,
+    "title": "Dataset Versioning",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 598,
+    "title": "Experiment Tracking",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 599,
+    "title": "MLflow Fundamentals",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 600,
+    "title": "CI/CD for AI Applications",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 601,
+    "title": "Automated Evaluation in CI",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 602,
+    "title": "Deployment Rollback",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 603,
+    "title": "Canary and Staged Releases",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 604,
+    "title": "AI Service Health Checks",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 605,
+    "title": "Request and Error Logging",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 606,
+    "title": "Token Usage Monitoring",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 607,
+    "title": "Cost Dashboards",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 608,
+    "title": "Latency and Availability Monitoring",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 609,
+    "title": "Model Quality Drift",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 610,
+    "title": "Data Drift",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 611,
+    "title": "Alerts and Incident Response",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 612,
+    "title": "Production AI Maintenance",
+    "section": "AI Deployment and MLOps"
+  },
+  {
+    "number": 613,
+    "title": "Designing an AI Chatbot",
+    "section": "AI System Design"
+  },
+  {
+    "number": 614,
+    "title": "Designing a RAG System",
+    "section": "AI System Design"
+  },
+  {
+    "number": 615,
+    "title": "Designing a Personalized Roadmap Engine",
+    "section": "AI System Design"
+  },
+  {
+    "number": 616,
+    "title": "Designing an AI Interview Platform",
+    "section": "AI System Design"
+  },
+  {
+    "number": 617,
+    "title": "Designing a Skill Matching System",
+    "section": "AI System Design"
+  },
+  {
+    "number": 618,
+    "title": "Designing an AI Tutor at Scale",
+    "section": "AI System Design"
+  },
+  {
+    "number": 619,
+    "title": "Model Selection and Routing",
+    "section": "AI System Design"
+  },
+  {
+    "number": 620,
+    "title": "API Gateway and Rate Limits",
+    "section": "AI System Design"
+  },
+  {
+    "number": 621,
+    "title": "Horizontal Scaling",
+    "section": "AI System Design"
+  },
+  {
+    "number": 622,
+    "title": "Load Balancing",
+    "section": "AI System Design"
+  },
+  {
+    "number": 623,
+    "title": "Caching Layers",
+    "section": "AI System Design"
+  },
+  {
+    "number": 624,
+    "title": "Queue-Based Processing",
+    "section": "AI System Design"
+  },
+  {
+    "number": 625,
+    "title": "Vector Search Architecture",
+    "section": "AI System Design"
+  },
+  {
+    "number": 626,
+    "title": "Database and Vector Index Trade-Offs",
+    "section": "AI System Design"
+  },
+  {
+    "number": 627,
+    "title": "Streaming Architecture",
+    "section": "AI System Design"
+  },
+  {
+    "number": 628,
+    "title": "Multi-Tenant AI Systems",
+    "section": "AI System Design"
+  },
+  {
+    "number": 629,
+    "title": "User-Level Cost Budgets",
+    "section": "AI System Design"
+  },
+  {
+    "number": 630,
+    "title": "Fault Tolerance",
+    "section": "AI System Design"
+  },
+  {
+    "number": 631,
+    "title": "AI System Observability",
+    "section": "AI System Design"
+  },
+  {
+    "number": 632,
+    "title": "Privacy-Aware Architecture",
+    "section": "AI System Design"
+  },
+  {
+    "number": 633,
+    "title": "Designing for Millions of Requests",
+    "section": "AI System Design"
+  },
+  {
+    "number": 634,
+    "title": "AI System Design Interview Questions",
+    "section": "AI System Design"
+  }
+]

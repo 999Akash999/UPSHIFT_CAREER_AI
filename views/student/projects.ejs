@@ -1,97 +1,96 @@
 <% layout('layouts/dashboardLayout') %>
 
-<div style="max-width: 1040px; margin: 0 auto;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+<section class="projects-page">
+  <header class="projects-heading">
     <div>
-      <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
-        My Projects
-      </h2>
-      <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
-        Add your projects, technologies, GitHub repositories, and live demos to your portfolio.
-      </p>
+      <p class="projects-eyebrow">YOUR WORK, IN ONE PLACE</p>
+      <h1>My Projects</h1>
+      <p>Show what you can build with clear project details, technologies, code, and demos.</p>
     </div>
-
-    <button onclick="document.getElementById('projectSubmissionModal').style.display='flex'" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
-      + Add project
+    <button class="projects-primary-button" type="button" data-project-modal-open>
+      <span aria-hidden="true">＋</span> Add a project
     </button>
-  </div>
+  </header>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
-    <% if (typeof projects !== 'undefined' && projects.length > 0) { %>
-      <% projects.forEach(p => { %>
-        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-              <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0;"><%= p.title %></h3>
-              <% if (p.isVerified) { %>
-                <span style="background: #f0fdf4; color: #166534; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">Verified</span>
+  <section class="projects-overview" aria-label="Project portfolio overview">
+    <div class="projects-overview-icon" aria-hidden="true">⌘</div>
+    <div><strong><%= projects.length %> <%= projects.length === 1 ? 'project' : 'projects' %></strong><span>in your portfolio</span></div>
+    <p>Tip: include the problem you solved, your contribution, and a working demo link.</p>
+  </section>
+
+  <% if (projects.length) { %>
+    <section class="projects-grid" aria-label="Your projects">
+      <% projects.forEach((project) => { %>
+        <article class="project-card">
+          <div class="project-card-cover">
+            <span class="project-card-mark" aria-hidden="true"><%= (project.title || 'P').trim().charAt(0).toUpperCase() %></span>
+            <% if (project.isVerified) { %><span class="project-verified"><span aria-hidden="true">✓</span> Verified</span><% } else { %><span class="project-type-label">PROJECT</span><% } %>
+          </div>
+          <div class="project-card-body">
+            <h2><%= project.title %></h2>
+            <p class="project-card-description"><%= project.description %></p>
+            <div class="project-tech-list" aria-label="Technologies used">
+              <% (project.techStack || []).forEach((tech) => { %><span><%= tech %></span><% }) %>
+              <% if (!project.techStack?.length) { %><span class="project-tech-empty">Add technologies to your project</span><% } %>
+            </div>
+            <div class="project-card-footer">
+              <% if (project.githubUrl || project.liveDemoUrl) { %>
+                <% if (project.githubUrl) { %><a href="<%= project.githubUrl %>" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">⌘</span> View code <span aria-hidden="true">↗</span></a><% } %>
+                <% if (project.liveDemoUrl) { %><a href="<%= project.liveDemoUrl %>" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">◉</span> Live demo <span aria-hidden="true">↗</span></a><% } %>
+              <% } else { %>
+                <span class="project-links-empty">No code or demo link added</span>
               <% } %>
             </div>
-            <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0 0 1rem;"><%= p.description %></p>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;">
-              <% (p.techStack || []).forEach(tech => { %>
-                <span style="background: #f1f5f9; color: #334155; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;"><%= tech %></span>
-              <% }) %>
-            </div>
           </div>
-
-          <div style="border-top: 1px solid #f1f5f9; padding-top: 1rem; display: flex; gap: 1rem;">
-            <% if (p.githubUrl) { %>
-              <a href="<%= p.githubUrl %>" target="_blank" style="color: #2563eb; font-weight: 700; font-size: 0.85rem; text-decoration: none;">GitHub ↗</a>
-            <% } %>
-            <% if (p.liveDemoUrl) { %>
-              <a href="<%= p.liveDemoUrl %>" target="_blank" style="color: #0f172a; font-weight: 700; font-size: 0.85rem; text-decoration: none;">Live Demo ↗</a>
-            <% } %>
-          </div>
-        </div>
+        </article>
       <% }) %>
-    <% } else { %>
-      <div style="grid-column: 1 / -1; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💻</div>
-        <h4 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">No projects added yet</h4>
-        <p style="margin: 0; font-size: 0.9rem;">Add a project to show your work in your portfolio.</p>
-      </div>
-    <% } %>
-  </div>
-</div>
-
-<!-- Modal Form -->
-<div id="projectSubmissionModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-  <div style="background: #ffffff; border-radius: 16px; width: 100%; max-width: 520px; padding: 2.25rem; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-      <h3 style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin: 0;">Add a project</h3>
-      <button onclick="document.getElementById('projectSubmissionModal').style.display='none'" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #64748b;">&times;</button>
-    </div>
-
-    <form action="/student/projects" method="POST">
-      <div style="margin-bottom: 1rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Project Title</label>
-        <input type="text" name="title" required minlength="2" maxlength="120" placeholder="e.g. Distributed Task Queue" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
-      </div>
-
-      <div style="margin-bottom: 1rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Description</label>
-        <textarea name="description" rows="3" required minlength="10" maxlength="3000" placeholder="What problem does it solve? Architecture decisions..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;"></textarea>
-      </div>
-
-      <div style="margin-bottom: 1rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Technologies Used (Comma separated)</label>
-        <input type="text" name="techStack" required maxlength="1500" placeholder="Go, Redis, Docker, gRPC" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
-      </div>
-
-      <div style="margin-bottom: 1rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">GitHub Repository URL</label>
-        <input type="url" name="githubUrl" placeholder="https://github.com/..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
-      </div>
-
-      <div style="margin-bottom: 1.5rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Live Demo Deployment URL</label>
-        <input type="url" name="liveDemoUrl" placeholder="https://..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
-      </div>
-
-      <button type="submit" style="width: 100%; background: #2563eb; color: #ffffff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer;">
-        Save project
+      <button class="project-add-card" type="button" data-project-modal-open>
+        <span aria-hidden="true">＋</span><strong>Add another project</strong><small>Keep building your portfolio</small>
       </button>
+    </section>
+  <% } else { %>
+    <section class="projects-empty-state">
+      <div class="projects-empty-art" aria-hidden="true"><span>⌘</span><i>✦</i></div>
+      <p class="projects-eyebrow">YOUR PORTFOLIO STARTS HERE</p>
+      <h2>Show the work behind your skills</h2>
+      <p>Add a class project, personal build, or team contribution. Include the technologies you used and links where people can explore it.</p>
+      <button class="projects-primary-button" type="button" data-project-modal-open>Add your first project <span aria-hidden="true">→</span></button>
+    </section>
+  <% } %>
+</section>
+
+<div class="project-modal-backdrop" id="projectSubmissionModal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle" aria-describedby="projectModalDescription" hidden>
+  <section class="project-modal">
+    <header class="project-modal-heading">
+      <div><p class="projects-eyebrow">PORTFOLIO BUILDER</p><h2 id="projectModalTitle">Add a project</h2><p id="projectModalDescription">Share enough detail for someone to understand what you made and why it matters.</p></div>
+      <button class="project-modal-close" id="closeProjectModal" type="button" aria-label="Close project form">&times;</button>
+    </header>
+    <form class="project-form" id="projectSubmissionForm" action="/student/projects" method="POST">
+      <div class="project-form-grid">
+        <label class="project-form-field project-form-field-wide" for="projectTitle">Project title <span>Required</span>
+          <input id="projectTitle" type="text" name="title" required minlength="2" maxlength="120" placeholder="e.g. Campus event booking app" autocomplete="off">
+        </label>
+        <label class="project-form-field project-form-field-wide" for="projectDescription">What did you build? <span>Required</span>
+          <textarea id="projectDescription" name="description" rows="4" required minlength="10" maxlength="3000" placeholder="Describe the problem, your approach, and what you contributed."></textarea>
+          <small class="project-character-count" id="projectDescriptionCount">0 / 3,000</small>
+        </label>
+        <label class="project-form-field project-form-field-wide" for="projectTechStack">Technologies <span>Separate with commas</span>
+          <input id="projectTechStack" type="text" name="techStack" required maxlength="1500" placeholder="JavaScript, Node.js, MongoDB">
+        </label>
+        <label class="project-form-field" for="projectGithub">GitHub repository <span>Optional</span>
+          <input id="projectGithub" type="url" name="githubUrl" placeholder="https://github.com/you/project" inputmode="url">
+        </label>
+        <label class="project-form-field" for="projectDemo">Live demo <span>Optional</span>
+          <input id="projectDemo" type="url" name="liveDemoUrl" placeholder="https://your-project.com" inputmode="url">
+        </label>
+      </div>
+      <p class="project-form-status" id="projectSubmissionStatus" role="status" aria-live="polite"></p>
+      <footer class="project-form-actions">
+        <button class="projects-secondary-button" id="cancelProjectModal" type="button">Cancel</button>
+        <button class="projects-primary-button" type="submit"><span aria-hidden="true">＋</span> Save project</button>
+      </footer>
     </form>
-  </div>
+  </section>
 </div>
+
+<script src="/js/projects.js" defer></script>

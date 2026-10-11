@@ -2,14 +2,16 @@ const Assessment = require("../models/Assessment");
 const skillAssessmentBank = require("../data/skillAssessmentBank");
 const AlumniEvent = require("../models/AlumniEvent");
 const EventRegistration = require("../models/EventRegistration");
-const DailyTask = require("../models/DailyTask");
+const { getTodayRoadmapPlan } = require("../services/roadmapDailyTaskService");
 const Doubt = require("../models/Doubt");
 const Job = require("../models/Job");
 const JobApplication = require("../models/JobApplication");
+const RecruiterInterview = require("../models/RecruiterInterview");
 const MentorProfile = require("../models/MentorProfile");
 const Project = require("../models/Project");
 const Student = require("../models/Student");
 const { calculateEmployability } = require("../services/employabilityService");
+const { evaluateGapsAndRecommendations, getRoleSkillProgress } = require("../services/skillGapService");
 const { getDateKeyIST, getDayBoundsIST } = require("../utils/timeHelpers");
 
 exports.getDailyTasks = async (req, res) => {
@@ -17,8 +19,15 @@ exports.getDailyTasks = async (req, res) => {
   let tasks = [];
   let tasksError = "";
   let snapshot = { overallScore: 0 };
+  let roadmap = null;
+  let restDay = false;
+  let planDay = null;
   try {
-    tasks = await DailyTask.find({ student: req.student._id, dueDate: { $gte: start, $lt: end } }).sort({ isCompleted: 1, dueDate: 1 });
+    const todayPlan = await getTodayRoadmapPlan(req.student._id, { start, end });
+    tasks = todayPlan.tasks;
+    roadmap = todayPlan.roadmap;
+    restDay = todayPlan.restDay;
+    planDay = todayPlan.planDay;
   } catch (error) {
     console.error("Daily tasks could not be loaded:", error);
     tasksError = "Your tasks could not be loaded right now. Please refresh in a moment.";
@@ -36,12 +45,29 @@ exports.getDailyTasks = async (req, res) => {
   const lastActivityKey = student?.lastActivityDate ? getDateKeyIST(student.lastActivityDate) : null;
   const activeToday = lastActivityKey === todayKey;
   const currentStreak = [todayKey, yesterdayKey].includes(lastActivityKey) ? student?.streak || 0 : 0;
-  res.render("student/daily-tasks", { title: "Daily Tasks", tasks, student, currentStreak, activeToday, employabilityScore: snapshot?.overallScore || 0, tasksError });
+  res.render("student/daily-tasks", { title: "Daily Tasks", tasks, student, currentStreak, activeToday, employabilityScore: snapshot?.overallScore || 0, tasksError, roadmap, restDay, planDay });
 };
 
 exports.getSkillGap = async (req, res) => {
-  const student = await Student.findById(req.student._id);
-  res.render("student/skill-gap", { title: "Skill Gap Analysis", student, topGaps: student.identifiedGaps || [] });
+  const student = req.student || await Student.findById(req.user._id);
+  if (!student) return res.status(404).render("errors/404", { title: "Student profile not found" });
+  const [roleSkillProgress, marketAnalysis] = await Promise.all([
+    getRoleSkillProgress(req.user._id, student.targetRole),
+    evaluateGapsAndRecommendations(student.skills || [], student.targetRole),
+  ]);
+  const strongSkills = new Set(roleSkillProgress.filter((item) => item.score !== null && item.score >= 75).map((item) => item.skill.toLowerCase()));
+  const assessedGaps = roleSkillProgress.filter((item) => item.score !== null && item.score < 75).map((item) => item.skill);
+  const topGaps = [...new Set([
+    ...(student.identifiedGaps || []).filter((gap) => !strongSkills.has(String(gap).toLowerCase())),
+    ...marketAnalysis.topGaps,
+    ...assessedGaps,
+  ])];
+  res.render("student/skill-gap", {
+    title: "Skill Gap Analysis", student, topGaps, roleSkillProgress,
+    marketSkills: marketAnalysis.marketSkills,
+    marketJobsAnalyzed: marketAnalysis.jobsAnalyzed,
+    recommendedCourses: marketAnalysis.recommendedCourses,
+  });
 };
 
 exports.getEmployability = async (req, res) => {
@@ -63,10 +89,13 @@ exports.getProjects = async (req, res) => {
 };
 
 exports.getApplications = async (req, res) => {
-  const applications = await JobApplication.find({ student: req.user._id })
+  const [applications, interviews] = await Promise.all([JobApplication.find({ student: req.user._id })
     .populate({ path: "job", populate: { path: "company" } })
-    .sort({ createdAt: -1 });
-  res.render("student/applications", { title: "My Applications", applications });
+    .sort({ createdAt: -1 }), RecruiterInterview.find({ student: req.user._id })
+    .populate("recruiter", "name")
+    .populate("job", "title")
+    .sort({ scheduledAt: -1 })]);
+  res.render("student/applications", { title: "My Applications", applications, interviews });
 };
 
 exports.getDoubts = async (req, res) => {

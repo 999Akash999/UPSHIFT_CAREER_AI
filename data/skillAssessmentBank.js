@@ -261,7 +261,20 @@ const banks = [
   },
 ];
 
-const makeQuestions = (facts) => {
+const inferFactSkill = (domain, factName) => {
+  const name = String(factName || "");
+  if (domain === "Web UI") {
+    return /semantic html|^label$|^alt text$|^alt empty string$|form method|^aria$|^tabindex$|viewport meta/i.test(name) ? "HTML" : "CSS";
+  }
+  if (domain === "Node.js") {
+    if (/express|route|middleware|req|res|http |cors|rest resource/i.test(name)) return /rest resource/i.test(name) ? "APIs" : "Express";
+    return "Node.js";
+  }
+  if (domain === "Databases") return "Databases";
+  return domain;
+};
+
+const makeQuestions = (facts, domain) => {
   const questionForms = [
     (fact) => `Which concept is described as: ${fact[1]}?`,
     (fact) => `A developer needs to solve this situation: ${fact[2]}. Which concept best fits?`,
@@ -278,6 +291,7 @@ const makeQuestions = (facts) => {
       options,
       correctAnswerIndex,
       explanation: `${fact[0]}: ${fact[1]}.`,
+      skill: inferFactSkill(domain, fact[0]),
       points: 1,
     };
   }));
@@ -288,5 +302,5 @@ module.exports = banks.map((bank) => ({
   durationMinutes: 60,
   passingScore: 60,
   isPublished: true,
-  questions: makeQuestions(bank.facts),
+  questions: makeQuestions(bank.facts, bank.domain),
 }));

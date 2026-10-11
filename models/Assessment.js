@@ -22,6 +22,7 @@ const questionSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  skill: { type: String, trim: true, default: "" },
   points: {
     type: Number,
     default: 10,

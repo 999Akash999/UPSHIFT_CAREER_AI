@@ -19,13 +19,22 @@
   <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/roadmap.css">
   <link rel="stylesheet" href="/css/ai-chat.css">
+  <link rel="stylesheet" href="/css/ai-tutor.css">
   <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/recruiter-candidate.css">
+  <link rel="stylesheet" href="/css/applications.css">
+  <link rel="stylesheet" href="/css/jobs.css">
+  <link rel="stylesheet" href="/css/interview.css">
+  <link rel="stylesheet" href="/css/ui-polish.css">
+  <link rel="stylesheet" href="/css/projects.css">
 
   <!-- External Libraries (Chart.js & Socket.io) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 </head>
 <body class="dashboard-body">
+
+  <a class="skip-to-content" href="#main-content">Skip to main content</a>
 
   <div class="app-layout">
 
@@ -44,7 +53,7 @@
       </div>
 
       <!-- Injected Dashboard Workspace -->
-      <main class="dashboard-main">
+      <main class="dashboard-main" id="main-content" tabindex="-1">
         <%- body %>
       </main>
 

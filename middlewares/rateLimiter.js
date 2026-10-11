@@ -29,6 +29,13 @@ const aiLimiter = rateLimit({
     success: false,
     message: "AI query capacity reached for this minute. Please wait a few seconds before asking again.",
   },
+  handler: (req, res, next, options) => {
+    if (req.xhr || req.headers.accept?.includes("json")) {
+      return res.status(options.statusCode).json({ success: false, error: options.message.message });
+    }
+    req.flash("error", options.message.message);
+    return res.redirect("/student/roadmap");
+  },
 });
 
 // 3. General API limiter

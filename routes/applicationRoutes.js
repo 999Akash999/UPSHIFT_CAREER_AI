@@ -7,6 +7,7 @@ const requireStudent = require("../middlewares/requireStudent");
 const upload = require("../middlewares/upload");
 const workspaceController = require("../controllers/studentWorkspaceController");
 const { apiLimiter } = require("../middlewares/rateLimiter");
+const recruiterEngagementController = require("../controllers/recruiterEngagementController");
 
 // Student application submission with resume PDF upload
 router.get("/", requireAuth, requireStudent, workspaceController.getApplications);
@@ -18,6 +19,7 @@ router.post(
   upload.single("resume"),
   applicationController.applyToJob
 );
+router.post("/:applicationId/offer", requireAuth, requireStudent, apiLimiter, recruiterEngagementController.respondToOffer);
 
 // Status updates by recruiters
 router.patch("/:applicationId/status", requireAuth, apiLimiter, applicationController.updateStatus);

@@ -25,9 +25,9 @@
       <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="presetBadgeContainer">
         <% const presets = ['JavaScript', 'TypeScript', 'Node.js', 'React', 'Python', 'C++', 'Java', 'Docker', 'MongoDB', 'PostgreSQL', 'AWS', 'Git', 'TailwindCSS']; %>
         <% presets.forEach(tag => { %>
-          <button 
-            type="button" 
-            onclick="addSkillTag('<%= tag %>')" 
+          <button
+            type="button"
+            data-skill-preset="<%= tag %>"
             style="background: #1e293b; border: 1px solid #334155; color: #cbd5e1; font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 6px; cursor: pointer; transition: all 0.2s;"
           >
             + <%= tag %>
@@ -36,18 +36,17 @@
       </div>
     </div>
 
-    <form action="/onboarding/skills" method="POST">
+    <form action="/onboarding/skills" method="POST" id="onboardingSkillsForm">
       
       <div style="margin-bottom: 1.75rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">Selected Skills (Comma separated or typed below)</label>
-        <textarea 
-          name="skills" 
-          id="skillsInputField" 
-          required 
-          rows="3" 
-          placeholder="JavaScript, Node.js, MongoDB..." 
-          style="width: 100%; background: #070d19; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem; font-family: 'JetBrains Mono', monospace; line-height: 1.5;"
-        ><%= student && student.skills ? student.skills.join(', ') : '' %></textarea>
+        <label for="skillEntry" style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">Add skills one by one</label>
+        <div style="display:flex;gap:.5rem;">
+          <input id="skillEntry" type="text" maxlength="50" autocomplete="off" placeholder="Type a skill, then press Enter" style="min-width:0;flex:1;background:#070d19;border:1px solid #1e3a5f;color:#fff;padding:.75rem 1rem;border-radius:8px;outline:none;font-size:.95rem;">
+          <button type="button" id="addSkillButton" style="background:#1e293b;border:1px solid #334155;color:#fff;padding:0 .9rem;border-radius:8px;font-weight:700;cursor:pointer;">Add</button>
+        </div>
+        <div id="selectedSkillTags" aria-live="polite" style="display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.7rem;"></div>
+        <textarea name="skills" id="skillsInputField" hidden><%= student && student.skills ? student.skills.join(', ') : '' %></textarea>
+        <p id="skillEntryStatus" role="status" aria-live="polite" style="min-height:1.1rem;margin:.45rem 0 0;color:#fda4af;font-size:.78rem;"></p>
         <span style="font-size: 0.75rem; color: #64748b; display: block; margin-top: 0.3rem;">Our AI will benchmark these against target industry cutoffs to identify your gap areas.</span>
       </div>
 
@@ -65,13 +64,4 @@
   </div>
 </div>
 
-<script>
-  function addSkillTag(tag) {
-    const input = document.getElementById('skillsInputField');
-    const existing = input.value.split(',').map(s => s.trim()).filter(Boolean);
-    if (!existing.includes(tag)) {
-      existing.push(tag);
-      input.value = existing.join(', ');
-    }
-  }
-</script>
+<script src="/js/onboarding-skills.js" defer></script>

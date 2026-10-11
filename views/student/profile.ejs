@@ -1,30 +1,133 @@
 <% layout('layouts/dashboardLayout') %>
+<%
+  const profilePercentValue = typeof profileCompletion !== 'undefined' ? Number(profileCompletion) : 0;
+  const profilePercent = Number.isFinite(profilePercentValue) ? Math.max(0, Math.min(100, profilePercentValue)) : 0;
+  const profileChecklist = typeof profileSections !== 'undefined' && Array.isArray(profileSections) ? profileSections : [];
+  const profileProjects = typeof projects !== 'undefined' && Array.isArray(projects) ? projects : [];
+%>
 
-<div style="max-width: 980px; margin: 0 auto;">
-  <div style="margin-bottom: 2rem;">
-    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
-      Student Profile & Portfolio
-    </h2>
-    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
-      Keep your professional background, GitHub links, and technical competencies updated for recruiter visibility.
-    </p>
-    <a class="button-primary" href="/student/resume-builder" style="margin-top: 1rem;">✦ Create an AI resume</a>
-  </div>
+<div class="student-profile-page">
+  <section class="student-profile-hero" aria-labelledby="student-profile-title">
+    <div class="student-profile-identity">
+      <% if (currUser.avatar && currUser.avatar !== '/images/avatars/default.png') { %>
+        <img class="student-profile-avatar" src="<%= currUser.avatar %>" alt="">
+      <% } else { %><span class="student-profile-avatar student-profile-avatar-fallback"><%= currUser.name.charAt(0).toUpperCase() %></span><% } %>
+      <div class="student-profile-identity-copy">
+        <span class="profile-eyebrow">Student portfolio</span>
+        <h2 id="student-profile-title"><%= currUser.name %></h2>
+        <p><%= student.targetRole || 'Add your target role' %><span aria-hidden="true"> · </span><%= student.primaryDomain || 'Add your domain' %></p>
+      </div>
+    </div>
+    <div class="student-profile-actions">
+      <button class="profile-action-secondary" type="button" data-profile-edit aria-controls="profileEditor" aria-expanded="false">Edit profile</button>
+      <a class="profile-action-primary" href="/student/resume-builder">Create AI resume <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <section class="profile-overview-grid" aria-label="Profile overview">
+    <article class="profile-overview-card profile-completion-card">
+      <div class="profile-overview-card-heading"><span class="profile-overview-icon">◒</span><span class="profile-overview-label">Profile completeness</span></div>
+      <div class="profile-completion-value"><strong><%= profilePercent %>%</strong><span>complete</span></div>
+      <div class="profile-completion-track" role="progressbar" aria-label="Profile completeness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<%= profilePercent %>"><span style="width: <%= profilePercent %>%"></span></div>
+      <p class="profile-overview-footnote"><%= profileChecklist.some((section) => !section.complete) || !profileChecklist.length ? 'Add a few details to make your profile stand out.' : 'Your profile has all the key sections.' %></p>
+    </article>
+    <article class="profile-overview-card">
+      <div class="profile-overview-card-heading"><span class="profile-overview-icon">✦</span><span class="profile-overview-label">Career direction</span></div>
+      <strong class="profile-overview-main"><%= student.targetRole || 'Add your target role' %></strong>
+      <p class="profile-overview-sub"><%= student.primaryDomain || 'Add your primary domain' %></p>
+      <button class="profile-overview-link" type="button" data-profile-edit data-profile-focus="targetRole" aria-controls="profileEditor" aria-expanded="false">Update career direction <span aria-hidden="true">→</span></button>
+    </article>
+    <article class="profile-overview-card">
+      <div class="profile-overview-card-heading"><span class="profile-overview-icon">▧</span><span class="profile-overview-label">Skills listed</span></div>
+      <div class="profile-completion-value"><strong><%= student.skills?.length || 0 %></strong><span>skills</span></div>
+      <button class="profile-overview-link" type="button" data-profile-edit data-profile-focus="profileSkillInput" aria-controls="profileEditor" aria-expanded="false">Update your skills <span aria-hidden="true">→</span></button>
+    </article>
+  </section>
+
+  <section class="profile-content-section" aria-labelledby="profile-projects-title">
+    <div class="profile-section-heading">
+      <div><span class="profile-eyebrow">Proof of work</span><h3 id="profile-projects-title">Projects & portfolio</h3><p>Show the projects that put your skills into practice.</p></div>
+      <a class="profile-section-link" href="/student/projects">Manage projects <span aria-hidden="true">→</span></a>
+    </div>
+    <% if (profileProjects.length) { %>
+      <div class="profile-project-grid">
+        <% profileProjects.forEach((project) => { %>
+          <article class="profile-project-card">
+            <div class="profile-project-card-top"><span class="profile-project-mark"><%= (project.title || 'P').slice(0, 1).toUpperCase() %></span><% if (project.isVerified) { %><span class="profile-verified-badge">Verified</span><% } %></div>
+            <h4><%= project.title %></h4>
+            <p><%= project.description %></p>
+            <% if (project.techStack?.length) { %><div class="profile-project-tags"><% project.techStack.slice(0, 5).forEach((tech) => { %><span><%= tech %></span><% }) %></div><% } %>
+            <div class="profile-project-links">
+              <% if (project.githubUrl) { %><a href="<%= project.githubUrl %>" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><% } %>
+              <% if (project.liveDemoUrl) { %><a href="<%= project.liveDemoUrl %>" target="_blank" rel="noopener noreferrer">Live demo <span aria-hidden="true">↗</span></a><% } %>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="profile-project-empty"><span aria-hidden="true">▧</span><div><strong>Your portfolio starts with one project</strong><p>Add a project with its tech stack and links so others can see what you’ve built.</p></div><a href="/student/projects">Add a project <span aria-hidden="true">→</span></a></div>
+    <% } %>
+  </section>
+
+  <section class="profile-content-section" aria-labelledby="profile-about-title">
+    <div class="profile-section-heading">
+      <div><span class="profile-eyebrow">A little more about you</span><h3 id="profile-about-title">About & career snapshot</h3><p>Give people a quick view of your direction, experience, and strengths.</p></div>
+      <button class="profile-section-link" type="button" data-profile-edit aria-controls="profileEditor" aria-expanded="false">Edit details <span aria-hidden="true">→</span></button>
+    </div>
+    <div class="profile-snapshot-grid">
+      <article class="profile-snapshot-card">
+        <span class="profile-snapshot-label">About me</span>
+        <% if (student.bio) { %><p class="profile-bio-copy"><%= student.bio %></p><% } else { %><p class="profile-bio-empty">Add a short introduction about your interests and the work you want to do.</p><% } %>
+        <span class="profile-snapshot-label profile-snapshot-skills-label">Skills & strengths</span>
+        <% if (student.skills?.length) { %>
+          <div class="profile-skill-tags"><% student.skills.forEach((skill) => { %><span><%= skill %></span><% }) %></div>
+        <% } else { %><p class="profile-bio-empty">Add your skills to make this section more useful.</p><% } %>
+      </article>
+      <article class="profile-snapshot-card">
+        <span class="profile-snapshot-label">Education & preferences</span>
+        <dl class="profile-fact-list">
+          <div><dt>Education</dt><dd><%= [student.academicDetails?.degree, student.academicDetails?.college].filter(Boolean).join(' · ') || 'Add your education' %></dd></div>
+          <div><dt>Graduation</dt><dd><%= student.academicDetails?.graduationYear || 'Not added' %></dd></div>
+          <div><dt>Location</dt><dd><%= student.careerDetails?.preferredLocation || 'Open to opportunities' %></dd></div>
+          <div><dt>Work preference</dt><dd><%= student.careerDetails?.workMode || 'Not specified' %></dd></div>
+          <div><dt>Experience</dt><dd><%= student.careerDetails?.experienceYears || 0 %> years</dd></div>
+          <div><dt>Availability</dt><dd><%= student.careerDetails?.availability || 'Not specified' %></dd></div>
+        </dl>
+      </article>
+    </div>
+    <% const publicLinks = [['GitHub', student.socialProfiles?.github, 'GH'], ['LinkedIn', student.socialProfiles?.linkedin, 'in'], ['LeetCode', student.socialProfiles?.leetcode, 'LC'], ['Portfolio', student.socialProfiles?.portfolio, '↗']].filter((link) => link[1]); %>
+    <% if (publicLinks.length) { %>
+      <nav class="profile-social-links" aria-label="Professional links">
+        <% publicLinks.forEach(([label, url, mark]) => { %>
+          <a class="profile-social-card" href="<%= url %>" target="_blank" rel="noopener noreferrer">
+            <span class="profile-social-mark" aria-hidden="true"><%= mark %></span>
+            <span class="profile-social-copy"><strong><%= label %></strong><small><%= url %></small></span>
+            <span class="profile-social-open" aria-label="Opens in a new tab">↗</span>
+          </a>
+        <% }) %>
+      </nav>
+    <% } %>
+  </section>
 
   <section class="profile-score-card" aria-labelledby="profile-score-title">
     <div class="profile-score-heading">
-      <div><span class="profile-eyebrow">Career readiness</span><h3 id="profile-score-title">Employability at a glance</h3><p>See which areas are building your score and where to focus next.</p></div>
+      <div><span class="profile-eyebrow">Career readiness</span><h3 id="profile-score-title">Employability breakdown</h3><p>See which areas are building your score and where to focus next.</p></div>
       <div class="profile-score-value"><strong><%= Math.round(snapshot?.overallScore || 0) %></strong><span>/ 100</span></div>
     </div>
     <div class="profile-chart-wrap"><canvas id="profileEmployabilityChart" role="img" aria-label="Employability score chart by skill category"></canvas></div>
     <a class="profile-score-link" href="/student/employability">View full employability report →</a>
   </section>
 
+  <section class="profile-content-section profile-editor-section" id="profileEditor" aria-labelledby="profile-editor-title" hidden>
+    <div class="profile-section-heading">
+      <div><span class="profile-eyebrow">Your information</span><h3 id="profile-editor-title">Profile details</h3><p>Keep your career direction, education, skills, and links current.</p></div>
+      <button class="profile-section-link profile-editor-close" id="closeProfileEditor" type="button">Close editor <span aria-hidden="true">×</span></button>
+    </div>
   <form id="profileEditForm" action="/student/profile" method="POST" enctype="multipart/form-data">
     <section class="profile-photo-card">
       <% if (currUser.avatar && currUser.avatar !== '/images/avatars/default.png') { %>
-        <img class="profile-photo-preview" src="<%= currUser.avatar %>" alt="Current profile picture">
-      <% } else { %><span class="profile-photo-fallback"><%= currUser.name.charAt(0).toUpperCase() %></span><% } %>
+        <img id="profilePhotoCurrent" class="profile-photo-preview" src="<%= currUser.avatar %>" alt="Current profile picture">
+      <% } else { %><span id="profilePhotoCurrent" class="profile-photo-fallback"><%= currUser.name.charAt(0).toUpperCase() %></span><% } %>
       <div class="profile-photo-copy">
         <h3>Profile picture</h3>
         <p>JPG, PNG or WEBP · up to 5 MB</p>
@@ -32,7 +135,7 @@
         <img id="profilePhotoPreview" class="profile-photo-preview is-hidden" alt="Selected profile picture preview">
       </div>
     </section>
-    <div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem;">
+    <div class="profile-editor-grid">
       
       <!-- Left Column: Core Profile & Social Credentials -->
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -143,9 +246,16 @@
 
         <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.85rem;">Verified Skills Tagging</h3>
-          <p style="font-size: 0.8rem; color: #64748b; margin: 0 0 1rem;">Update or add technical keywords separated by commas.</p>
-          
-          <textarea name="skills" rows="4" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; outline: none; margin-bottom: 1.5rem;"><%= (student.skills || []).join(', ') %></textarea>
+          <p style="font-size: 0.8rem; color: #64748b; margin: 0 0 1rem;">Add skills one by one. Press Enter or click Add skill; each skill appears in its own box.</p>
+          <div class="profile-skill-editor" id="profileSkillEditor">
+            <div class="profile-skill-editor-tags" id="profileSkillTags" aria-label="Your skills">
+              <% (student.skills || []).forEach((skill) => { %>
+                <span class="profile-skill-chip"><span class="profile-skill-chip-name"><%= skill %></span><input type="hidden" name="skills" value="<%= skill %>"><button type="button" class="profile-skill-remove" aria-label="Remove <%= skill %>" title="Remove skill">×</button></span>
+              <% }) %>
+            </div>
+            <div class="profile-skill-entry"><input id="profileSkillInput" type="text" maxlength="50" autocomplete="off" placeholder="e.g. JavaScript"><button id="profileSkillAdd" type="button">Add skill</button></div>
+            <p class="profile-skill-editor-hint">Up to 40 skills · 50 characters each. Click × to remove a skill.</p>
+          </div>
 
           <p id="profileSaveStatus" class="profile-save-status" role="status" aria-live="polite"></p>
           <button id="profileSaveButton" type="submit" style="width: 100%; background: #2563eb; color: #ffffff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
@@ -157,13 +267,96 @@
 
     </div>
   </form>
+  </section>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const metrics = <%- JSON.stringify(snapshot?.breakdown || { technical: 0, projects: 0, roadmapProgress: 0, softSkills: 0, problemSolving: 0 }) %>;
     if (typeof renderEmployabilityBars === 'function') renderEmployabilityBars('profileEmployabilityChart', metrics);
+
+    const skillEditor = document.getElementById('profileSkillEditor');
+    const skillTags = document.getElementById('profileSkillTags');
+    const skillInput = document.getElementById('profileSkillInput');
+    const skillAddButton = document.getElementById('profileSkillAdd');
+    const skillHint = skillEditor?.querySelector('.profile-skill-editor-hint');
+    if (!skillEditor || !skillTags || !skillInput || !skillAddButton) return;
+
+    const showSkillMessage = (message, isError = false) => {
+      skillHint.textContent = message;
+      skillHint.classList.toggle('is-error', isError);
+    };
+    const addSkills = (rawValue) => {
+      const candidates = rawValue.split(',').map((skill) => skill.trim()).filter(Boolean);
+      if (!candidates.length) return;
+      let added = 0;
+      for (const skill of candidates) {
+        const currentSkills = [...skillTags.querySelectorAll('input[name="skills"]')].map((input) => input.value);
+        if (skill.length > 50) {
+          showSkillMessage('Each skill must be 50 characters or fewer.', true);
+          continue;
+        }
+        if (currentSkills.length >= 40) {
+          showSkillMessage('You can add up to 40 skills.', true);
+          break;
+        }
+        if (currentSkills.some((current) => current.toLocaleLowerCase() === skill.toLocaleLowerCase())) continue;
+
+        const chip = document.createElement('span');
+        chip.className = 'profile-skill-chip';
+        const name = document.createElement('span');
+        name.className = 'profile-skill-chip-name';
+        name.textContent = skill;
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'skills';
+        hiddenInput.value = skill;
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'profile-skill-remove';
+        removeButton.setAttribute('aria-label', `Remove ${skill}`);
+        removeButton.title = 'Remove skill';
+        removeButton.textContent = '×';
+        chip.append(name, hiddenInput, removeButton);
+        skillTags.append(chip);
+        added += 1;
+      }
+      skillInput.value = '';
+      if (added) showSkillMessage(`${added} skill${added === 1 ? '' : 's'} added. Save your profile to keep the changes.`);
+    };
+
+    skillAddButton.addEventListener('click', () => addSkills(skillInput.value));
+    skillInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ',') {
+        event.preventDefault();
+        addSkills(skillInput.value);
+      }
+    });
+    skillTags.addEventListener('click', (event) => {
+      const removeButton = event.target.closest('.profile-skill-remove');
+      if (!removeButton) return;
+      removeButton.closest('.profile-skill-chip')?.remove();
+      showSkillMessage('Skill removed. Save your profile to keep the changes.');
+    });
   });
+
+  const profileEditor = document.getElementById('profileEditor');
+  const profileEditTriggers = [...document.querySelectorAll('[data-profile-edit]')];
+  const setProfileEditorOpen = (open, trigger) => {
+    if (!profileEditor) return;
+    profileEditor.hidden = !open;
+    profileEditTriggers.forEach((button) => button.setAttribute('aria-expanded', String(open)));
+    if (open) {
+      profileEditor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const focusTarget = trigger?.dataset.profileFocus;
+      const target = focusTarget ? document.getElementById(focusTarget) : profileEditor.querySelector('input:not([type="hidden"]):not([disabled]), textarea, select');
+      window.setTimeout(() => target?.focus(), 180);
+    } else {
+      (profileEditor.contains(trigger) ? profileEditTriggers[0] : trigger)?.focus();
+    }
+  };
+  profileEditTriggers.forEach((button) => button.addEventListener('click', () => setProfileEditorOpen(true, button)));
+  document.getElementById('closeProfileEditor')?.addEventListener('click', (event) => setProfileEditorOpen(false, event.currentTarget));
 </script>
 
 <script>

@@ -16,6 +16,7 @@
       <label>Experience<textarea name="experience" rows="5" maxlength="5000" placeholder="Role, company, dates, and what you worked on. Put each role on a new line."></textarea></label>
       <label>Projects<textarea name="projects" rows="5" maxlength="5000" placeholder="Project name, technologies, what you built, and any real results."></textarea></label>
       <label>Certifications<textarea name="certifications" rows="2" maxlength="5000" placeholder="List certifications, if you have any."></textarea></label>
+      <label>Job description for keyword coverage <span class="form-hint">Optional. Checked locally against your resume; not sent to AI.</span><textarea name="jobDescription" rows="5" maxlength="10000" placeholder="Paste the job description to see which role skills your resume mentions."></textarea></label>
       <button class="button-primary resume-generate-button" id="generateResumeButton" type="submit"><span>✦</span> Generate my resume</button>
       <p class="resume-status" id="resumeStatus" role="status" aria-live="polite"></p>
     </form>
@@ -27,6 +28,7 @@
       </article>
     </section>
   </div>
+  <section id="atsAnalysis" class="ats-analysis panel-card" aria-live="polite" hidden></section>
 </section>
 
 <script>
@@ -35,6 +37,7 @@
   const resumePreview = document.getElementById('resumePreview');
   const generateResumeButton = document.getElementById('generateResumeButton');
   const printResumeButton = document.getElementById('printResumeButton');
+  const atsAnalysis = document.getElementById('atsAnalysis');
 
   function resumeEscape(value) {
     return String(value || '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
@@ -59,9 +62,26 @@
       ${skills.length ? `<section><h2>Skills</h2><p>${skills.map(resumeEscape).join(' · ')}</p></section>` : ''}
       ${experience.length ? `<section><h2>Experience</h2>${experience.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.role)}${item.company ? ` · ${resumeEscape(item.company)}` : ''}</h3>${item.duration ? `<p class="resume-date">${resumeEscape(item.duration)}</p>` : ''}${resumeList(item.bullets)}</div>`).join('')}</section>` : ''}
       ${projects.length ? `<section><h2>Projects</h2>${projects.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.name)}</h3>${item.technologies ? `<p class="resume-date">${resumeEscape(item.technologies)}</p>` : ''}${resumeList(item.bullets)}${item.githubUrl ? `<a href="${resumeEscape(item.githubUrl)}">Source code</a>` : ''}${item.liveDemoUrl ? `${item.githubUrl ? ' · ' : ''}<a href="${resumeEscape(item.liveDemoUrl)}">Live demo</a>` : ''}</div>`).join('')}</section>` : ''}
-      ${education.length ? `<section><h2>Education</h2>${education.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.degree || item.school)}</h3><p>${resumeEscape(item.school)}${item.year ? ` · ${resumeEscape(item.year)}` : ''}</p>${item.details ? `<p>${resumeEscape(item.details)}</p>` : ''}</div>`).join('')}</section>` : ''}
+      ${education.length ? `<section><h2>Education</h2>${education.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.degree || item.school)}</h3>${item.degree && item.school ? `<p>${resumeEscape(item.school)}</p>` : ''}${item.year ? `<p class="resume-date">${resumeEscape(item.year)}</p>` : ''}${item.details ? `<p>${resumeEscape(item.details)}</p>` : ''}</div>`).join('')}</section>` : ''}
       ${certifications.length ? `<section><h2>Certifications</h2>${resumeList(certifications)}</section>` : ''}`;
     printResumeButton.classList.remove('is-hidden');
+  }
+
+  function renderAtsAnalysis(analysis) {
+    atsAnalysis.replaceChildren();
+    if (!analysis) { atsAnalysis.hidden = true; return; }
+    atsAnalysis.hidden = false;
+    const heading = document.createElement('h3'); heading.textContent = 'Resume keyword coverage estimate'; atsAnalysis.append(heading);
+    if (analysis.score === null) {
+      const note = document.createElement('p'); note.textContent = analysis.note; atsAnalysis.append(note); return;
+    }
+    const score = document.createElement('strong'); score.className = 'ats-analysis-score'; score.textContent = `${analysis.score}%`; atsAnalysis.append(score);
+    const summary = document.createElement('p'); summary.textContent = `${analysis.matchedSkills.length} of ${analysis.matchedSkills.length + analysis.missingSkills.length} recognized role skills appear in the resume.`; atsAnalysis.append(summary);
+    [['Matched skills', analysis.matchedSkills], ['Skills to add only if you have them', analysis.missingSkills]].forEach(([label, skills]) => {
+      if (!skills.length) return;
+      const group = document.createElement('p'); const title = document.createElement('strong'); title.textContent = `${label}: `; group.append(title, document.createTextNode(skills.join(', '))); atsAnalysis.append(group);
+    });
+    const note = document.createElement('small'); note.textContent = analysis.note; atsAnalysis.append(note);
   }
 
   resumeForm.addEventListener('submit', async (event) => {
@@ -80,8 +100,9 @@
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.error || data.message || `Request failed (${response.status})`);
       renderResume(data.resume);
-      resumeStatus.textContent = 'Draft ready. Review the details, then print or save as PDF.';
-      resumeStatus.classList.add('success');
+      renderAtsAnalysis(data.atsAnalysis);
+      resumeStatus.textContent = data.fallback ? data.message : 'Draft ready. Review the details, then print or save as PDF.';
+      resumeStatus.classList.add(data.fallback ? 'warning' : 'success');
     } catch (error) {
       resumeStatus.textContent = error.message || 'Could not generate the resume. Please try again.';
       resumeStatus.classList.add('error');

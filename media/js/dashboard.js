@@ -9,7 +9,7 @@ function updateDailyTaskPreview() {
   const count = document.getElementById("taskProgressCount");
   const percent = document.getElementById("taskProgressPercent");
   const fill = document.getElementById("taskProgressFill");
-  const progress = document.querySelector(".task-progress-track[role='progressbar']");
+  const progress = document.querySelector(".task-progress-track[role='progressbar'], .daily-progress-track[role='progressbar']");
   if (count) count.textContent = `${completed} / ${inputs.length} complete`;
   if (percent) percent.textContent = `${progressValue}%`;
   if (fill) fill.style.width = `${progressValue}%`;
@@ -63,7 +63,7 @@ async function saveDailyTasks() {
     const count = document.getElementById("taskProgressCount");
     const percent = document.getElementById("taskProgressPercent");
     const fill = document.getElementById("taskProgressFill");
-    const progress = document.querySelector(".task-progress-track[role='progressbar']");
+    const progress = document.querySelector(".task-progress-track[role='progressbar'], .daily-progress-track[role='progressbar']");
     if (count) count.textContent = `${data.completedTasks} / ${data.totalTasks} complete`;
     if (percent) percent.textContent = `${data.progress}%`;
     if (fill) fill.style.width = `${data.progress}%`;
@@ -115,4 +115,23 @@ async function saveDailyTasks() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", updateDailyTaskPreview);
+document.addEventListener("DOMContentLoaded", () => {
+  updateDailyTaskPreview();
+
+  document.querySelectorAll("[data-daily-task-checkbox]").forEach((input) => {
+    input.addEventListener("change", () => stageDailyTask(input));
+  });
+
+  document.getElementById("dailyTaskSaveButton")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    saveDailyTasks();
+  });
+
+  // The daily tasks page has a regular form for accessibility and fallback,
+  // but save it with fetch so the streak and progress update in place.
+  const form = document.getElementById("dailyTasksForm");
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    saveDailyTasks();
+  });
+});

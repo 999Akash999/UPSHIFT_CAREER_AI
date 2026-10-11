@@ -32,9 +32,11 @@ const calculateEmployability = async (studentId) => {
 
   // Multiple projects and verified work build evidence gradually instead of causing large jumps.
   const projectsScore = Math.min(100, projects.length * 8 + projects.filter((project) => project.isVerified).length * 5);
-  const milestones = (roadmap?.weeks || []).flatMap((week) => week.milestones || []);
-  const roadmapProgress = milestones.length
-    ? (milestones.filter((milestone) => milestone.isCompleted).length / milestones.length) * 100
+  const roadmapDays = (roadmap?.weeks || []).flatMap((week) =>
+    (week.dailyTasks || []).flatMap((task, index) => /^Rest day/i.test(task) ? [] : [Boolean(week.dailyTaskCompletions?.[index])])
+  );
+  const roadmapProgress = roadmapDays.length
+    ? (roadmapDays.filter(Boolean).length / roadmapDays.length) * 100
     : 0;
   const learning = Math.min(100, completedActivities * 4);
   const consistency = Math.min(100, completedTasks * 3);

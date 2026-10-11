@@ -47,7 +47,7 @@ function parseJsonResponse(text) {
   }
 }
 
-const generateAIContent = async ({ messages, jsonMode = false, temperature = 0.3, maxTokens = 1500 }) => {
+const generateAIContent = async ({ messages, jsonMode = false, temperature = 0.3, maxTokens = 1500, timeoutMs = AI_CONFIG.timeoutMs }) => {
   if (!AI_CONFIG.isConfigured) {
     console.warn("⚠️ Gemini API key missing. Using the feature's local fallback response.");
     return null;
@@ -80,7 +80,7 @@ const generateAIContent = async ({ messages, jsonMode = false, temperature = 0.3
             ...(jsonMode ? { responseMimeType: "application/json" } : {}),
           },
         }),
-        signal: AbortSignal.timeout(AI_CONFIG.timeoutMs),
+        signal: AbortSignal.timeout(timeoutMs),
       },
     );
 

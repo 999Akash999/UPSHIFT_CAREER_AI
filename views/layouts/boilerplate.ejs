@@ -19,8 +19,11 @@
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/ui-polish.css">
 </head>
 <body class="public-body">
+
+  <a class="skip-to-content" href="#main-content">Skip to main content</a>
 
   <!-- Global Public Navbar -->
   <%- include('../partials/navbar') %>
@@ -31,7 +34,7 @@
   </div>
 
   <!-- Page Body Content Injection -->
-  <main style="flex: 1 0 auto;">
+  <main class="public-main" id="main-content" tabindex="-1">
     <%- body %>
   </main>
 
