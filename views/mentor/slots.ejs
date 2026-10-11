@@ -1,0 +1,65 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">
+      Availability Settings & Calendar Slots
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Specify recurring weekly calendar windows where students can schedule 1:1 sessions.
+    </p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 2rem;">
+
+  <!-- Weekly Availability Configuration Form -->
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 1.5rem;">Recurring Weekly Windows</h3>
+
+    <form action="/mentor/availability" method="POST">
+      
+      <% const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; %>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+        <% days.forEach(day => { %>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; width: 140px;">
+              <input type="checkbox" name="activeDays" value="<%= day.toLowerCase() %>" style="width: 18px; height: 18px; accent-color: #2563eb; cursor: pointer;">
+              <span style="font-weight: 700; font-size: 0.9rem; color: #0f172a;"><%= day %></span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <input type="time" name="startTime_<%= day.toLowerCase() %>" value="18:00" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 0.4rem 0.65rem; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">
+              <span style="color: #64748b; font-size: 0.85rem;">to</span>
+              <input type="time" name="endTime_<%= day.toLowerCase() %>" value="21:00" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 0.4rem 0.65rem; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.75rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+          Save Availability Windows
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Session Pricing & Default Conference Link Configuration -->
+  <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <form action="/mentor/availability" method="POST" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1rem;">Session Honorarium</h3>
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 0.4rem;">Hourly Consultation Fee (INR)</label>
+        <input type="number" name="hourlyRate" min="0" value="<%= mentorProfile && mentorProfile.hourlyRate ? mentorProfile.hourlyRate : 1500 %>" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; color: #0f172a; font-size: 1rem; outline: none;">
+      </div>
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 0.4rem;">Google Meet or Zoom URL</label>
+        <input type="url" name="defaultMeetingLink" placeholder="https://meet.google.com/xyz-abc-def" value="<%= mentorProfile && mentorProfile.defaultMeetingLink ? mentorProfile.defaultMeetingLink : '' %>" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.9rem; color: #0f172a; outline: none;">
+      </div>
+      <button type="submit" style="padding:.65rem 1rem;background:#2563eb;color:#fff;border:0;border-radius:8px;font-weight:700;">Save rate and meeting link</button>
+    </form>
+  </div>
+
+</div>

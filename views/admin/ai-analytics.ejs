@@ -1,0 +1,15 @@
+<% layout('layouts/dashboardLayout') %>
+
+<section class="admin-ai-page">
+  <header><div><p class="eyebrow">PLATFORM HEALTH</p><h2>AI activity</h2><p>Usage totals for tutor, interview practice, and learning roadmaps.</p></div><span class="ai-config-pill <%= metrics.configured ? 'is-ready' : 'is-offline' %>"><i></i><%= metrics.configured ? 'AI configured' : 'API key missing' %></span></header>
+  <article class="ai-model-card"><span>ACTIVE MODEL</span><strong><%= metrics.model %></strong><small>Counts summarize saved activity; no message content is shown here.</small></article>
+  <div class="ai-metric-grid">
+    <article class="ai-metric-card"><span class="ai-metric-icon">✦</span><small>Tutor questions</small><strong><%= metrics.tutorPrompts %></strong><p>Student learning conversations</p></article>
+    <article class="ai-metric-card"><span class="ai-metric-icon">◎</span><small>Career coach prompts</small><strong><%= metrics.coachPrompts %></strong><p>Career guidance conversations</p></article>
+    <article class="ai-metric-card"><span class="ai-metric-icon">◉</span><small>Interview evaluations</small><strong><%= metrics.interviewEvaluations %></strong><p>Answers reviewed by AI</p></article>
+    <article class="ai-metric-card"><span class="ai-metric-icon">↗</span><small>Roadmaps generated</small><strong><%= metrics.roadmapsGenerated %></strong><p>Saved learning plans</p></article>
+  </div>
+</section>
+<style>
+  .admin-ai-page{max-width:1200px;margin:auto}.admin-ai-page>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}.admin-ai-page h2{margin:.2rem 0;color:#302749;font-size:clamp(1.6rem,4vw,2.1rem)}.admin-ai-page header p:last-child{margin:.2rem 0;color:#817890}.ai-config-pill{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .7rem;border-radius:99px;font-size:.75rem;font-weight:750}.ai-config-pill i{width:8px;height:8px;border-radius:50%;background:currentColor}.ai-config-pill.is-ready{background:#edf7f1;color:#277451}.ai-config-pill.is-offline{background:#fff3e8;color:#a45f17}.ai-model-card,.ai-metric-card{border:1px solid #ebe5f4;border-radius:15px;background:#fff;box-shadow:0 8px 28px #34245008}.ai-model-card{display:grid;gap:.3rem;padding:1rem 1.2rem;margin-bottom:1rem}.ai-model-card span,.ai-metric-card small{color:#8a8098;font-size:.68rem;font-weight:750;letter-spacing:.08em}.ai-model-card strong{color:#423457;font-size:1rem}.ai-model-card small{letter-spacing:0;font-weight:500}.ai-metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem}.ai-metric-card{position:relative;display:grid;gap:.25rem;padding:1.2rem}.ai-metric-icon{position:absolute;right:1rem;top:1rem;display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:#f2edfb;color:#7954c8}.ai-metric-card strong{color:#352b47;font-size:2rem;line-height:1.2}.ai-metric-card p{margin:0;color:#8a8098;font-size:.72rem}@media(max-width:560px){.admin-ai-page>header{align-items:flex-start;flex-direction:column}}
+</style>

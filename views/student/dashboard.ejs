@@ -1,0 +1,225 @@
+ <% layout('layouts/dashboardLayout') %>
+
+<!-- Top Hero Summary Card -->
+<div class="career-hero" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); border-radius: 16px; padding: 2rem; color: #ffffff; margin-bottom: 2rem; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <div class="career-hero-badge" style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(37, 99, 235, 0.2); border: 1px solid rgba(37, 99, 235, 0.4); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.75rem;">
+        <span>⚡</span> STUDENT CAREER OPERATING SYSTEM
+      </div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        Welcome back, <%= currUser && currUser.name ? currUser.name.split(' ')[0] : 'Engineer' %>
+      </h2>
+      <p class="career-hero-description" style="color: #94a3b8; margin: 0; font-size: 0.95rem;">
+        Track: <strong><%= typeof student !== 'undefined' && student.targetRole ? student.targetRole : 'Full Stack Developer' %></strong> &bull; Complete a learning task each day to keep your streak going.
+      </p>
+    </div>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <a class="career-hero-primary" href="/student/roadmap" style="background: #2563eb; color: #ffffff; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.85rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+        Resume Roadmap →
+      </a>
+      <a class="career-hero-secondary" href="/student/interview" style="background: #1e293b; border: 1px solid #334155; color: #ffffff; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.85rem;">
+        AI Mock Interview
+      </a>
+      <a href="/student/resume-builder" style="background: #ffffff; border: 1px solid #e6ddf7; color: #6541b3; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.85rem;">
+        ✦ AI Resume Builder
+      </a>
+    </div>
+  </div>
+</div>
+
+<section class="activity-card streak-heatmap-card" aria-labelledby="activityTitle">
+  <div class="activity-card-header">
+    <div><p class="activity-eyebrow">DAILY PRACTICE</p><h3 id="activityTitle">Daily streak</h3><p>One completed learning task lights up that day. Keep your practice consistent.</p></div>
+    <div class="streak-summary <%= activeToday ? 'streak-active-today' : '' %>"><span class="streak-flame">🔥</span><div><strong id="activityStreakValue"><%= currentStreak || 0 %> day streak</strong><small id="currentStreakStatus"><%= activeToday ? 'Today’s streak is safe' : 'Complete a task today to keep it going' %></small></div></div>
+  </div>
+  <div class="activity-heatmap-scroll"><div class="activity-heatmap" role="img" aria-label="Daily task activity over the last year">
+    <div class="heatmap-weekdays"><span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span></div>
+    <% activityWeeks.forEach(week => { %>
+      <div class="heatmap-week"><span class="heatmap-month"><%= week.month %></span><% week.days.forEach(day => { %>
+        <span class="heatmap-cell level-<%= day.level %> <%= day.future ? 'future' : '' %> <%= day.today ? 'today' : '' %>" data-activity-date="<%= day.key %>" title="<%= day.count %> task<%= day.count === 1 ? '' : 's' %> · <%= day.label %>" aria-label="<%= day.count %> tasks completed · <%= day.label %>"></span>
+      <% }) %></div>
+    <% }) %>
+  </div></div>
+  <div class="heatmap-legend"><span>Less</span><i class="level-0"></i><i class="level-1"></i><i class="level-2"></i><i class="level-3"></i><i class="level-4"></i><span>More</span><a href="/student/daily-tasks">Complete today’s tasks →</a></div>
+</section>
+
+<!-- Primary Metric Cards Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+  
+  <!-- Employability Score -->
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Employability Index</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #2563eb; margin: 0.35rem 0;">
+      <strong id="employabilityScoreValue"><%= typeof employabilityScore !== 'undefined' ? employabilityScore : 0 %></strong><span style="font-size: 1.1rem; color: #64748b;">/100</span>
+    </div>
+    <div style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Builds as you learn and ship work</div>
+  </div>
+
+  <!-- Active Daily Streak -->
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Daily goal</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+      <strong id="completedTaskMetric"><%= completedTasksCount %></strong><span style="font-size: 1.1rem; color: #64748b;"> / <%= todayTasks.length %></span>
+    </div>
+    <div style="font-size: 0.8rem; color: #d97706; font-weight: 600;">✦ Tasks completed today</div>
+  </div>
+
+  <!-- Verified Skills -->
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Skills listed</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+      <%= typeof student !== 'undefined' && student.skills ? student.skills.length : 0 %>
+    </div>
+    <div style="font-size: 0.8rem; color: #2563eb; font-weight: 600;">
+      <a href="/student/skill-gap" style="color: inherit; text-decoration: none;">View skill gap analysis →</a>
+    </div>
+  </div>
+
+  <!-- Open Job Applications -->
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Active Applications</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+      <%= typeof activeApplicationsCount !== 'undefined' ? activeApplicationsCount : 0 %>
+    </div>
+    <div style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Applied, shortlisted, or interviewing</div>
+  </div>
+
+</div>
+
+<section class="portfolio-dashboard-grid">
+  <div class="portfolio-panel">
+    <div class="panel-heading"><div><p class="activity-eyebrow">BUILT BY YOU</p><h3>Project showcase</h3></div><a href="/student/projects">Manage projects <span>→</span></a></div>
+    <% if (recentProjects && recentProjects.length) { %>
+      <div class="dashboard-project-grid">
+        <% recentProjects.forEach(project => { %>
+          <article class="dashboard-project-card">
+            <div class="project-cover"><span class="project-cover-monogram"><%= project.title.slice(0, 1).toUpperCase() %></span><span class="project-cover-label">PROJECT</span></div>
+            <div class="dashboard-project-copy"><h4><%= project.title %></h4><p><%= project.description %></p>
+              <% if (project.techStack && project.techStack.length) { %><div class="project-tech-tags"><% project.techStack.slice(0, 3).forEach(tech => { %><span><%= tech %></span><% }) %></div><% } %>
+              <div class="project-card-links"><% if (project.githubUrl) { %><a href="<%= project.githubUrl %>" target="_blank" rel="noopener noreferrer"><span class="brand-mark github-mark">GH</span> Code</a><% } %><% if (project.liveDemoUrl) { %><a href="<%= project.liveDemoUrl %>" target="_blank" rel="noopener noreferrer"><span class="demo-mark">↗</span> Live demo</a><% } %></div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="portfolio-empty"><span>⌘</span><div><strong>Your projects belong here</strong><p>Add a GitHub repo and live demo to show what you can build.</p></div><a href="/student/projects">Add a project →</a></div>
+    <% } %>
+  </div>
+  <aside class="profile-links-panel">
+    <p class="activity-eyebrow">YOUR LINKS</p><h3>Keep your work connected</h3><p class="profile-links-intro">Make it easy for mentors and hiring teams to find you.</p>
+    <div class="profile-link-list">
+      <% if (student.socialProfiles?.github) { %><a href="<%= student.socialProfiles.github %>" target="_blank" rel="noopener noreferrer"><span class="brand-mark github-mark">GH</span><span><strong>GitHub</strong><small>Code and repositories</small></span><b>↗</b></a><% } %>
+      <% if (student.socialProfiles?.linkedin) { %><a href="<%= student.socialProfiles.linkedin %>" target="_blank" rel="noopener noreferrer"><span class="brand-mark linkedin-mark">in</span><span><strong>LinkedIn</strong><small>Professional profile</small></span><b>↗</b></a><% } %>
+      <% if (student.socialProfiles?.leetcode) { %><a href="<%= student.socialProfiles.leetcode %>" target="_blank" rel="noopener noreferrer"><span class="brand-mark leetcode-mark">LC</span><span><strong>LeetCode</strong><small>Problem-solving profile</small></span><b>↗</b></a><% } %>
+      <% if (student.socialProfiles?.portfolio) { %><a href="<%= student.socialProfiles.portfolio %>" target="_blank" rel="noopener noreferrer"><span class="brand-mark portfolio-mark">↗</span><span><strong>Portfolio</strong><small>Personal website</small></span><b>↗</b></a><% } %>
+    </div>
+    <a class="edit-profile-links" href="/student/profile">Edit profile links</a>
+  </aside>
+</section>
+
+<!-- Core Split Workspace: Competency Radar & Today's Tasks -->
+<div style="display: grid; grid-template-columns: 1.1fr 1.3fr; gap: 2rem; margin-bottom: 2rem;">
+
+  <!-- Left: Employability Competency Radar Chart -->
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Competency Matrix Radar</h3>
+        <p style="font-size: 0.8rem; color: #64748b; margin: 0.2rem 0 0;">Evaluated across 5 core factors</p>
+      </div>
+      <a href="/student/employability" style="font-size: 0.8rem; font-weight: 700; color: #2563eb; text-decoration: none;">Details →</a>
+    </div>
+    
+    <div style="position: relative; height: 320px; width: 100%; flex-grow: 1;">
+      <canvas id="dashboardRadarChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Right: Today's Daily Learning Tasks Checklist -->
+  <div class="today-tasks-panel" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Today’s focus</h3>
+        <p style="font-size: 0.8rem; color: #64748b; margin: 0.2rem 0 0;">Complete a task to update your score and activity streak.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;"><button class="daily-save-button" id="dailyTaskSaveButton" type="button" onclick="saveDailyTasks()" disabled>Progress saved</button><a href="/student/daily-tasks" style="font-size: 0.8rem; font-weight: 700; color: #2563eb; text-decoration: none;">View All →</a></div>
+    </div>
+
+    <div class="task-progress-summary"><strong id="taskProgressCount"><%= completedTasksCount %> / <%= todayTasks.length %> complete</strong><span id="taskProgressPercent"><%= todayTaskProgress %>%</span></div>
+    <div class="task-progress-track" role="progressbar" aria-label="Today's task progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<%= todayTaskProgress %>"><span id="taskProgressFill" style="width: <%= todayTaskProgress %>%"></span></div>
+
+    <div id="todayTaskList" class="today-task-list" style="display: flex; flex-direction: column; gap: 0.75rem; flex-grow: 1;">
+      <% if (typeof todayTasks !== 'undefined' && todayTasks.length > 0) { %>
+        <% todayTasks.forEach(task => { %>
+          <div class="task-item dashboard-task-row <%= task.isCompleted ? 'done' : '' %>" data-task-row style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0; background: <%= task.isCompleted ? '#f8fafc' : '#ffffff' %>;">
+            <div class="dashboard-task-main" style="display: flex; align-items: center; gap: 0.75rem;">
+              <input 
+                type="checkbox" 
+                <%= task.isCompleted ? 'checked' : '' %> 
+                data-daily-task-checkbox data-task-id="<%= task._id %>"
+                data-saved-checked="<%= task.isCompleted %>"
+                onchange="stageDailyTask(this)" 
+                aria-label="Mark <%= task.title %> complete"
+                style="width: 18px; height: 18px; accent-color: #7954c8; cursor: pointer;"
+              >
+              <span class="dashboard-task-title" style="font-size: 0.9rem; font-weight: 600; color: <%= task.isCompleted ? '#94a3b8' : '#0f172a' %>; text-decoration: <%= task.isCompleted ? 'line-through' : 'none' %>;">
+                <%= task.title %>
+              </span>
+            </div>
+            <span class="task-category" style="font-size: 0.75rem; color: #2563eb; background: rgba(37,99,235,0.08); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700;">
+              Roadmap
+            </span>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="task-empty-state"><span>☀</span><strong>You’re all clear for today</strong><p>Generate a roadmap to get a fresh set of focused daily tasks.</p><a href="/student/roadmap">Open your roadmap →</a></div>
+      <% } %>
+    </div>
+    <p class="task-update-status" id="taskUpdateStatus" role="status" aria-live="polite"></p>
+  </div>
+
+</div>
+
+<!-- Lower Section: Targeted Upskill Recommendations to Bridge Gaps -->
+<div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+    <div>
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Recommended Upskilling to Raise Your Score</h3>
+      <p style="font-size: 0.85rem; color: #64748b; margin: 0.2rem 0 0;">Targeted modules based on missing competencies in your active applications.</p>
+    </div>
+    <a href="/courses" style="font-size: 0.85rem; font-weight: 700; color: #2563eb; text-decoration: none;">Browse Store →</a>
+  </div>
+
+  <% if (gapCourses && gapCourses.length) { %>
+    <div class="recommended-course-grid">
+      <% gapCourses.forEach(course => { %>
+        <article class="recommended-course-card">
+          <span><%= course.category %> · <%= course.level %></span>
+          <h4><%= course.title %></h4>
+          <p><%= course.description %></p>
+          <div><strong><%= course.discountPrice > 0 ? `₹${course.discountPrice}` : course.price === 0 ? 'Free' : `₹${course.price}` %></strong><a href="/courses/<%= course.slug %>">View course →</a></div>
+        </article>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="course-empty-state"><span>✦</span><div><strong>No targeted courses yet</strong><p>Update your skills or browse the course library to find your next step.</p></div><a href="/courses">Browse all courses →</a></div>
+  <% } %>
+</div>
+
+<!-- Embedded Radar Chart Bootstrap -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const rawMetrics = <%- JSON.stringify(
+      typeof scoreMetrics !== 'undefined' 
+        ? scoreMetrics 
+        : (typeof student !== 'undefined' && student.employabilityBreakdown 
+            ? student.employabilityBreakdown 
+            : { technical: 0, projects: 0, roadmapProgress: 0, softSkills: 0, problemSolving: 0 })
+    ) %>;
+
+    if (typeof renderEmployabilityRadar === "function") {
+      renderEmployabilityRadar("dashboardRadarChart", rawMetrics);
+    }
+  });
+</script>

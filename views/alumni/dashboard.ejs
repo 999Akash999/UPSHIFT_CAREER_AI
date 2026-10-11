@@ -1,0 +1,131 @@
+<% layout('layouts/dashboardLayout') %>
+
+<!-- Top Hero Summary Card -->
+<div style="background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); border-radius: 16px; padding: 2rem; color: #ffffff; margin-bottom: 2rem; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(37, 99, 235, 0.2); border: 1px solid rgba(37, 99, 235, 0.4); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.75rem;">
+        <span>🌐</span> ALUMNI NETWORK CONSOLE
+      </div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        Welcome back, <%= currUser ? currUser.name.split(' ')[0] : 'Alumni' %>
+      </h2>
+      <p style="color: #94a3b8; margin: 0; font-size: 0.95rem;">
+        Connect with current engineering juniors, review candidate referral requests, and host tech webinars.
+      </p>
+    </div>
+    <div style="display: flex; gap: 0.75rem;">
+      <a href="/alumni/my-events" style="background: #1e293b; border: 1px solid #334155; color: #ffffff; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.85rem;">
+        Host Tech Webinar
+      </a>
+      <a href="/alumni/referrals" style="background: #2563eb; color: #ffffff; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.85rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+        Referral Inbox →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Primary Alumni Metric Cards -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+  
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Pending Referral Requests</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+      <%= typeof pendingReferrals !== 'undefined' ? pendingReferrals : 0 %>
+    </div>
+    <div style="font-size: 0.8rem; color: #2563eb; font-weight: 600;">Requests awaiting your review</div>
+  </div>
+
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Accepted Referrals</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+      <%= typeof acceptedReferrals !== 'undefined' ? acceptedReferrals : 0 %>
+    </div>
+    <div style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Referral requests you accepted</div>
+  </div>
+
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Webinars & AMAs Hosted</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #2563eb; margin: 0.35rem 0;">
+      <%= typeof hostedEventsCount !== 'undefined' ? hostedEventsCount : 0 %>
+    </div>
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Events hosted</div>
+  </div>
+
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Current Employer</div>
+    <div style="font-size: 1.5rem; font-weight: 900; color: #0f172a; margin: 0.75rem 0 0.35rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+      <%= profile?.currentCompany || 'Not added' %>
+    </div>
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600;"><%= profile?.designation || 'Add your role in profile settings' %></div>
+  </div>
+
+</div>
+
+<!-- Split View: High Score Referral Queue & Active Network Talks -->
+<div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+
+  <!-- Pending Referral Pipeline -->
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Top Student Referral Requests</h3>
+        <p style="font-size: 0.85rem; color: #64748b; margin: 0.2rem 0 0;">Pre-screened candidates from your alma mater.</p>
+      </div>
+      <a href="/alumni/referrals" style="font-size: 0.85rem; font-weight: 700; color: #2563eb; text-decoration: none;">View All →</a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+      <% if (typeof referralRequests !== 'undefined' && referralRequests.length > 0) { %>
+        <% referralRequests.slice(0, 3).forEach(req => { %>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem;">
+                <%= req.student && req.student.name ? req.student.name.charAt(0).toUpperCase() : 'S' %>
+              </div>
+              <div>
+                <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a;"><%= req.student ? req.student.name : 'Student' %></div>
+                <div style="font-size: 0.8rem; color: #64748b;">Target: <%= req.targetRole || 'Software Engineer' %></div>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <span style="background: rgba(37, 99, 235, 0.1); color: #2563eb; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
+                <%= req.employabilityScore ?? 0 %>/100
+              </span>
+              <a href="/alumni/referrals/<%= req._id %>" style="display: block; font-size: 0.75rem; color: #2563eb; font-weight: 700; text-decoration: none; margin-top: 0.35rem;">
+                Review Dossier →
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div style="text-align: center; padding: 2.5rem 1rem; color: #64748b;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">📬</div>
+          <p style="font-weight: 700; color: #0f172a; margin: 0 0 0.25rem;">No Pending Inbound Requests</p>
+          <p style="font-size: 0.85rem; margin: 0;">Junior requests matching your company profile will show up here.</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Upcoming Webinars Summary -->
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Upcoming Tech Talk</h3>
+      <a href="/alumni/my-events" style="font-size: 0.85rem; font-weight: 700; color: #2563eb; text-decoration: none;">Manage Talks</a>
+    </div>
+
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; flex-grow: 1;">
+      <% if (myEvents && myEvents.length) { const event = myEvents[0]; %>
+        <span style="background:#2563eb;color:#fff;font-size:.7rem;font-weight:800;padding:.2rem .5rem;border-radius:4px;text-transform:uppercase;">Upcoming event</span>
+        <h4 style="font-size:1.05rem;font-weight:800;color:#0f172a;margin:.5rem 0 .35rem;"><%= event.title %></h4>
+        <p style="font-size:.8rem;color:#64748b;line-height:1.5;"><%= event.description %></p>
+        <p style="font-size:.8rem;color:#0f172a;">👥 <%= event.registrationCount || 0 %> / <%= event.capacity %> registered<br><%= new Date(event.scheduledAt).toLocaleString('en-IN') %></p>
+      <% } else { %>
+        <p style="color:#64748b;">No upcoming event yet. Create one to show it here.</p>
+      <% } %>
+      <a href="/alumni/my-events" style="background:#0f172a;color:#fff;padding:.4rem .85rem;border-radius:6px;font-size:.75rem;font-weight:700;text-decoration:none;">Manage events</a>
+    </div>
+  </div>
+
+</div>

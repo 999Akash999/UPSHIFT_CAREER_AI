@@ -1,0 +1,39 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 860px; margin: 0 auto;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        Notifications & Alerts
+      </h2>
+      <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+        Updates on upcoming deadlines, recruiter status changes, and streak alerts.
+      </p>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+    <% if (typeof notifications !== 'undefined' && notifications.length > 0) { %>
+      <% notifications.forEach(n => { %>
+        <div style="background: #ffffff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 1.3rem;">
+              <%= n.category === 'streak' ? '🔥' : (n.category === 'application' ? '💼' : '🔔') %>
+            </span>
+            <div>
+              <div style="font-size: 0.95rem; font-weight: 800; color: #0f172a;"><%= n.title %></div>
+              <p style="font-size: 0.85rem; color: #64748b; margin: 0.2rem 0 0;"><%= n.message %></p>
+            </div>
+          </div>
+          <a href="<%= n.actionUrl || '/student/dashboard' %>" style="color: #2563eb; font-weight: 700; font-size: 0.85rem; text-decoration: none;">View →</a>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔕</div>
+        <h4 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">Inbox is Empty</h4>
+        <p style="margin: 0; font-size: 0.9rem;">You are completely caught up on all alerts and activity.</p>
+      </div>
+    <% } %>
+  </div>
+</div>

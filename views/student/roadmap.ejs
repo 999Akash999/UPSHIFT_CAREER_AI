@@ -1,0 +1,78 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.25rem;">
+      <%= roadmap ? roadmap.title : 'Personalized Learning Curriculum' %>
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Target: <strong><%= roadmap ? roadmap.targetRole : student.targetRole %></strong> &bull; Completion: <%= roadmap ? roadmap.completionPercentage : 0 %>%
+    </p>
+  </div>
+
+  <form action="/roadmap/generate" method="POST" style="display: flex; gap: 0.5rem;">
+    <input type="hidden" name="targetRole" value="<%= student.targetRole %>">
+    <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
+      ⚡ Regenerate AI Roadmap
+    </button>
+  </form>
+</div>
+
+<% if (roadmap && roadmap.weeks && roadmap.weeks.length > 0) { %>
+  <div class="roadmap-container" style="position: relative; padding-left: 2rem;">
+    <% roadmap.weeks.forEach((week) => { %>
+      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.75rem; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative;">
+        
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          <span style="background: #2563eb; color: #ffffff; font-weight: 800; font-size: 0.8rem; padding: 0.3rem 0.7rem; border-radius: 6px;">
+            WEEK <%= week.weekNumber %>
+          </span>
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0;"><%= week.theme %></h3>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+          <% week.milestones.forEach((milestone, mIdx) => { %>
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 0.85rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem; min-width:0;">
+                <input 
+                  type="checkbox" 
+                  <%= milestone.isCompleted ? 'checked' : '' %> 
+                  onchange="toggleMilestone('<%= roadmap._id %>', '<%= week.weekNumber %>', '<%= mIdx %>', this)"
+                  style="width: 18px; height: 18px; accent-color: #2563eb; cursor: pointer;"
+                >
+                <span style="font-size: 0.95rem; font-weight: 600; color: <%= milestone.isCompleted ? '#94a3b8' : '#0f172a' %>; text-decoration: <%= milestone.isCompleted ? 'line-through' : 'none' %>;">
+                  <%= milestone.title %>
+                  <% if (milestone.lesson || milestone.example || milestone.practice) { %>
+                    <details style="margin-top:.65rem;font-weight:400;text-decoration:none;color:#5f566b;line-height:1.6">
+                      <summary style="cursor:pointer;color:#7954c8;font-weight:700">Learn this topic</summary>
+                      <% if (milestone.lesson) { %><p style="margin:.55rem 0"><%= milestone.lesson %></p><% } %>
+                      <% if (milestone.keyConcepts && milestone.keyConcepts.length) { %><strong>Key ideas</strong><ul style="margin:.25rem 0;padding-left:1.2rem"><% milestone.keyConcepts.forEach(concept => { %><li><%= concept %></li><% }) %></ul><% } %>
+                      <% if (milestone.example) { %><p style="margin:.5rem 0"><strong>Example:</strong> <%= milestone.example %></p><% } %>
+                      <% if (milestone.practice) { %><p style="margin:.5rem 0"><strong>Try it:</strong> <%= milestone.practice %></p><% } %>
+                    </details>
+                  <% } %>
+                </span>
+              </div>
+              <span style="font-size: 0.75rem; font-weight: 700; color: #2563eb; background: rgba(37,99,235,0.08); padding: 0.2rem 0.5rem; border-radius: 4px;">Milestone</span>
+            </div>
+          <% }) %>
+        </div>
+
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 4rem 2rem; text-align: center;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">🧭</div>
+    <h3 style="font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">No Active Roadmap Initialized</h3>
+    <p style="color: #64748b; max-width: 480px; margin: 0 auto 2rem;">Let our Gemini career architect build a tailored curriculum based on your target role and identified skill gaps.</p>
+    <form action="/roadmap/generate" method="POST">
+      <input type="hidden" name="targetRole" value="<%= student.targetRole || 'Full Stack Engineer' %>">
+      <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.9rem 2rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer;">
+        Generate Custom Curriculum Now
+      </button>
+    </form>
+  </div>
+<% } %>
+
+<script src="/js/roadmap.js"></script>

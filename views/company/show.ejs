@@ -1,0 +1,9 @@
+<% layout('layouts/boilerplate') %>
+
+<main style="max-width:850px;margin:4rem auto;padding:2rem;background:#fff;border:1px solid #e2e8f0;border-radius:14px;">
+  <a href="/jobs" style="color:#2563eb;">← Hiring board</a>
+  <h1 style="color:#0f172a;"><%= company.name %></h1>
+  <p style="color:#2563eb;font-weight:700;"><%= company.industry %> · <%= company.location %></p>
+  <p style="white-space:pre-line;color:#334155;"><%= company.description || 'Company profile' %></p>
+  <% if (company.website) { %><a href="<%= company.website.startsWith('http') ? company.website : `https://${company.website}` %>" target="_blank" rel="noopener">Company website ↗</a><% } %>
+</main>

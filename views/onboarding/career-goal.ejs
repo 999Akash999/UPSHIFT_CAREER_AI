@@ -1,0 +1,66 @@
+<% layout('layouts/boilerplate') %>
+
+<div style="min-height: calc(100vh - 180px); display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+  <div style="background: #0f172a; border: 1px solid #1e3a5f; width: 100%; max-width: 540px; padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);">
+
+    <!-- Step Progress Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 700; color: #60a5fa; text-transform: uppercase;">Step 3 of 3</span>
+      <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600;">Target Specialization</span>
+    </div>
+
+    <!-- Progress Bar Tracker -->
+    <div style="width: 100%; height: 6px; background: #1e293b; border-radius: 3px; margin-bottom: 2rem; overflow: hidden;">
+      <div style="width: 100%; height: 100%; background: #2563eb; border-radius: 3px;"></div>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.75rem; font-weight: 800; color: #ffffff; margin-bottom: 0.35rem; letter-spacing: -0.02em;">Target Career Role</h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin: 0;">Specify what role you are targeting to trigger customized roadmaps and matching job applications.</p>
+    </div>
+
+    <form action="/onboarding/career-goal" method="POST">
+      
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">Target Job Title</label>
+        <select name="targetRole" required style="width: 100%; background: #070d19; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem; cursor: pointer;">
+          <option value="Full Stack Developer" <%= student && student.targetRole === 'Full Stack Developer' ? 'selected' : '' %>>Full Stack Developer (MERN / Next.js)</option>
+          <option value="Backend Engineer" <%= student && student.targetRole === 'Backend Engineer' ? 'selected' : '' %>>Backend Engineer (Node / Go / Java)</option>
+          <option value="Frontend Engineer" <%= student && student.targetRole === 'Frontend Engineer' ? 'selected' : '' %>>Frontend Engineer (React / TypeScript)</option>
+          <option value="AI / ML Engineer" <%= student && student.targetRole === 'AI / ML Engineer' ? 'selected' : '' %>>AI / ML Engineer (Python / PyTorch)</option>
+          <option value="DevOps & Cloud Engineer" <%= student && student.targetRole === 'DevOps & Cloud Engineer' ? 'selected' : '' %>>DevOps & Cloud Engineer (Docker / K8s / AWS)</option>
+          <option value="Data Engineer" <%= student && student.targetRole === 'Data Engineer' ? 'selected' : '' %>>Data Engineer (SQL / Spark / ETL)</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 1.75rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">Primary Domain Track</label>
+        <select name="primaryDomain" required style="width: 100%; background: #070d19; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem; cursor: pointer;">
+          <option value="Web Development" selected>Web Applications & Microservices</option>
+          <option value="Artificial Intelligence">Generative AI & Machine Learning</option>
+          <option value="Cloud Infrastructure">Cloud Architectures & Reliability</option>
+          <option value="Core Engineering">Systems Programming & Distributed Computing</option>
+        </select>
+      </div>
+
+      <!-- Finalizing Banner -->
+      <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="font-size: 1.1rem; line-height: 1;">💡</span>
+        <span style="font-size: 0.8rem; color: #93c5fd; line-height: 1.5;">
+          Submitting this will mark your profile as onboarded and generate your baseline employability matrix on your student dashboard.
+        </span>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <a href="/onboarding/skills" style="display: flex; align-items: center; justify-content: center; background: #1e293b; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.85rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; text-decoration: none;">
+          ← Back
+        </a>
+        <button type="submit" style="flex-grow: 1; background: #2563eb; color: #ffffff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+          Complete Setup & Enter Terminal 🚀
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

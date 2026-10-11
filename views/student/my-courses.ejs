@@ -1,0 +1,187 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1140px; margin: 0 auto;">
+  
+  <!-- Top Navigation & Title Bar -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.25); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: #2563eb; margin-bottom: 0.5rem;">
+        <span>🎓</span> ACTIVE ENROLLMENTS & UPSKILL TRACKS
+      </div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        My Enrolled Courses
+      </h2>
+      <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+        Track your curriculum completion, resume video lessons, and verify completed capstones.
+      </p>
+    </div>
+
+    <div style="display: flex; gap: 0.75rem;">
+      <a href="/courses" style="background: #ffffff; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none;">
+        Explore Upskill Store
+      </a>
+      <a href="/student/roadmap" style="background: #2563eb; color: #ffffff; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);">
+        Roadmap Sync →
+      </a>
+    </div>
+  </div>
+
+  <!-- Summary Statistics Row -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2.25rem;">
+    
+    <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Enrolled Tracks</div>
+      <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+        <%= typeof enrolledCourses !== 'undefined' ? enrolledCourses.length : 3 %>
+      </div>
+      <div style="font-size: 0.8rem; color: #2563eb; font-weight: 600;">Active certifications</div>
+    </div>
+
+    <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Average Progress</div>
+      <div style="font-size: 2.25rem; font-weight: 900; color: #2563eb; margin: 0.35rem 0;">
+        68<span style="font-size: 1.1rem; color: #64748b;">%</span>
+      </div>
+      <div style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Consistent learning pace</div>
+    </div>
+
+    <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Completed Capstones</div>
+      <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+        2
+      </div>
+      <div style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Added to portfolio</div>
+    </div>
+
+    <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Employability Boost</div>
+      <div style="font-size: 2.25rem; font-weight: 900; color: #10b981; margin: 0.35rem 0;">
+        +12 <span style="font-size: 1.1rem; color: #64748b;">pts</span>
+      </div>
+      <div style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Verified via assignments</div>
+    </div>
+
+  </div>
+
+  <!-- Enrolled Course Cards List -->
+  <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <% if (typeof enrolledCourses !== 'undefined' && enrolledCourses.length > 0) { %>
+      <% enrolledCourses.forEach(enrollment => { %>
+        <% const course = enrollment.course || enrollment; %>
+        <% const progressPercent = enrollment.progressPercentage || 65; %>
+        <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: grid; grid-template-columns: 180px 1fr auto; gap: 2rem; align-items: center;">
+          
+          <!-- Course Thumbnail / Category Shield -->
+          <div style="height: 120px; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <span style="align-self: flex-start; background: rgba(37, 99, 235, 0.25); color: #93c5fd; font-size: 0.65rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase;">
+              <%= course.category || 'Tech Track' %>
+            </span>
+            <span style="color: #ffffff; font-size: 0.75rem; font-weight: 700;">
+              <%= course.level || 'Intermediate' %>
+            </span>
+          </div>
+
+          <!-- Course Metadata & Progress Bar -->
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;">
+              <span style="font-size: 0.75rem; font-weight: 800; color: #2563eb; text-transform: uppercase;">
+                <%= course.modules ? course.modules.length : 6 %> Modules
+              </span>
+              <span style="color: #cbd5e1;">&bull;</span>
+              <span style="font-size: 0.75rem; color: #64748b;">
+                Last active: <%= new Date().toLocaleDateString('en-IN') %>
+              </span>
+            </div>
+
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem;">
+              <%= course.title %>
+            </h3>
+
+            <!-- Targeted Gaps Resolved -->
+            <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;">
+              <% (course.targetSkillGaps || []).slice(0, 3).forEach(gap => { %>
+                <span style="background: rgba(37, 99, 235, 0.08); color: #2563eb; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">
+                  ✓ <%= gap %>
+                </span>
+              <% }) %>
+            </div>
+
+            <!-- Custom Progress Bar -->
+            <div style="max-width: 460px;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem;">
+                <span style="color: #0f172a;">Course Progress</span>
+                <span style="color: #2563eb;"><%= progressPercent %>% Completed</span>
+              </div>
+              <div style="width: 100%; height: 7px; background: #f1f5f9; border-radius: 4px; overflow: hidden;">
+                <div style="width: <%= progressPercent %>%; height: 100%; background: #2563eb; border-radius: 4px;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; flex-direction: column; gap: 0.6rem; min-width: 160px; text-align: right;">
+            <a href="/courses/<%= course.slug || 'active-lesson' %>/learn" style="background: #2563eb; color: #ffffff; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; text-align: center; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);">
+              Resume Lesson ▶
+            </a>
+            <a href="/courses/<%= course.slug %>" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.8rem; text-decoration: none; text-align: center;">
+              Syllabus & Docs
+            </a>
+          </div>
+
+        </div>
+      <% }) %>
+    <% } else { %>
+      <!-- Fallback Preview When No Orders Exist Yet -->
+      <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: grid; grid-template-columns: 180px 1fr auto; gap: 2rem; align-items: center;">
+        
+        <div style="height: 120px; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <span style="align-self: flex-start; background: rgba(37, 99, 235, 0.25); color: #93c5fd; font-size: 0.65rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase;">
+            SYSTEM DESIGN
+          </span>
+          <span style="color: #ffffff; font-size: 0.75rem; font-weight: 700;">
+            Advanced
+          </span>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;">
+            <span style="font-size: 0.75rem; font-weight: 800; color: #2563eb; text-transform: uppercase;">8 Modules</span>
+            <span style="color: #cbd5e1;">&bull;</span>
+            <span style="font-size: 0.75rem; color: #64748b;">Active Lesson: Distributed Caching with Redis</span>
+          </div>
+
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem;">
+            High-Concurrency Architecture & Microservices
+          </h3>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;">
+            <span style="background: rgba(37, 99, 235, 0.08); color: #2563eb; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">✓ Redis</span>
+            <span style="background: rgba(37, 99, 235, 0.08); color: #2563eb; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">✓ Kafka Streams</span>
+            <span style="background: rgba(37, 99, 235, 0.08); color: #2563eb; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">✓ Docker Clustered</span>
+          </div>
+
+          <div style="max-width: 460px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem;">
+              <span style="color: #0f172a;">Module 4 of 8</span>
+              <span style="color: #2563eb;">50% Completed</span>
+            </div>
+            <div style="width: 100%; height: 7px; background: #f1f5f9; border-radius: 4px; overflow: hidden;">
+              <div style="width: 50%; height: 100%; background: #2563eb; border-radius: 4px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.6rem; min-width: 160px; text-align: right;">
+          <a href="/courses/system-design/learn" style="background: #2563eb; color: #ffffff; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; text-align: center; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);">
+            Resume Lesson ▶
+          </a>
+          <a href="/courses/system-design" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.8rem; text-decoration: none; text-align: center;">
+            Syllabus & Docs
+          </a>
+        </div>
+
+      </div>
+    <% } %>
+  </div>
+
+</div>

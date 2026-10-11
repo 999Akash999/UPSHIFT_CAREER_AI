@@ -1,0 +1,45 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width:1000px;margin:0 auto;">
+  <a href="/courses/<%= course.slug %>" style="color:#2563eb;">← Course overview</a>
+  <h1 style="color:#0f172a;"><%= course.title %></h1>
+  <% if (previewOnly) { %><p style="padding:.75rem;background:#fffbeb;color:#92400e;border-radius:8px;">Preview mode. Enroll to access all course lessons.</p><% } %>
+  <% modules.forEach((module, moduleIndex) => { %>
+    <section style="margin:1.25rem 0;padding:1.25rem;background:#fff;border:1px solid #e2e8f0;border-radius:12px;">
+      <h2 style="margin-top:0;color:#0f172a;"><%= moduleIndex + 1 %>. <%= module.title %></h2>
+      <% if (module.description) { %><p style="color:#64748b;"><%= module.description %></p><% } %>
+      <ol style="padding-left:1.25rem;color:#334155;">
+        <% module.lessons.forEach(lesson => { %>
+          <% const isLessonComplete = (completedLessons || []).includes(String(lesson._id)); %>
+          <li style="padding:.5rem 0;"><strong><%= lesson.title %></strong> · <%= lesson.durationMinutes %> min
+            <% if (lesson.videoUrl) { %><div><a href="<%= lesson.videoUrl %>" target="_blank" rel="noopener">Open lesson ↗</a></div><% } %>
+            <% (lesson.resources || []).forEach(resource => { %><div><a href="<%= resource.fileUrl %>" target="_blank" rel="noopener"><%= resource.title %></a></div><% }) %>
+            <% if (!previewOnly) { %>
+              <button type="button" class="lesson-complete" data-lesson-id="<%= lesson._id %>" style="margin-top:.5rem;padding:.4rem .7rem;border:0;border-radius:6px;background:<%= isLessonComplete ? '#dcfce7' : '#2563eb' %>;color:<%= isLessonComplete ? '#166534' : '#fff' %>;cursor:pointer;">
+                <%= isLessonComplete ? 'Completed ✓' : 'Mark complete' %>
+              </button>
+            <% } %>
+          </li>
+        <% }) %>
+      </ol>
+    </section>
+  <% }) %>
+</main>
+<script>
+  document.querySelectorAll(".lesson-complete").forEach((button) => {
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      try {
+        const response = await fetch(`/courses/<%= course.slug %>/lessons/${button.dataset.lessonId}/complete`, { method: "POST", headers: { Accept: "application/json" } });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Could not save progress.");
+        button.textContent = "Completed ✓";
+        button.style.background = "#dcfce7";
+        button.style.color = "#166534";
+      } catch (error) {
+        alert(error.message);
+        button.disabled = false;
+      }
+    });
+  });
+</script>

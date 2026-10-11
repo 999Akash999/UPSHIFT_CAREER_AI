@@ -1,0 +1,44 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width: 860px; margin: 0 auto;">
+  <a href="/student/assessments" style="color:#2563eb;">← Assessments</a>
+  <h1 style="color:#0f172a;"><%= assessment.title %></h1>
+  <p style="color:#64748b;"><%= assessment.description %> · <%= assessment.questions.length %> questions · <%= assessment.durationMinutes %> minutes · Pass: <%= assessment.passingScore %>%</p>
+  <form id="assessment-form" style="display:grid;gap:1rem;">
+    <% assessment.questions.forEach((question, index) => { %>
+      <fieldset style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;">
+        <legend style="font-weight:700;color:#0f172a;"><%= index + 1 %>. <%= question.prompt %></legend>
+        <% question.options.forEach((option, optionIndex) => { %>
+          <label style="display:block;padding:.4rem;color:#334155;">
+            <input type="radio" name="question-<%= index %>" value="<%= optionIndex %>" required> <%= option %>
+          </label>
+        <% }) %>
+      </fieldset>
+    <% }) %>
+    <button type="submit" style="padding:.8rem 1rem;background:#2563eb;color:#fff;border:0;border-radius:8px;font-weight:700;">Submit assessment</button>
+  </form>
+  <p id="assessment-result" role="status" style="font-weight:700;"></p>
+</main>
+
+<script>
+  document.getElementById('assessment-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const answers = <%- JSON.stringify(assessment.questions.map(() => null)) %>;
+    answers.forEach((_, index) => {
+      const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+      answers[index] = Number(selected.value);
+    });
+    const result = document.getElementById('assessment-result');
+    try {
+      const response = await fetch('/student/assessments/submit', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assessmentId: '<%= assessment._id %>', answers })
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || 'Submission failed.');
+      result.textContent = `Your score: ${payload.score}%${payload.passed ? ' — Passed!' : ''}`;
+    } catch (error) {
+      result.textContent = error.message;
+    }
+  });
+</script>

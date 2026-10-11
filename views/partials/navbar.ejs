@@ -1,0 +1,24 @@
+<header class="public-header">
+  <div class="public-nav-wrap">
+    <a class="public-brand" href="/">
+      <span class="brand-badge">U</span>
+      <span><strong>UPSHIFT</strong><small>Career OS</small></span>
+    </a>
+    <button class="public-nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="publicNav" onclick="togglePublicNav()">☰</button>
+    <nav class="public-nav-links" id="publicNav">
+      <a href="/courses">Courses</a>
+      <a href="/student/jobs">Hiring board</a>
+      <a href="/student/mentorship">Mentorship</a>
+      <a href="/alumni">Alumni</a>
+      <% if (typeof currUser !== 'undefined' && currUser) { %>
+        <a class="public-nav-cta" href="/<%= currUser.role %>/dashboard">Open dashboard <span>→</span></a>
+        <a class="public-avatar-link" href="<%= currUser.role === 'student' ? '/student/profile' : '/' + currUser.role + '/dashboard' %>" aria-label="Open profile">
+          <% if (currUser.avatar && currUser.avatar !== '/images/avatars/default.png') { %><img class="avatar-image" src="<%= currUser.avatar %>" alt=""><% } else { %><span class="avatar-fallback"><%= currUser.name.charAt(0).toUpperCase() %></span><% } %>
+        </a>
+      <% } else { %>
+        <a class="public-nav-login" href="/login">Sign in</a>
+        <a class="public-nav-cta" href="/signup">Get started <span>→</span></a>
+      <% } %>
+    </nav>
+  </div>
+</header>

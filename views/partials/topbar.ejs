@@ -1,0 +1,24 @@
+<header class="dashboard-topbar">
+  <div class="topbar-leading">
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="appSidebar" aria-expanded="false" onclick="toggleSidebarNav()">☰</button>
+    <div>
+      <p class="topbar-eyebrow"><%= currUser ? currUser.role : 'Workspace' %> workspace</p>
+      <h1><%= typeof pageTitle !== 'undefined' ? pageTitle : (typeof title !== 'undefined' ? title.replace(/\s*\|.*$/, '') : 'Your dashboard') %></h1>
+    </div>
+    <% if (typeof student !== 'undefined' && student.targetRole) { %>
+      <span class="topbar-track"><%= student.targetRole %></span>
+    <% } %>
+  </div>
+  <div class="topbar-actions">
+    <% if (typeof student !== 'undefined') { %>
+      <span class="streak-pill" id="currentStreakBadge"><span>✦</span> <%= typeof currentStreak !== 'undefined' ? currentStreak : (student.streak || 0) %> day streak</span>
+    <% } %>
+    <button class="copilot-trigger" type="button" onclick="toggleAIDrawer()"><span>✦</span><span class="copilot-label">AI Copilot</span></button>
+    <div class="notification-trigger"><%- include('./notification-menu') %></div>
+    <a href="<%= currUser && currUser.role === 'student' ? '/student/profile' : '/' + (currUser ? currUser.role : 'student') + '/dashboard' %>" class="topbar-avatar-link" aria-label="Profile">
+      <% if (currUser && currUser.avatar && currUser.avatar !== '/images/avatars/default.png') { %>
+        <img class="avatar-image" src="<%= currUser.avatar %>" alt="">
+      <% } else { %><span class="avatar-fallback"><%= currUser && currUser.name ? currUser.name.charAt(0).toUpperCase() : 'U' %></span><% } %>
+    </a>
+  </div>
+</header>

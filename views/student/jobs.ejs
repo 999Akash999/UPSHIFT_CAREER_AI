@@ -1,0 +1,53 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1040px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      Matched Opportunities & Openings
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Apply directly to verified listings. Pass the Employability Cutoff to fast-track your application to recruiter review.
+    </p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+    <% if (typeof jobs !== 'undefined' && jobs.length > 0) { %>
+      <% jobs.forEach(job => { %>
+        <% const qualifies = (typeof currentScore !== 'undefined' ? currentScore : 80) >= (job.minEmployabilityScore || 60); %>
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div style="max-width: 650px;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: #2563eb;"><%= job.company ? job.company.name : 'Partner Firm' %></span>
+              <span style="color: #cbd5e1;">&bull;</span>
+              <span style="font-size: 0.8rem; color: #64748b;"><%= job.location || 'Remote' %></span>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem;"><%= job.title %></h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.5rem;">
+              <% (job.requiredSkills || []).forEach(s => { %>
+                <span style="background: #f1f5f9; color: #334155; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px;"><%= s %></span>
+              <% }) %>
+            </div>
+          </div>
+
+          <div style="text-align: right;">
+            <div style="margin-bottom: 0.75rem;">
+              <span style="font-size: 0.75rem; color: #64748b; font-weight: 600; display: block;">Score Cutoff:</span>
+              <span style="font-weight: 800; font-size: 1.1rem; color: <%= qualifies ? '#10b981' : '#ef4444' %>;">
+                &ge; <%= job.minEmployabilityScore || 60 %>
+              </span>
+            </div>
+            <a href="/student/jobs/<%= job._id %>" style="display: inline-block; background: #2563eb; color: #ffffff; padding: 0.6rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none;">
+              Apply Now →
+            </a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💼</div>
+        <h4 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">No Active Openings Right Now</h4>
+        <p style="margin: 0; font-size: 0.9rem;">Recruiters regularly post new positions. Check back soon.</p>
+      </div>
+    <% } %>
+  </div>
+</div>

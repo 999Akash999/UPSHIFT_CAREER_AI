@@ -1,0 +1,22 @@
+<% layout('layouts/dashboardLayout') %>
+<main style="max-width:850px;margin:auto;">
+  <a href="/mentor/courses" style="color:#2563eb;">← My courses</a>
+  <h1 style="color:#0f172a;">Create a course</h1>
+  <p style="color:#64748b;">Course details and lesson structure will be saved in the database. Publish it to show it in the student catalog.</p>
+  <form action="/mentor/courses" method="POST" style="display:grid;gap:1rem;padding:1.5rem;background:white;border:1px solid #e2e8f0;border-radius:12px;">
+    <label>Course title<input name="title" required minlength="5" maxlength="150" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></label>
+    <label>Description<textarea name="description" required minlength="30" rows="5" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></textarea></label>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;">
+      <label>Category<select name="category" required style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"><% categories.forEach(category => { %><option value="<%= category %>"><%= category %></option><% }) %></select></label>
+      <label>Level<select name="level" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+      <label>Price (₹)<input type="number" name="price" required min="0" step="1" value="0" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></label>
+      <label>Discount price (₹)<input type="number" name="discountPrice" min="0" step="1" value="0" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></label>
+    </div>
+    <label>Thumbnail URL (optional)<input type="url" name="thumbnail" placeholder="https://…" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></label>
+    <label>Skills this course teaches <small>(comma separated)</small><input name="targetSkillGaps" placeholder="Node.js, MongoDB, REST APIs" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></label>
+    <label>Module title<input name="moduleTitle" value="Course lessons" required style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></label>
+    <label>Lessons <small>(one lesson per line: title | video URL | duration in minutes)</small><textarea name="lessons" required rows="7" placeholder="Introduction | https://example.com/lesson-1 | 12&#10;Build the project | https://example.com/lesson-2 | 25" style="display:block;width:100%;padding:.7rem;margin-top:.35rem;"></textarea></label>
+    <label style="display:flex;gap:.6rem;align-items:center;"><input type="checkbox" name="isPublished" checked> Publish this course in the student catalog</label>
+    <button type="submit" style="padding:.8rem 1rem;background:#2563eb;color:white;border:0;border-radius:8px;font-weight:700;cursor:pointer;">Save course</button>
+  </form>
+</main>

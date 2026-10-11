@@ -1,0 +1,93 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">
+      Host & Manage Alumni Webinars
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Schedule technical knowledge sessions, system design crash courses, and campus placement AMAs.
+    </p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem;">
+
+  <!-- Form to Host a New Webinar -->
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 1.5rem;">Schedule a New Session</h3>
+
+    <form action="/alumni/events" method="POST">
+      
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Session Title</label>
+        <input type="text" name="title" required placeholder="e.g. Navigating Microservices at Scale & Cracking Senior Loops" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Event Type</label>
+        <select name="category" required style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+          <option value="webinar">Webinar</option><option value="hackathon">Hackathon</option><option value="ideathon">Ideathon</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Scheduled Date & Time</label>
+          <input type="datetime-local" name="scheduledAt" required style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Max Attendee Capacity</label>
+          <input type="number" name="capacity" value="100" min="10" max="500" required style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem; font-family: 'JetBrains Mono', monospace; font-weight: 700;">
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Virtual Meeting Room URL</label>
+        <input type="url" name="meetLink" required placeholder="https://meet.google.com/abc-defg-hij" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+      </div>
+
+      <div style="margin-bottom: 1.75rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Detailed Agenda & Takeaways</label>
+        <textarea name="description" rows="4" required placeholder="Detail the technical areas covered, recommended prerequisites, and Q&A flow..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.9rem; line-height: 1.5;"></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.85rem 1.85rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+          Publish Session to Student Calendar →
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Historical & Scheduled Sessions List -->
+  <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1rem;">Your Active Hosted Events</h3>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% if (typeof myEvents !== 'undefined' && myEvents.length > 0) { %>
+          <% myEvents.forEach(evt => { %>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+              <span style="font-size: 0.75rem; color: #2563eb; font-weight: 700;">
+                <%= new Date(evt.scheduledAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
+              </span>
+              <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin: 0.25rem 0 0.5rem;"><%= evt.title %></h4>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #64748b;">
+                <span>Capacity: <%= evt.capacity %> spots</span>
+                <a href="<%= evt.meetLink %>" target="_blank" style="color: #2563eb; font-weight: 700; text-decoration: none;">Join Link ↗</a>
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <div style="text-align: center; padding: 2rem 1rem; color: #64748b;">
+            <p style="font-size: 0.85rem; margin: 0;">No scheduled sessions active. Fill out the form to schedule your first talk.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+</div>

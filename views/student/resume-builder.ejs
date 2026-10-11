@@ -1,0 +1,93 @@
+<% layout('layouts/dashboardLayout') %>
+
+<section class="resume-builder-page">
+  <div class="page-heading">
+    <div><p class="eyebrow">AI CAREER TOOLS</p><h2>Build your resume</h2><p>Turn your real experience into a clear, ATS-friendly resume. Review every detail before using it.</p></div>
+    <span class="ai-tag">✦ Gemini AI</span>
+  </div>
+
+  <div class="resume-builder-grid">
+    <form class="resume-form panel-card" id="resumeForm">
+      <h3>Your details</h3>
+      <p class="form-hint">Your saved skills, education, links, and portfolio projects are included automatically. Add factual work experience or extra projects; AI will improve wording without inventing achievements.</p>
+      <label>Target role<input name="targetRole" required maxlength="120" value="<%= student.targetRole || '' %>" placeholder="Frontend Developer"></label>
+      <label>Skills<input name="skills" maxlength="5000" value="<%= (student.skills || []).join(', ') %>" placeholder="JavaScript, React, Node.js"></label>
+      <label>Education<textarea name="education" rows="3" maxlength="5000" placeholder="Degree, college, graduation year"><%= [student.academicDetails?.degree, student.academicDetails?.college, student.academicDetails?.graduationYear].filter(Boolean).join(', ') %></textarea></label>
+      <label>Experience<textarea name="experience" rows="5" maxlength="5000" placeholder="Role, company, dates, and what you worked on. Put each role on a new line."></textarea></label>
+      <label>Projects<textarea name="projects" rows="5" maxlength="5000" placeholder="Project name, technologies, what you built, and any real results."></textarea></label>
+      <label>Certifications<textarea name="certifications" rows="2" maxlength="5000" placeholder="List certifications, if you have any."></textarea></label>
+      <button class="button-primary resume-generate-button" id="generateResumeButton" type="submit"><span>✦</span> Generate my resume</button>
+      <p class="resume-status" id="resumeStatus" role="status" aria-live="polite"></p>
+    </form>
+
+    <section class="resume-preview-wrap">
+      <div class="preview-toolbar"><div><h3>Resume preview</h3><p>Your generated resume will appear here.</p></div><button class="button-secondary is-hidden" id="printResumeButton" type="button" onclick="window.print()">Print / Save PDF</button></div>
+      <article class="resume-paper" id="resumePreview">
+        <div class="resume-empty"><span>▤</span><strong>Your resume preview</strong><p>Fill in your details and generate a draft. You can then print it or save it as PDF.</p></div>
+      </article>
+    </section>
+  </div>
+</section>
+
+<script>
+  const resumeForm = document.getElementById('resumeForm');
+  const resumeStatus = document.getElementById('resumeStatus');
+  const resumePreview = document.getElementById('resumePreview');
+  const generateResumeButton = document.getElementById('generateResumeButton');
+  const printResumeButton = document.getElementById('printResumeButton');
+
+  function resumeEscape(value) {
+    return String(value || '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+  }
+
+  function resumeList(items) {
+    if (!Array.isArray(items) || !items.length) return '';
+    return `<ul>${items.map((item) => `<li>${resumeEscape(item)}</li>`).join('')}</ul>`;
+  }
+
+  function renderResume(resume) {
+    const experience = Array.isArray(resume.experience) ? resume.experience : [];
+    const projects = Array.isArray(resume.projects) ? resume.projects : [];
+    const education = Array.isArray(resume.education) ? resume.education : [];
+    const certifications = Array.isArray(resume.certifications) ? resume.certifications : [];
+    const skills = Array.isArray(resume.skills) ? resume.skills : [];
+    const links = resume.links || {};
+    resumePreview.innerHTML = `
+      <header class="resume-paper-header"><h1>${resumeEscape(resume.name)}</h1><p>${resumeEscape(resume.headline || resumeForm.targetRole.value)}</p>
+        <div class="resume-contact">${resumeEscape(resume.email)}${links.linkedin ? ` · ${resumeEscape(links.linkedin)}` : ''}${links.github ? ` · ${resumeEscape(links.github)}` : ''}${links.leetcode ? ` · ${resumeEscape(links.leetcode)}` : ''}${links.portfolio ? ` · ${resumeEscape(links.portfolio)}` : ''}</div></header>
+      ${resume.summary ? `<section><h2>Professional Summary</h2><p>${resumeEscape(resume.summary)}</p></section>` : ''}
+      ${skills.length ? `<section><h2>Skills</h2><p>${skills.map(resumeEscape).join(' · ')}</p></section>` : ''}
+      ${experience.length ? `<section><h2>Experience</h2>${experience.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.role)}${item.company ? ` · ${resumeEscape(item.company)}` : ''}</h3>${item.duration ? `<p class="resume-date">${resumeEscape(item.duration)}</p>` : ''}${resumeList(item.bullets)}</div>`).join('')}</section>` : ''}
+      ${projects.length ? `<section><h2>Projects</h2>${projects.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.name)}</h3>${item.technologies ? `<p class="resume-date">${resumeEscape(item.technologies)}</p>` : ''}${resumeList(item.bullets)}${item.githubUrl ? `<a href="${resumeEscape(item.githubUrl)}">Source code</a>` : ''}${item.liveDemoUrl ? `${item.githubUrl ? ' · ' : ''}<a href="${resumeEscape(item.liveDemoUrl)}">Live demo</a>` : ''}</div>`).join('')}</section>` : ''}
+      ${education.length ? `<section><h2>Education</h2>${education.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.degree || item.school)}</h3><p>${resumeEscape(item.school)}${item.year ? ` · ${resumeEscape(item.year)}` : ''}</p>${item.details ? `<p>${resumeEscape(item.details)}</p>` : ''}</div>`).join('')}</section>` : ''}
+      ${certifications.length ? `<section><h2>Certifications</h2>${resumeList(certifications)}</section>` : ''}`;
+    printResumeButton.classList.remove('is-hidden');
+  }
+
+  resumeForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    resumeStatus.textContent = 'Creating your resume…';
+    resumeStatus.className = 'resume-status';
+    generateResumeButton.disabled = true;
+    generateResumeButton.innerHTML = '<span>◌</span> Creating draft…';
+    try {
+      const payload = Object.fromEntries(new FormData(resumeForm).entries());
+      const response = await fetch('/student/resume-builder/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || data.message || `Request failed (${response.status})`);
+      renderResume(data.resume);
+      resumeStatus.textContent = 'Draft ready. Review the details, then print or save as PDF.';
+      resumeStatus.classList.add('success');
+    } catch (error) {
+      resumeStatus.textContent = error.message || 'Could not generate the resume. Please try again.';
+      resumeStatus.classList.add('error');
+    } finally {
+      generateResumeButton.disabled = false;
+      generateResumeButton.innerHTML = '<span>✦</span> Generate my resume';
+    }
+  });
+</script>

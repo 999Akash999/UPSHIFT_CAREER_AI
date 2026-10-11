@@ -1,0 +1,64 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1040px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      My Job Applications
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Track the status of your submitted candidacies across partner hiring pipelines.
+    </p>
+  </div>
+
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+      <thead>
+        <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-weight: 700; font-size: 0.8rem; text-transform: uppercase;">
+          <th style="padding: 1rem 1.25rem;">JOB OPENING</th>
+          <th style="padding: 1rem 1.25rem;">SUBMISSION DATE</th>
+          <th style="padding: 1rem 1.25rem;">SCORE AT SUBMISSION</th>
+          <th style="padding: 1rem 1.25rem;">CURRENT PIPELINE STAGE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (typeof applications !== 'undefined' && applications.length > 0) { %>
+          <% applications.forEach(app => { %>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 1rem 1.25rem;">
+                <div style="font-weight: 800; color: #0f172a;"><%= app.job ? app.job.title : 'Software Role' %></div>
+                <div style="font-size: 0.75rem; color: #64748b;"><%= app.job && app.job.company ? app.job.company.name : 'Partner Firm' %></div>
+              </td>
+              <td style="padding: 1rem 1.25rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #64748b;">
+                <%= new Date(app.createdAt).toLocaleDateString('en-IN') %>
+              </td>
+              <td style="padding: 1rem 1.25rem;">
+                <span style="background: rgba(37, 99, 235, 0.1); color: #2563eb; font-weight: 800; padding: 0.25rem 0.5rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+                  <%= app.employabilityScoreAtApplication %>/100
+                </span>
+              </td>
+              <td style="padding: 1rem 1.25rem;">
+                <% if (app.status === 'offered') { %>
+                  <span style="background: #f0fdf4; color: #166534; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 20px;">OFFER EXTENDED 🎉</span>
+                <% } else if (app.status === 'interviewing') { %>
+                  <span style="background: rgba(37,99,235,0.1); color: #2563eb; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 20px;">INTERVIEW SCHEDULED</span>
+                <% } else if (app.status === 'shortlisted') { %>
+                  <span style="background: #fffbeb; color: #b45309; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 20px;">SHORTLISTED</span>
+                <% } else if (app.status === 'rejected') { %>
+                  <span style="background: #fef2f2; color: #991b1b; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 20px;">NOT SELECTED</span>
+                <% } else { %>
+                  <span style="background: #f1f5f9; color: #475569; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 20px;">APPLIED</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td colspan="4" style="padding: 3rem; text-align: center; color: #64748b;">
+              <p style="margin: 0; font-size: 0.9rem;">You haven't submitted any job applications yet.</p>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

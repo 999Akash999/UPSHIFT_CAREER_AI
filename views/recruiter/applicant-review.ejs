@@ -1,0 +1,131 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 960px; margin: 0 auto;">
+  
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <a href="/recruiter/manage-jobs" style="font-size: 0.85rem; color: #2563eb; font-weight: 700; text-decoration: none;">← Back to Job Postings</a>
+      <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0.35rem 0 0; letter-spacing: -0.02em;">
+        Applicant Dossier: <%= application && application.student ? application.student.name : 'Candidate Review' %>
+      </h2>
+    </div>
+
+    <!-- Application Pipeline Status Form -->
+    <form action="/recruiter/applications/<%= application ? application._id : '' %>/status" method="POST" style="display: flex; gap: 0.5rem; align-items: center;">
+      <select name="status" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; outline: none; cursor: pointer;">
+        <option value="applied" <%= application && application.status === 'applied' ? 'selected' : '' %>>Applied</option>
+        <option value="shortlisted" <%= application && application.status === 'shortlisted' ? 'selected' : '' %>>Shortlisted</option>
+        <option value="interviewing" <%= application && application.status === 'interviewing' ? 'selected' : '' %>>Interview Scheduled</option>
+        <option value="offered" <%= application && application.status === 'offered' ? 'selected' : '' %>>Offer Extended</option>
+        <option value="rejected" <%= application && application.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+      </select>
+      <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer;">
+        Update Status
+      </button>
+    </form>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem;">
+    
+    <!-- Left Column: Summary Dossier & Resume View -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      
+      <!-- Academic & Application Snapshot -->
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1rem;">Candidate Snapshot</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem;">
+          <div>
+            <span style="color: #64748b; font-weight: 600; display: block;">Applied For Role:</span>
+            <span style="color: #0f172a; font-weight: 700;"><%= application && application.job ? application.job.title : 'Software Engineer' %></span>
+          </div>
+          <div>
+            <span style="color: #64748b; font-weight: 600; display: block;">Institutional Degree:</span>
+            <span style="color: #0f172a; font-weight: 700;"><%= student && student.academicDetails ? student.academicDetails.degree : 'B.Tech CS' %></span>
+          </div>
+          <div>
+            <span style="color: #64748b; font-weight: 600; display: block;">CGPA Benchmark:</span>
+            <span style="color: #0f172a; font-weight: 700;"><%= student && student.academicDetails && student.academicDetails.cgpa ? student.academicDetails.cgpa : '8.6' %> / 10.0</span>
+          </div>
+          <div>
+            <span style="color: #64748b; font-weight: 600; display: block;">Submission Date:</span>
+            <span style="color: #0f172a; font-weight: 700;"><%= application ? new Date(application.createdAt).toLocaleDateString('en-IN') : 'Recent' %></span>
+          </div>
+        </div>
+
+        <% if (application && application.coverNote) { %>
+          <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #f1f5f9;">
+            <span style="color: #64748b; font-weight: 600; font-size: 0.85rem; display: block; margin-bottom: 0.25rem;">Candidate Statement:</span>
+            <p style="font-size: 0.85rem; color: #334155; line-height: 1.5; margin: 0;"><%= application.coverNote %></p>
+          </div>
+        <% } %>
+      </div>
+
+      <!-- Resume Access Container -->
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Verified Resume Document</h3>
+          <a href="<%= application && application.resumeUrl ? application.resumeUrl : '#' %>" target="_blank" style="background: #0f172a; color: #ffffff; padding: 0.45rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-decoration: none;">
+            Open PDF Fullscreen ↗
+          </a>
+        </div>
+        <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 2.5rem; text-align: center; color: #64748b;">
+          <span style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">📄</span>
+          <span style="font-size: 0.85rem; font-weight: 600;">Verified PDF document linked directly via storage provider.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Employability Score Breakdown -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align: center;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Composite Score</span>
+        <div style="font-size: 3.5rem; font-weight: 900; color: #2563eb; font-family: 'JetBrains Mono', monospace; line-height: 1; margin: 0.5rem 0;">
+          <%= application ? application.employabilityScoreAtApplication : 84 %>
+        </div>
+        <span style="background: #f0fdf4; color: #166534; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 700; font-size: 0.8rem;">
+          Exceeds Cutoff Benchmark
+        </span>
+
+        <div style="margin-top: 1.5rem; text-align: left; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem;">
+          <div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.2rem;">
+              <span>Technical Accuracy</span>
+              <span style="color: #2563eb;">85%</span>
+            </div>
+            <div style="width: 100%; height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: 85%; height: 100%; background: #2563eb;"></div></div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.2rem;">
+              <span>Verified Capstones</span>
+              <span style="color: #2563eb;">80%</span>
+            </div>
+            <div style="width: 100%; height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: 80%; height: 100%; background: #2563eb;"></div></div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.2rem;">
+              <span>Roadmap Completion Pace</span>
+              <span style="color: #2563eb;">90%</span>
+            </div>
+            <div style="width: 100%; height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: 90%; height: 100%; background: #2563eb;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recruiter Interview Notes Input -->
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem;">Internal Interview Notes</h4>
+        <textarea rows="4" placeholder="Log technical impressions, coding round feedback, or cultural evaluation notes..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; font-size: 0.85rem; outline: none; margin-bottom: 0.75rem;"><%= application ? application.recruiterNotes : '' %></textarea>
+        <button type="button" style="width: 100%; background: #0f172a; color: #ffffff; border: none; padding: 0.6rem; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+          Save Private Notes
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

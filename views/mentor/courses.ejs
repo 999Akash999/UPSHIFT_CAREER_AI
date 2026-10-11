@@ -1,0 +1,22 @@
+<% layout('layouts/dashboardLayout') %>
+<main style="max-width:1100px;margin:auto;">
+  <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+    <div><h1 style="margin:0;color:#0f172a;">My courses</h1><p style="color:#64748b;">Courses you create are saved to the course catalog database.</p></div>
+    <a href="/mentor/courses/new" style="background:#2563eb;color:white;padding:.7rem 1rem;border-radius:8px;text-decoration:none;font-weight:700;">Create a course</a>
+  </header>
+  <% if (!courses.length) { %>
+    <section style="padding:2rem;background:white;border:1px solid #e2e8f0;border-radius:12px;color:#64748b;">You have not created a course yet. Create one to add your curriculum to the catalog.</section>
+  <% } else { %>
+    <div style="display:grid;gap:1rem;">
+      <% courses.forEach(course => { %>
+        <article style="display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.25rem;background:white;border:1px solid #e2e8f0;border-radius:12px;">
+          <div><h2 style="font-size:1.1rem;margin:0 0 .35rem;color:#0f172a;"><%= course.title %></h2><p style="margin:0;color:#64748b;"><%= course.category %> · <%= course.level %> · ₹<%= course.price %> · <%= course.enrolledCount %> students</p><span style="display:inline-block;margin-top:.5rem;color:<%= course.isPublished ? '#15803d' : '#a16207' %>;font-weight:700;"><%= course.isPublished ? 'Published' : 'Draft' %></span></div>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            <% if (course.isPublished) { %><a href="/courses/<%= course.slug %>" style="color:#2563eb;">Preview</a><% } else { %><span style="color:#94a3b8;">Draft</span><% } %>
+            <form action="/mentor/courses/<%= course._id %>/toggle-publish" method="POST"><button type="submit" style="padding:.5rem .75rem;border:1px solid #cbd5e1;border-radius:6px;background:white;cursor:pointer;"><%= course.isPublished ? 'Unpublish' : 'Publish' %></button></form>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+</main>

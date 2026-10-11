@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate') %>
+
+<div style="min-height: calc(100vh - 180px); display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+  <div style="background: #0f172a; border: 1px solid #1e3a5f; width: 100%; max-width: 540px; padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);">
+
+    <!-- Step Progress Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 700; color: #60a5fa; text-transform: uppercase;">Step 1 of 3</span>
+      <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600;">Academic History</span>
+    </div>
+
+    <!-- Progress Bar Tracker -->
+    <div style="width: 100%; height: 6px; background: #1e293b; border-radius: 3px; margin-bottom: 2rem; overflow: hidden;">
+      <div style="width: 33.33%; height: 100%; background: #2563eb; border-radius: 3px;"></div>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.75rem; font-weight: 800; color: #ffffff; margin-bottom: 0.35rem; letter-spacing: -0.02em;">Education Details</h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin: 0;">Tell us about your current university degree and cohort.</p>
+    </div>
+
+    <form action="/onboarding/education" method="POST">
+      
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">College / University Name</label>
+        <input 
+          type="text" 
+          name="college" 
+          required 
+          placeholder="e.g. National Institute of Technology" 
+          value="<%= student && student.academicDetails ? (student.academicDetails.college || '') : '' %>"
+          style="width: 100%; background: #070d19; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;"
+        >
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">Degree & Major</label>
+        <input 
+          type="text" 
+          name="degree" 
+          required 
+          placeholder="e.g. B.Tech Computer Science & Engineering" 
+          value="<%= student && student.academicDetails ? (student.academicDetails.degree || '') : '' %>"
+          style="width: 100%; background: #070d19; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;"
+        >
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.75rem;">
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">Graduation Year</label>
+          <select name="graduationYear" style="width: 100%; background: #070d19; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+            <% const currentYear = 2026; %>
+            <% for (let y = currentYear - 2; y <= currentYear + 5; y++) { %>
+              <option value="<%= y %>" <%= student && student.academicDetails && student.academicDetails.graduationYear === y ? 'selected' : (y === currentYear ? 'selected' : '') %>><%= y %></option>
+            <% } %>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem;">Cumulative CGPA (out of 10)</label>
+          <input 
+            type="number" 
+            name="cgpa" 
+            step="0.01" 
+            min="0" 
+            max="10" 
+            placeholder="8.5" 
+            value="<%= student && student.academicDetails && student.academicDetails.cgpa ? student.academicDetails.cgpa : '' %>"
+            style="width: 100%; background: #070d19; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;"
+          >
+        </div>
+      </div>
+
+      <button type="submit" style="width: 100%; background: #2563eb; color: #ffffff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+        Save & Continue to Skills →
+      </button>
+
+    </form>
+
+  </div>
+</div>

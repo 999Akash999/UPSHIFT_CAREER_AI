@@ -1,0 +1,96 @@
+<div id="aiDrawerBackdrop" onclick="toggleAIDrawer()" style="display: none; position: fixed; inset: 0; background: rgba(7, 13, 25, 0.6); backdrop-filter: blur(4px); z-index: 9998; transition: opacity 0.3s;"></div>
+
+<aside id="aiCopilotDrawer" style="position: fixed; top: 0; right: -420px; width: 420px; height: 100vh; background: #0f172a; border-left: 1px solid #1e3a5f; box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 9999; display: flex; flex-direction: column; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+  
+  <!-- Drawer Top Bar -->
+  <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #1e3a5f; display: flex; justify-content: space-between; align-items: center; background: #070d19;">
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <div style="width: 28px; height: 28px; background: #2563eb; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 0.85rem; font-weight: 800;">
+        ✨
+      </div>
+      <div>
+        <h3 style="font-size: 0.95rem; font-weight: 800; color: #ffffff; margin: 0;">UPSHIFT AI Copilot</h3>
+        <span style="font-size: 0.65rem; color: #60a5fa; font-weight: 700; text-transform: uppercase;">Realtime Engineering Tutor</span>
+      </div>
+    </div>
+    <button onclick="toggleAIDrawer()" style="background: transparent; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; line-height: 1;">&times;</button>
+  </div>
+
+  <!-- Real-time Dialogue Feed -->
+  <div id="drawerChatHistory" style="flex-grow: 1; padding: 1.25rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem;">
+    <div style="align-self: flex-start; max-width: 90%; background: #1e293b; border: 1px solid #334155; padding: 0.85rem 1rem; border-radius: 12px; border-bottom-left-radius: 2px; color: #f8fafc; font-size: 0.85rem; line-height: 1.5;">
+      Hello! I'm your AI Engineering Tutor. Paste a bug, ask for an architectural explanation, or request tips to prepare for your next mock interview.
+    </div>
+  </div>
+
+  <!-- Input and Submission Form -->
+  <div style="padding: 1rem 1.25rem; border-top: 1px solid #1e3a5f; background: #070d19;">
+    <div style="display: flex; gap: 0.5rem;">
+      <input 
+        type="text" 
+        id="drawerPromptInput" 
+        placeholder="Ask a technical doubt..." 
+        onkeydown="if(event.key === 'Enter') submitDrawerMessage()"
+        style="flex-grow: 1; background: #0f172a; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.85rem; outline: none;"
+      >
+      <button onclick="submitDrawerMessage()" style="background: #2563eb; color: #ffffff; border: none; padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer;">
+        Send
+      </button>
+    </div>
+    <div style="font-size: 0.65rem; color: #64748b; margin-top: 0.5rem; text-align: center;">Powered by Gemini &bull; Optimized for Socratic hints</div>
+  </div>
+
+</aside>
+
+<script>
+  function toggleAIDrawer() {
+    const drawer = document.getElementById('aiCopilotDrawer');
+    const backdrop = document.getElementById('aiDrawerBackdrop');
+    const isOpen = drawer.style.right === '0px';
+
+    if (isOpen) {
+      drawer.style.right = '-420px';
+      backdrop.style.display = 'none';
+    } else {
+      drawer.style.right = '0px';
+      backdrop.style.display = 'block';
+    }
+  }
+
+  async function submitDrawerMessage() {
+    const input = document.getElementById('drawerPromptInput');
+    const history = document.getElementById('drawerChatHistory');
+    const prompt = input.value.trim();
+
+    if (!prompt) return;
+
+    // Append User Bubble
+    const userMsg = document.createElement('div');
+    userMsg.style.cssText = "align-self: flex-end; max-width: 90%; background: #2563eb; color: #ffffff; padding: 0.85rem 1rem; border-radius: 12px; border-bottom-right-radius: 2px; font-size: 0.85rem; line-height: 1.5;";
+    userMsg.textContent = prompt;
+    history.appendChild(userMsg);
+    input.value = '';
+    history.scrollTop = history.scrollHeight;
+
+    // Append Loading Bubble
+    const aiMsg = document.createElement('div');
+    aiMsg.style.cssText = "align-self: flex-start; max-width: 90%; background: #1e293b; border: 1px solid #334155; padding: 0.85rem 1rem; border-radius: 12px; border-bottom-left-radius: 2px; color: #94a3b8; font-size: 0.85rem; line-height: 1.5;";
+    aiMsg.textContent = "Analyzing context...";
+    history.appendChild(aiMsg);
+    history.scrollTop = history.scrollHeight;
+
+    try {
+      const res = await fetch('/ai/tutor/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      aiMsg.style.color = '#f8fafc';
+      aiMsg.innerHTML = data.reply || "Could not generate reply.";
+    } catch (err) {
+      aiMsg.textContent = "Connection error. Please try again.";
+    }
+    history.scrollTop = history.scrollHeight;
+  }
+</script>

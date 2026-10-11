@@ -1,0 +1,22 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width:850px;margin:0 auto;">
+  <a href="/student/doubts" style="color:#2563eb;">← Community questions</a>
+  <article style="background:#fff;padding:1.5rem;margin-top:1rem;border:1px solid #e2e8f0;border-radius:12px;">
+    <h1 style="color:#0f172a;"><%= doubt.title %></h1>
+    <p style="color:#64748b;">Asked by <%= doubt.author ? doubt.author.name : 'Student' %></p>
+    <p style="white-space:pre-line;color:#334155;"><%= doubt.description %></p>
+    <% if (doubt.codeSnippet) { %><pre style="white-space:pre-wrap;background:#0f172a;color:#e2e8f0;padding:1rem;border-radius:8px;"><%= doubt.codeSnippet %></pre><% } %>
+  </article>
+  <h2>Replies</h2>
+  <% (doubt.replies || []).forEach(reply => { %>
+    <article style="background:#fff;padding:1rem;margin:.75rem 0;border:1px solid #e2e8f0;border-radius:10px;">
+      <strong><%= reply.author ? reply.author.name : 'Member' %></strong>
+      <p style="white-space:pre-line;"><%= reply.message %></p>
+    </article>
+  <% }) %>
+  <form action="/student/doubts/<%= doubt._id %>/reply" method="POST" style="display:grid;gap:.75rem;margin-top:1rem;">
+    <label for="message">Add a reply</label><textarea id="message" name="message" rows="3" maxlength="4000" required></textarea>
+    <button type="submit" style="padding:.7rem;background:#2563eb;color:#fff;border:0;border-radius:8px;">Post reply</button>
+  </form>
+</main>

@@ -1,0 +1,19 @@
+<% if (typeof success !== 'undefined' && success.length > 0) { %>
+  <div class="alert-dismissible" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 0.85rem 1.25rem; border-radius: 8px; margin-bottom: 1.25rem; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <span style="font-size: 1.1rem;">✓</span>
+      <span><%= success %></span>
+    </div>
+    <button onclick="this.parentElement.remove()" style="background: transparent; border: none; color: inherit; font-size: 1.25rem; cursor: pointer; line-height: 1;">&times;</button>
+  </div>
+<% } %>
+
+<% if (typeof error !== 'undefined' && error.length > 0) { %>
+  <div class="alert-dismissible" style="background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 0.85rem 1.25rem; border-radius: 8px; margin-bottom: 1.25rem; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <span style="font-size: 1.1rem;">⚠️</span>
+      <span><%= error %></span>
+    </div>
+    <button onclick="this.parentElement.remove()" style="background: transparent; border: none; color: inherit; font-size: 1.25rem; cursor: pointer; line-height: 1;">&times;</button>
+  </div>
+<% } %>

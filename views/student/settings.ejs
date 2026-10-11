@@ -1,0 +1,73 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 760px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      Account & System Settings
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Manage password credentials, security preferences, and notification frequencies.
+    </p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 2rem;">
+    
+    <!-- Change Password Container -->
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1.25rem;">Change Master Password</h3>
+      
+      <form action="/student/settings/password" method="POST">
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Current Password</label>
+          <input type="password" name="currentPassword" required placeholder="••••••••••••" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem; outline: none;">
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">New Password (Min. 8 characters)</label>
+          <input type="password" name="newPassword" required minlength="8" placeholder="••••••••••••" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem; outline: none;">
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Confirm New Password</label>
+          <input type="password" name="confirmNewPassword" required minlength="8" placeholder="••••••••••••" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem; outline: none;">
+        </div>
+
+        <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer;">
+          Update Credentials
+        </button>
+      </form>
+    </div>
+
+    <!-- Notification Preferences -->
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1.25rem;">Notification Preferences</h3>
+      
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">Daily Task Reminders</div>
+            <span style="font-size: 0.8rem; color: #64748b;">Receive daily morning reminders at 08:00 IST</span>
+          </div>
+          <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #2563eb; cursor: pointer;">
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">Job Match Alerts</div>
+            <span style="font-size: 0.8rem; color: #64748b;">Alert me when my score exceeds a new company's hiring cutoff</span>
+          </div>
+          <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #2563eb; cursor: pointer;">
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">Streak Risk Notifications</div>
+            <span style="font-size: 0.8rem; color: #64748b;">Notify me 2 hours before midnight if today's task is incomplete</span>
+          </div>
+          <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #2563eb; cursor: pointer;">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1040px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      Skill Verification Assessments
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Prove competence in your target domain. High assessment scores directly advance your employability ranking.
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem;">
+    <% if (typeof assessments !== 'undefined' && assessments.length > 0) { %>
+      <% assessments.forEach(quiz => { %>
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span style="font-size: 0.75rem; font-weight: 800; color: #2563eb; text-transform: uppercase;"><%= quiz.domain %></span>
+              <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">⏱️ <%= quiz.durationMinutes %> mins</span>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem;"><%= quiz.title %></h3>
+            <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0 0 1rem;"><%= quiz.description %></p>
+            <p style="font-size: 0.78rem; color: #7954c8; font-weight: 750; margin: 0;"><%= quiz.questions.length %> questions · Multiple choice</p>
+          </div>
+
+          <div style="border-top: 1px solid #f1f5f9; padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #0f172a;">Passing: <%= quiz.passingScore %>%</span>
+            <a href="/student/assessments/<%= quiz._id %>" style="background: #2563eb; color: #ffffff; padding: 0.5rem 1.1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; text-decoration: none;">
+              Start Test →
+            </a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div style="grid-column: 1 / -1; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📝</div>
+        <h4 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">No Active Assessments Available</h4>
+        <p style="margin: 0; font-size: 0.9rem;">Check back soon for new certification challenges.</p>
+      </div>
+    <% } %>
+  </div>
+</div>

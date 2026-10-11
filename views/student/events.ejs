@@ -1,0 +1,36 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main class="events-page">
+  <header class="events-heading">
+    <div><p class="events-kicker">LEARN · BUILD · MEET</p><h1>Events & community</h1><p>Join practical hackathons, ideathons, and webinars—or revisit events you attended.</p></div>
+  </header>
+  <% if (typeof eventsError !== 'undefined' && eventsError) { %><p class="events-notice" role="status"><%= eventsError %></p><% } %>
+
+  <section class="event-section">
+    <div class="section-title"><div><p class="events-kicker">UP NEXT</p><h2>Upcoming events</h2></div><span><%= events.length %> available</span></div>
+    <% if (events.length) { %>
+      <div class="event-grid">
+        <% events.forEach(evt => { const registered = registeredEventIds.has(String(evt._id)); const category = evt.category || 'webinar'; %>
+          <article class="event-card">
+            <div class="event-card-top"><span class="event-type event-type-<%= category %>"><%= category %></span><span class="event-date"><%= new Date(evt.scheduledAt).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'}) %></span></div>
+            <h3><%= evt.title %></h3><p class="event-description"><%= evt.description %></p>
+            <div class="event-footer"><span><%= Math.max(0, evt.capacity - evt.registrationCount) %> seats left</span>
+              <% if (registered) { %><div class="event-actions"><strong class="registered-label">✓ Registered</strong><% if (evt.meetLink) { %><a class="join-link" href="<%= evt.meetLink %>" target="_blank" rel="noopener noreferrer">Join event ↗</a><% } %></div>
+              <% } else { %><form action="/student/events/<%= evt._id %>/register" method="POST"><button class="rsvp-button" type="submit">Attend event →</button></form><% } %>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %><div class="empty-events"><span>📅</span><h3>No upcoming events yet</h3><p>Check back soon for the next hackathon, ideathon, or webinar.</p></div><% } %>
+  </section>
+
+  <% if (attendedEvents.length) { %>
+    <section class="event-section attended-section"><div class="section-title"><div><p class="events-kicker">YOUR ACTIVITY</p><h2>Attended events</h2></div></div>
+      <div class="event-grid"><% attendedEvents.forEach(evt => { %><article class="event-card attended-card"><div class="event-card-top"><span class="event-type event-type-<%= evt.category || 'webinar' %>"><%= evt.category || 'webinar' %></span><span class="attended-label">✓ Attended</span></div><h3><%= evt.title %></h3><p class="event-description"><%= evt.description %></p><span class="event-date"><%= new Date(evt.scheduledAt).toLocaleDateString('en-IN',{dateStyle:'medium'}) %></span></article><% }) %></div>
+    </section>
+  <% } %>
+</main>
+
+<style>
+  .events-page{max-width:1100px;margin:0 auto}.events-notice{padding:.8rem 1rem;border-radius:10px;background:#fff8e8;color:#7c5b20;font-size:.84rem}.events-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}.events-heading h1{font-size:clamp(1.7rem,4vw,2.25rem);letter-spacing:-.03em;color:#241b35;margin:.25rem 0}.events-heading p:last-child{margin:.35rem 0;color:#746b80}.events-kicker{font-size:.7rem;letter-spacing:.12em;font-weight:800;color:#7954c8;margin:0}.event-section{margin-bottom:2rem}.section-title{display:flex;justify-content:space-between;align-items:end;margin-bottom:1rem}.section-title h2{margin:.2rem 0;color:#302641;font-size:1.3rem}.section-title>span{font-size:.82rem;color:#746b80}.event-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:1rem}.event-card{background:#fff;border:1px solid #e9e2f2;border-radius:16px;padding:1.25rem;box-shadow:0 8px 24px #3924520a;display:flex;flex-direction:column;min-height:230px}.event-card-top{display:flex;justify-content:space-between;align-items:center;gap:.5rem}.event-type{border-radius:999px;padding:.3rem .65rem;text-transform:capitalize;font-size:.72rem;font-weight:800;background:#f3edfc;color:#6842a8}.event-type-hackathon{background:#e9f7f2;color:#18745c}.event-type-ideathon{background:#fff4df;color:#946316}.event-date{font-size:.76rem;color:#746b80}.event-card h3{color:#302641;font-size:1.1rem;line-height:1.35;margin:.9rem 0 .45rem}.event-description{font-size:.86rem;line-height:1.55;color:#746b80;margin:0 0 1rem}.event-footer{border-top:1px solid #f0ebf5;padding-top:.9rem;margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:.75rem}.event-footer>span{font-size:.76rem;color:#746b80}.rsvp-button,.join-link{display:inline-block;border:0;border-radius:9px;padding:.62rem .8rem;background:#7954c8;color:white;text-decoration:none;font-size:.8rem;font-weight:750;cursor:pointer}.event-actions{display:flex;align-items:center;gap:.6rem}.registered-label,.attended-label{color:#19805f;font-size:.78rem}.join-link{background:#f3edfc;color:#61439b}.attended-section{margin-top:2.5rem}.attended-card{min-height:190px}.attended-label{font-weight:750}.empty-events{border:1px dashed #d8cde7;border-radius:16px;text-align:center;padding:2.5rem 1rem;color:#746b80}.empty-events>span{font-size:2rem}.empty-events h3{color:#302641;margin:.5rem}.empty-events p{margin:.25rem}@media(max-width:600px){.events-heading{align-items:start}.section-title{align-items:start}.event-footer{align-items:flex-start;flex-direction:column}.event-actions{flex-wrap:wrap}}
+</style>

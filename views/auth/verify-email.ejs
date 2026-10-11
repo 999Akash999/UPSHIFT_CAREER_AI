@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') %>
+
+<div style="min-height: calc(100vh - 180px); display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+  <div style="background: #0f172a; border: 1px solid #1e3a5f; width: 100%; max-width: 480px; padding: 3rem 2.5rem; border-radius: 16px; text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);">
+    
+    <div style="width: 64px; height: 64px; background: rgba(37, 99, 235, 0.15); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; color: #60a5fa; margin-bottom: 1.5rem;">
+      ✉️
+    </div>
+
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Verify Your Email</h2>
+    <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">
+      We dispatched a verification link to your email address. Confirming your email ensures recruitment partners can connect directly with you for interview rounds.
+    </p>
+
+    <div style="background: #070d19; border: 1px solid #1e3a5f; padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem; text-align: left;">
+      <div style="font-size: 0.8rem; font-weight: 700; color: #60a5fa; text-transform: uppercase; margin-bottom: 0.25rem;">Next Steps</div>
+      <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">
+        1. Open your inbox and click the verification URL.<br/>
+        2. If you don't see it, check your spam or promotional folders.<br/>
+        3. Links remain active for 24 hours.
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <a href="/login" style="background: #2563eb; color: #ffffff; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+        Proceed to Login
+      </a>
+      <form action="/auth/resend-verification" method="POST">
+        <button type="submit" style="background: transparent; border: none; color: #64748b; font-size: 0.85rem; cursor: pointer; text-decoration: underline;">
+          Didn't receive an email? Resend verification link
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>

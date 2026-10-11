@@ -1,0 +1,32 @@
+<% layout('layouts/boilerplate') %>
+
+<div style="min-height: calc(100vh - 180px); display: flex; align-items: center; justify-content: center; padding: 2rem;">
+  <div style="background: #0f172a; border: 1px solid #1e3a5f; width: 100%; max-width: 540px; padding: 3.5rem 2.5rem; border-radius: 16px; text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);">
+    
+    <div style="display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 50%; margin-bottom: 1.5rem;">
+      <span style="font-size: 2rem;">⚠️</span>
+    </div>
+
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      HTTP 400 &bull; Bad Request
+    </div>
+
+    <h2 style="font-size: 2rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; margin-bottom: 0.75rem;">
+      Malformed Request Syntax
+    </h2>
+
+    <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">
+      <%= typeof message !== 'undefined' && message ? message : 'The server could not understand the request due to invalid parameters, missing fields, or invalid payload encoding.' %>
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <button onclick="history.back()" style="background: #1e293b; border: 1px solid #1e3a5f; color: #ffffff; padding: 0.75rem 1.6rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
+        ← Go Back
+      </button>
+      <a href="/" style="background: #2563eb; color: #ffffff; padding: 0.75rem 1.6rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+        Return Home
+      </a>
+    </div>
+
+  </div>
+</div>

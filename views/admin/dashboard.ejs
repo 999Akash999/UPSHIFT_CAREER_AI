@@ -1,0 +1,40 @@
+<% layout('layouts/dashboardLayout') %>
+
+<!-- Top System Health Header -->
+<div style="background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); border-radius: 16px; padding: 2rem; color: #ffffff; margin-bottom: 2rem; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: #34d399; margin-bottom: 0.75rem;">
+        <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 6px #10b981;"></span> SYSTEM LEVEL 0 &bull; ROOT CONSOLE
+      </div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        Executive Administration Hub
+      </h2>
+      <p style="color: #94a3b8; margin: 0; font-size: 0.95rem;">
+        Oversee system traffic, approve corporate hiring accounts, audit security logs, and monitor AI activity.
+      </p>
+    </div>
+    <div style="display: flex; gap: 0.75rem;">
+      <a href="/admin/audit-logs" style="background: #1e293b; border: 1px solid #334155; color: #ffffff; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.85rem;">
+        View Audit Trail
+      </a>
+      <a href="/admin/ai-analytics" style="background: #2563eb; color: #ffffff; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.85rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+        AI Token Usage →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Primary Telemetry Metrics -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+  
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Platform Users</div>
+    <div style="font-size: 2.25rem; font-weight: 900; color: #0f172a; margin: 0.35rem 0;">
+      <%= typeof stats !== 'undefined' ? stats.userCount : 0 %>
+    </div>
+    <div style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Accounts in the database</div>
+  </div>
+
+  <div style="background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <div style="font-size: 0.75rem; font-weight: 700

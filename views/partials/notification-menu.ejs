@@ -1,0 +1,11 @@
+<div class="notification-widget" data-preview-url="/student/notifications/preview" data-read-all-url="/student/notifications/read-all">
+  <button id="notificationBellBtn" class="notification-bell" type="button" aria-label="Open notifications" aria-controls="notificationDropdownMenu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+    <span id="unreadNotificationBadge" class="notification-badge" hidden>0</span>
+  </button>
+  <section id="notificationDropdownMenu" class="notification-dropdown" aria-label="Notifications" hidden>
+    <header class="notification-dropdown-header"><div><strong>Notifications</strong><span id="notificationUnreadSummary">Updates for your account</span></div><a href="/student/notifications">View all</a></header>
+    <div id="notificationList" class="notification-preview-list" aria-live="polite"><div class="notification-loading">Loading notifications…</div></div>
+    <footer class="notification-dropdown-footer"><span id="notificationActionStatus" role="status" aria-live="polite"></span><button id="markAllNotificationsRead" type="button">Mark all as read</button></footer>
+  </section>
+</div>

@@ -1,0 +1,97 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main class="dsa-page">
+  <header class="dsa-hero">
+    <div><p class="dsa-kicker">DAILY PROBLEM SOLVING</p><h1>DSA Practice</h1><p>Build interview-ready patterns one question at a time. Correct solves count toward your practice streak.</p></div>
+    <a href="#questionList" class="dsa-start">Practice a question ↓</a>
+  </header>
+
+  <section class="dsa-stats" aria-label="Practice progress">
+    <article class="dsa-stat"><span>🔥</span><div><small>DSA streak</small><strong><b id="dsaStreak"><%= currentStreak %></b> days</strong></div><em>best: <b id="dsaBestStreak"><%= bestStreak %></b></em></article>
+    <article class="dsa-stat"><span>✅</span><div><small>Questions solved</small><strong><b id="dsaSolvedCount"><%= solvedCount %></b> / <%= questions.length %></strong></div></article>
+    <article class="dsa-stat"><span>🎯</span><div><small>Solved today</small><strong><b id="dsaSolvedToday"><%= solvedToday %></b> questions</strong></div><em>one correct solve keeps today active</em></article>
+  </section>
+
+  <section class="dsa-section" id="questionList">
+    <div class="dsa-section-heading"><div><p class="dsa-kicker">PICK A PATTERN</p><h2>Practice questions</h2></div><span><%= questions.length %> original questions</span></div>
+    <div class="dsa-question-list">
+      <% questions.forEach((question, questionIndex) => { const solved = Boolean(question.attempt && question.attempt.isSolved); %>
+        <details class="dsa-question" data-question-card="<%= question.id %>">
+          <summary><span class="question-number"><%= String(questionIndex + 1).padStart(2,'0') %></span><span class="question-summary"><strong><%= question.title %></strong><small><%= question.pattern %> · <%= question.difficulty %></small></span><span class="question-solved" data-solved-label><%= solved ? '✓ Solved' : 'Practice →' %></span></summary>
+          <div class="question-content">
+            <p class="question-prompt"><%= question.prompt %></p>
+            <form class="dsa-answer-form" data-question-id="<%= question.id %>">
+              <fieldset <%= solved ? 'disabled' : '' %>><legend>Choose the best answer</legend>
+                <% question.choices.forEach((choice, choiceIndex) => { %>
+                  <label class="dsa-choice"><input type="radio" name="selectedIndex" value="<%= choiceIndex %>" <%= question.attempt && question.attempt.lastSelectedIndex === choiceIndex && !solved ? 'checked' : '' %>><span><%= choice %></span></label>
+                <% }) %>
+              </fieldset>
+              <div class="dsa-form-actions"><button class="dsa-check-button" type="submit" <%= solved ? 'disabled' : '' %>><%= solved ? 'Solved' : 'Check answer' %></button><small><%= question.attempt && !solved ? `${question.attempt.attemptCount} attempt(s) so far` : '' %></small></div>
+              <p class="dsa-answer-feedback" role="status" aria-live="polite"><%= solved ? 'Already solved. Keep your daily streak alive with another question.' : '' %></p>
+            </form>
+          </div>
+        </details>
+      <% }) %>
+    </div>
+  </section>
+
+  <section class="dsa-section badges-section">
+    <div class="dsa-section-heading"><div><p class="dsa-kicker">CONSISTENCY REWARDS</p><h2>Your badges</h2></div><span>Keep showing up to unlock more</span></div>
+    <div class="badge-grid" id="dsaBadgeGrid">
+      <% badges.forEach(badge => { %>
+        <article class="dsa-badge <%= badge.earned ? 'earned' : '' %>" data-badge-id="<%= badge.id %>">
+          <span class="badge-icon"><%= badge.earned ? '🏆' : '◇' %></span><div><strong class="badge-title"><%= badge.title %></strong><p><%= badge.description %></p><small class="badge-progress"><%= badge.earned ? 'Unlocked' : `${badge.progressLabel} progress` %></small><div class="badge-track"><span style="width:<%= badge.earned ? 100 : badge.progress %>%"></span></div></div>
+        </article>
+      <% }) %>
+    </div>
+  </section>
+</main>
+
+<style>
+  .dsa-page{max-width:1050px;margin:0 auto;color:#302641}.dsa-hero{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:1.4rem}.dsa-hero h1{font-size:clamp(1.8rem,4vw,2.4rem);letter-spacing:-.035em;color:#241b35;margin:.25rem 0}.dsa-hero p:last-child{color:#746b80;margin:.4rem 0 0;max-width:650px;line-height:1.55}.dsa-kicker{font-size:.7rem;letter-spacing:.12em;font-weight:850;color:#7954c8;margin:0}.dsa-start,.dsa-check-button{border:0;border-radius:10px;padding:.75rem 1rem;background:#7954c8;color:#fff;text-decoration:none;font:inherit;font-size:.85rem;font-weight:800;white-space:nowrap;cursor:pointer}.dsa-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem;margin:1.3rem 0 2rem}.dsa-stat{display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid #e9e2f2;border-radius:14px;padding:1rem;box-shadow:0 7px 22px #39245208}.dsa-stat>span{font-size:1.4rem}.dsa-stat div{display:grid;gap:.15rem;min-width:0}.dsa-stat small,.dsa-stat em{font-size:.75rem;color:#81768e;font-style:normal}.dsa-stat strong{font-size:1.05rem;color:#302641}.dsa-stat>em{margin-left:auto}.dsa-section{margin:2rem 0}.dsa-section-heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:.85rem}.dsa-section-heading h2{font-size:1.35rem;color:#302641;margin:.2rem 0}.dsa-section-heading>span{font-size:.8rem;color:#81768e}.dsa-question-list{display:grid;gap:.7rem}.dsa-question{background:#fff;border:1px solid #e9e2f2;border-radius:13px;overflow:hidden}.dsa-question[open]{box-shadow:0 10px 26px #3924520b;border-color:#d9c9ed}.dsa-question summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.85rem;padding:.9rem 1rem}.dsa-question summary::-webkit-details-marker{display:none}.question-number{width:2.1rem;height:2.1rem;display:grid;place-items:center;background:#f3edfc;color:#6943aa;border-radius:9px;font-weight:850;font-size:.76rem}.question-summary{display:grid;gap:.2rem;flex:1}.question-summary strong{font-size:.92rem;color:#302641}.question-summary small{font-size:.75rem;color:#81768e}.question-solved{font-size:.76rem;font-weight:800;color:#7954c8}.dsa-question[data-solved="true"] .question-solved{color:#16815f}.question-content{padding:0 1rem 1rem 3.95rem}.question-prompt{font-size:.9rem;line-height:1.6;color:#463b54;margin:.2rem 0 1rem}.dsa-answer-form fieldset{border:0;padding:0;margin:0}.dsa-answer-form legend{font-size:.8rem;font-weight:800;margin-bottom:.55rem}.dsa-choice{display:flex;align-items:flex-start;gap:.6rem;padding:.65rem .75rem;margin:.4rem 0;border:1px solid #ebe5f2;border-radius:9px;font-size:.83rem;line-height:1.45;cursor:pointer}.dsa-choice:has(input:checked){border-color:#9c7ad2;background:#f8f4fc}.dsa-choice input{margin-top:.15rem;accent-color:#7954c8;flex:none}.dsa-answer-form fieldset:disabled .dsa-choice{cursor:default}.dsa-form-actions{display:flex;align-items:center;gap:.8rem;margin-top:.75rem}.dsa-check-button:disabled{background:#19815e;cursor:default}.dsa-form-actions small{color:#81768e}.dsa-answer-feedback{font-size:.84rem;line-height:1.5;margin:.65rem 0 0;color:#71677e}.dsa-answer-feedback.is-correct{color:#16815f;font-weight:700}.dsa-answer-feedback.is-wrong{color:#a24752}.badge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.dsa-badge{display:flex;align-items:flex-start;gap:.8rem;padding:1rem;background:#fff;border:1px solid #e9e2f2;border-radius:13px;opacity:.76}.dsa-badge.earned{opacity:1;border-color:#d8c5f2;background:linear-gradient(135deg,#fff,#faf7ff)}.badge-icon{width:2.4rem;height:2.4rem;display:grid;place-items:center;border-radius:10px;background:#f2edf8;color:#7954c8;font-size:1.1rem;flex:none}.dsa-badge>div{flex:1}.badge-title{font-size:.9rem}.dsa-badge p{font-size:.78rem;line-height:1.4;color:#81768e;margin:.25rem 0}.badge-progress{font-size:.7rem;color:#7954c8;font-weight:750}.badge-track{height:5px;border-radius:99px;background:#eee8f5;margin-top:.4rem;overflow:hidden}.badge-track span{height:100%;display:block;background:#8b65cc;border-radius:inherit;transition:width .25s}@media(max-width:680px){.dsa-hero{align-items:flex-start;flex-direction:column}.dsa-stats{grid-template-columns:1fr}.dsa-stat>em{margin-left:auto}.dsa-section-heading{align-items:flex-start;flex-direction:column;gap:.25rem}.question-content{padding-left:1rem}.badge-grid{grid-template-columns:1fr}.dsa-question summary{gap:.55rem;padding:.8rem}.question-number{width:1.85rem;height:1.85rem}}
+</style>
+
+<script>
+(() => {
+  const badgeGrid = document.getElementById('dsaBadgeGrid');
+  const escapeHTML = (value) => String(value || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  document.querySelectorAll('.dsa-answer-form').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const choice = form.querySelector('input[name="selectedIndex"]:checked');
+      const feedback = form.querySelector('.dsa-answer-feedback');
+      const button = form.querySelector('button');
+      if (!choice) { feedback.textContent = 'Choose an option before checking your answer.'; feedback.className = 'dsa-answer-feedback is-wrong'; return; }
+      button.disabled = true; button.textContent = 'Checking…'; feedback.textContent = '';
+      try {
+        const response = await fetch('/student/dsa/answer', { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify({ questionId:form.dataset.questionId, selectedIndex:Number(choice.value) }) });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || `Could not check answer (${response.status})`);
+        if (data.alreadySolved) { feedback.textContent = 'Already solved. Keep your daily streak alive with another question.'; feedback.className = 'dsa-answer-feedback is-correct'; button.textContent = 'Solved'; form.querySelector('fieldset').disabled = true; form.closest('.dsa-question').querySelector('[data-solved-label]').textContent = '✓ Solved'; return; }
+        if (data.isCorrect) {
+          feedback.innerHTML = `<strong>Correct!</strong> ${escapeHTML(data.explanation)}`; feedback.className = 'dsa-answer-feedback is-correct';
+          button.textContent = 'Solved';
+          form.querySelectorAll('input').forEach((input) => { input.disabled = true; });
+          form.querySelector('fieldset').disabled = true;
+          form.closest('.dsa-question').querySelector('[data-solved-label]').textContent = '✓ Solved';
+          document.getElementById('dsaSolvedCount').textContent = data.solvedCount;
+          document.getElementById('dsaSolvedToday').textContent = data.solvedToday;
+          document.getElementById('dsaStreak').textContent = data.currentStreak;
+          document.getElementById('dsaBestStreak').textContent = data.bestStreak;
+          data.badges.forEach((badge) => {
+            const card = badgeGrid.querySelector(`[data-badge-id="${badge.id}"]`);
+            if (!card) return;
+            card.classList.toggle('earned', badge.earned);
+            card.querySelector('.badge-icon').textContent = badge.earned ? '🏆' : '◇';
+            card.querySelector('.badge-progress').textContent = badge.earned ? 'Unlocked' : `${badge.progressLabel} progress`;
+            card.querySelector('.badge-track span').style.width = `${badge.progress}%`;
+          });
+        } else {
+          feedback.textContent = `Not quite. Hint: ${data.hint || 'Review the pattern and try again.'}`;
+          feedback.className = 'dsa-answer-feedback is-wrong'; button.disabled = false; button.textContent = 'Try again';
+        }
+      } catch (error) { feedback.textContent = error.message || 'Could not check your answer. Try again.'; feedback.className = 'dsa-answer-feedback is-wrong'; button.disabled = false; button.textContent = 'Try again'; }
+    });
+  });
+})();
+</script>

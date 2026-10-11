@@ -1,0 +1,94 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">
+      Verified Candidate Talent Search
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Search across student engineers ranked by benchmarked assessment performance and verified project code.
+    </p>
+  </div>
+</div>
+
+<!-- Search & Filtering Bar -->
+<div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <form action="/recruiter/candidates" method="GET" style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 1rem; align-items: flex-end;">
+    
+    <div>
+      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 0.35rem;">Skill or Target Role</label>
+      <input type="text" name="query" placeholder="e.g. Docker, TypeScript, Microservices..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+    </div>
+
+    <div>
+      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 0.35rem;">Min. Employability Score</label>
+      <select name="minScore" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+        <option value="50">50+ (Baseline)</option>
+        <option value="70" selected>70+ (Interview Ready)</option>
+        <option value="85">85+ (Diamond Band)</option>
+      </select>
+    </div>
+
+    <div>
+      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 0.35rem;">Graduation Batch</label>
+      <select name="batch" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+        <option value="all">All Batches</option>
+        <option value="2026">2026 Cohort</option>
+        <option value="2027">2027 Cohort</option>
+      </select>
+    </div>
+
+    <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.7rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
+      Apply Filters
+    </button>
+  </form>
+</div>
+
+<!-- Candidate Cards Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+  <% if (typeof candidates !== 'undefined' && candidates.length > 0) { %>
+    <% candidates.forEach(cand => { %>
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem;">
+                <%= cand.user ? cand.user.name.charAt(0).toUpperCase() : 'C' %>
+              </div>
+              <div>
+                <h4 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin: 0;"><%= cand.user ? cand.user.name : 'Candidate' %></h4>
+                <span style="font-size: 0.75rem; color: #64748b;"><%= cand.academicDetails ? cand.academicDetails.college : 'Engineering Institute' %></span>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; font-weight: 900; color: #2563eb;"><%= cand.employabilityScore || 75 %></span>
+              <span style="display: block; font-size: 0.65rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Score</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: #0f172a; display: block; margin-bottom: 0.35rem;">Target: <%= cand.targetRole || 'Full Stack Engineer' %></span>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.35rem;">
+              <% (cand.skills || []).slice(0, 4).forEach(skill => { %>
+                <span style="background: #f1f5f9; color: #334155; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;"><%= skill %></span>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid #f1f5f9; padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">🔥 <%= cand.streak || 0 %> Day Streak</span>
+          <a href="/recruiter/candidate/<%= cand._id %>" style="background: #0f172a; color: #ffffff; padding: 0.45rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-decoration: none;">
+            View Profile →
+          </a>
+        </div>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <div style="grid-column: 1 / -1; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+      <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
+      <h3 style="font-size: 1.2rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem;">No Candidates Found</h3>
+      <p style="margin: 0; font-size: 0.9rem;">Try broadening your skill query or adjusting the employability score threshold.</p>
+    </div>
+  <% } %>
+</div>

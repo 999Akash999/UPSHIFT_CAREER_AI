@@ -1,0 +1,69 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 860px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      Post Job or Internship Opening
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Define mandatory technical skills and set an Employability Score cutoff to automatically filter out unqualified applicants.
+    </p>
+  </div>
+
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <form action="/recruiter/jobs" method="POST">
+      
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Job Title</label>
+        <input type="text" name="title" required placeholder="e.g. Associate Backend Engineer (Go / Node.js)" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Employment Type</label>
+          <select name="jobType" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+            <option value="Full-Time">Full-Time (FTE)</option>
+            <option value="Internship">Summer / 6-Month Internship</option>
+            <option value="Part-Time">Part-Time Contractor</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Office Location</label>
+          <input type="text" name="location" required placeholder="e.g. Bengaluru, India (or Remote)" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Annual CTC / Monthly Stipend</label>
+          <input type="text" name="salaryRange" placeholder="e.g. ₹12 - ₹18 LPA or ₹45,000/mo" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem;">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Employability Score Cutoff (0-100)</label>
+          <input type="number" name="minEmployabilityScore" min="0" max="100" value="70" required style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem; font-family: 'JetBrains Mono', monospace; font-weight: 700;">
+          <span style="font-size: 0.75rem; color: #64748b; display: block; margin-top: 0.25rem;">Candidates below this score will be flagged as sub-threshold.</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Mandatory Tech Stack (Comma separated)</label>
+        <input type="text" name="skillsRequired" required placeholder="Node.js, Docker, PostgreSQL, Redis, Kubernetes" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem; font-family: 'JetBrains Mono', monospace;">
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Job Scope & Team Description</label>
+        <textarea name="description" rows="6" required placeholder="Describe responsibilities, daily engineering stack, performance evaluation criteria..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; outline: none; font-size: 0.95rem; line-height: 1.5;"></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+        <a href="/recruiter/manage-jobs" style="background: #f1f5f9; color: #475569; padding: 0.85rem 1.5rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.95rem;">Cancel</a>
+        <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+          Publish Listing to Student Board →
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width:1100px;margin:0 auto;">
+  <h1 style="color:#0f172a;">User Governance</h1>
+  <p style="color:#64748b;">Review user accounts and update roles.</p>
+  <div style="overflow-x:auto;background:#fff;border:1px solid #e2e8f0;border-radius:12px;">
+    <table style="width:100%;border-collapse:collapse;text-align:left;">
+      <thead><tr><th style="padding:1rem;">Name</th><th>Email</th><th>Role</th><th>Status</th><th>Update role</th></tr></thead>
+      <tbody>
+        <% if (users.length) { %>
+          <% users.forEach(user => { %>
+            <tr style="border-top:1px solid #e2e8f0;">
+              <td style="padding:1rem;"><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.role %></td>
+              <td><%= user.isActive === false ? 'Suspended' : 'Active' %></td>
+              <td>
+                <form action="/admin/users/role" method="POST" style="display:flex;gap:.5rem;padding:.5rem;">
+                  <input type="hidden" name="userId" value="<%= user._id %>">
+                  <select name="newRole">
+                    <% ['student', 'recruiter', 'mentor', 'alumni', 'admin'].forEach(role => { %>
+                      <option value="<%= role %>" <%= user.role === role ? 'selected' : '' %>><%= role %></option>
+                    <% }) %>
+                  </select>
+                  <button type="submit">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="5" style="padding:2rem;text-align:center;color:#64748b;">No users found.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</main>

@@ -1,0 +1,71 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1180px; margin: 0 auto;">
+  <!-- Header -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        Upskill Store & Certification Paths
+      </h2>
+      <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+        Close verified technical skill gaps with production-focused curriculums.
+      </p>
+    </div>
+  </div>
+
+  <!-- Course Cards Grid -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem;">
+    <% if (typeof courses !== 'undefined' && courses.length > 0) { %>
+      <% courses.forEach(course => { %>
+        <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.2s;">
+          <div>
+            <!-- Banner / Thumbnail -->
+            <div style="height: 140px; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+              <span style="align-self: flex-start; background: rgba(37, 99, 235, 0.25); border: 1px solid rgba(96, 165, 250, 0.4); color: #93c5fd; font-size: 0.7rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px; text-transform: uppercase;">
+                <%= course.category %>
+              </span>
+              <span style="color: #ffffff; font-size: 0.75rem; font-weight: 600;">Level: <%= course.level %></span>
+            </div>
+
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem; line-height: 1.3;">
+                <%= course.title %>
+              </h3>
+              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0 0 1rem;">
+                <%= course.description ? course.description.substring(0, 110) + '...' : '' %>
+              </p>
+
+              <!-- Target Gaps Tagging -->
+              <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;">
+                <% (course.targetSkillGaps || []).slice(0, 3).forEach(gap => { %>
+                  <span style="background: rgba(37, 99, 235, 0.08); color: #2563eb; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">
+                    🎯 Bridges <%= gap %>
+                  </span>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price & Action Footer -->
+          <div style="padding: 1.25rem 1.5rem; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="font-size: 1.25rem; font-weight: 900; color: #0f172a;">₹<%= course.discountPrice || course.price %></span>
+              <% if (course.discountPrice && course.discountPrice < course.price) { %>
+                <span style="font-size: 0.8rem; color: #94a3b8; text-decoration: line-through; margin-left: 0.35rem;">₹<%= course.price %></span>
+              <% } %>
+            </div>
+            <a href="/courses/<%= course.slug %>" style="background: #2563eb; color: #ffffff; padding: 0.5rem 1.1rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-decoration: none; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);">
+              View Curriculum →
+            </a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div style="grid-column: 1 / -1; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎓</div>
+        <h4 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">Courses Loading Soon</h4>
+        <p style="margin: 0; font-size: 0.9rem;">New industry curriculums are being finalized by mentors.</p>
+      </div>
+    <% } %>
+  </div>
+</div>

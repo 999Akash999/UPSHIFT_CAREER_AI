@@ -1,0 +1,65 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">
+      Company & Recruiter Verification
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Verify legitimate hiring partners to grant access to candidate search and score cutoffs.
+    </p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+  <% if (typeof companies !== 'undefined' && companies.length > 0) { %>
+    <% companies.forEach(comp => { %>
+      <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+            <div>
+              <span style="font-size: 0.75rem; font-weight: 800; color: #2563eb; text-transform: uppercase;"><%= comp.tier || 'Startup' %></span>
+              <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0.2rem 0;"><%= comp.name %></h3>
+            </div>
+            <% if (comp.isVerified) { %>
+              <span style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">Verified</span>
+            <% } else { %>
+              <span style="background: #fffbeb; color: #b45309; border: 1px solid #fef3c7; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">Pending Review</span>
+            <% } %>
+          </div>
+
+          <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin-bottom: 1rem;">
+            <%= comp.description ? comp.description.substring(0, 110) + '...' : 'No description provided.' %>
+          </p>
+
+          <div style="font-size: 0.8rem; color: #475569; margin-bottom: 0.35rem;">
+            <strong>Industry:</strong> <%= comp.industry || 'Tech' %>
+          </div>
+          <div style="font-size: 0.8rem; color: #475569; margin-bottom: 1.25rem;">
+            <strong>Website:</strong> <a href="<%= comp.website %>" target="_blank" style="color: #2563eb; text-decoration: none;"><%= comp.website %></a>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+          <% if (!comp.isVerified) { %>
+            <form action="/admin/companies/<%= comp._id %>/verify" method="POST" style="flex-grow: 1;">
+              <button type="submit" style="width: 100%; background: #2563eb; color: #ffffff; border: none; padding: 0.6rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer;">
+                Approve & Verify
+              </button>
+            </form>
+          <% } else { %>
+            <button disabled style="width: 100%; background: #f8fafc; color: #94a3b8; border: 1px solid #e2e8f0; padding: 0.6rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem;">
+              Partner Verified
+            </button>
+          <% } %>
+        </div>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <div style="grid-column: 1 / -1; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+      <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏢</div>
+      <h3 style="font-size: 1.2rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem;">No Pending Verifications</h3>
+      <p style="margin: 0; font-size: 0.9rem;">All registered recruiting partners have been audited.</p>
+    </div>
+  <% } %>
+</div>

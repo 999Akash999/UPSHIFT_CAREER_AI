@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= typeof title !== 'undefined' ? title : 'Dashboard | UPSHIFT CAREER' %></title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/logos/m1.jpg">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core App Stylesheets -->
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/roadmap.css">
+  <link rel="stylesheet" href="/css/ai-chat.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+
+  <!-- External Libraries (Chart.js & Socket.io) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="dashboard-body">
+
+  <div class="app-layout">
+
+    <!-- Persistent Deep Navy Sidebar -->
+    <%- include('../partials/sidebar') %>
+
+    <!-- Main Workspace Column -->
+    <div class="dashboard-shell">
+      
+      <!-- Top Action Bar -->
+      <%- include('../partials/topbar') %>
+
+      <!-- Alert & Flash Container -->
+      <div style="padding: 1rem 2rem 0;">
+        <%- include('../partials/flash') %>
+      </div>
+
+      <!-- Injected Dashboard Workspace -->
+      <main class="dashboard-main">
+        <%- body %>
+      </main>
+
+      <!-- App Bottom Bar -->
+      <footer class="dashboard-footer">
+        <div>&copy; <%= new Date().getFullYear() %> UPSHIFT CAREER. Operating System for Student Engineers.</div>
+        <div style="display: flex; gap: 1rem;">
+          <a href="/student/settings" style="color: inherit; text-decoration: none;">Settings</a>
+          <a href="mailto:support@upshiftcareer.com" style="color: inherit; text-decoration: none;">Helpdesk</a>
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <!-- Global AI Assistant Sliding Drawer -->
+  <%- include('../partials/ai-drawer') %>
+
+  <!-- Workspace Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/charts.js"></script>
+</body>
+</html>

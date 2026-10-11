@@ -1,0 +1,62 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 900px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      AI Career Coach & Strategy Advisor
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Tailored guidance targeting: <strong><%= student.targetRole %></strong>
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem;">Next 30 Days Target</h3>
+      <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0;">
+        Complete 3 high-concurrency microservice assignments, verify your Docker capstone, and reach a 75+ Employability index to unlock Tier-1 company cutoffs.
+      </p>
+    </div>
+
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem;">Behavioral & STAR Focus</h3>
+      <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0;">
+        Structure past project difficulties with Situation, Task, Action, and Measurable Result to succeed in engineering manager reviews.
+      </p>
+    </div>
+  </div>
+
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 1rem;">Ask Strategy Question</h3>
+    <textarea id="coachQueryInput" rows="3" placeholder="e.g. Should I focus on learning Redis or Kubernetes next for backend roles?" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; font-size: 0.95rem; outline: none; margin-bottom: 1rem;"></textarea>
+    <button onclick="requestCoachAdvice()" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer;">
+      Generate Tactical Advice →
+    </button>
+    <div id="coachAdviceOutput" style="display: none; white-space:pre-wrap; margin-top: 1.5rem; padding: 1.25rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.95rem; color: #0f172a; line-height: 1.6;"></div>
+  </div>
+</div>
+
+<script>
+  async function requestCoachAdvice() {
+    const input = document.getElementById('coachQueryInput');
+    const out = document.getElementById('coachAdviceOutput');
+    const query = input.value.trim();
+    if (!query) return;
+
+    out.style.display = 'block';
+    out.textContent = 'Analyzing career milestones...';
+
+    try {
+      const res = await fetch('/ai/coach/advice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not generate advice.');
+      out.textContent = data.advice || 'Could not generate advice.';
+    } catch (e) {
+      out.textContent = e.message || 'Request failed. Please try again.';
+    }
+  }
+</script>

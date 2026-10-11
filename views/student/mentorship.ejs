@@ -1,0 +1,42 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1040px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      Affordable 1:1 Mentorship
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Get practical help with projects, interviews, resumes, and career planning. Demo mentor sessions start at ₹299/hour.
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem;">
+    <% if (typeof mentors !== 'undefined' && mentors.length > 0) { %>
+      <% mentors.forEach(m => { %>
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+              <div><h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;"><%= m.user ? m.user.name : 'Mentor' %></h3><% if (m.isDemo) { %><span style="display:inline-block;margin-top:.3rem;background:#f3edfc;color:#6842a8;padding:.2rem .5rem;border-radius:999px;font-size:.68rem;font-weight:700;">Demo mentor</span><% } %></div>
+              <span style="font-size: 0.8rem; font-weight: 700; color: #f59e0b;">★ <%= m.rating || 5.0 %></span>
+            </div>
+            <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 .75rem;"><%= m.bio || 'Engineering mentor' %></p>
+            <% if (m.expertise && m.expertise.length) { %><div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.85rem;"><% m.expertise.forEach(skill => { %><span style="background:#f3edfc;color:#61439b;padding:.25rem .55rem;border-radius:999px;font-size:.72rem;font-weight:650;"><%= skill %></span><% }) %></div><% } %>
+            <div style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem;">₹<%= Number(m.hourlyRate || 0).toLocaleString('en-IN') %> <span style="font-size:.78rem;font-weight:500;color:#64748b;">/ hour</span></div>
+          </div>
+
+          <div style="border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+            <a href="/student/mentorship/book/<%= m._id %>" style="display: block; text-align: center; background: #2563eb; color: #ffffff; padding: 0.6rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-decoration: none;">
+              Book an affordable session →
+            </a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div style="grid-column: 1 / -1; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤝</div>
+        <h4 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">No Mentors Available</h4>
+        <p style="margin: 0; font-size: 0.9rem;">Mentor calendars are currently booked. Please check back tomorrow.</p>
+      </div>
+    <% } %>
+  </div>
+</div>

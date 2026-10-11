@@ -1,0 +1,97 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1040px; margin: 0 auto;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        My Projects
+      </h2>
+      <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+        Add your projects, technologies, GitHub repositories, and live demos to your portfolio.
+      </p>
+    </div>
+
+    <button onclick="document.getElementById('projectSubmissionModal').style.display='flex'" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
+      + Add project
+    </button>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+    <% if (typeof projects !== 'undefined' && projects.length > 0) { %>
+      <% projects.forEach(p => { %>
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+              <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0;"><%= p.title %></h3>
+              <% if (p.isVerified) { %>
+                <span style="background: #f0fdf4; color: #166534; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">Verified</span>
+              <% } %>
+            </div>
+            <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0 0 1rem;"><%= p.description %></p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;">
+              <% (p.techStack || []).forEach(tech => { %>
+                <span style="background: #f1f5f9; color: #334155; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;"><%= tech %></span>
+              <% }) %>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid #f1f5f9; padding-top: 1rem; display: flex; gap: 1rem;">
+            <% if (p.githubUrl) { %>
+              <a href="<%= p.githubUrl %>" target="_blank" style="color: #2563eb; font-weight: 700; font-size: 0.85rem; text-decoration: none;">GitHub ↗</a>
+            <% } %>
+            <% if (p.liveDemoUrl) { %>
+              <a href="<%= p.liveDemoUrl %>" target="_blank" style="color: #0f172a; font-weight: 700; font-size: 0.85rem; text-decoration: none;">Live Demo ↗</a>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div style="grid-column: 1 / -1; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 3rem; text-align: center; color: #64748b;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💻</div>
+        <h4 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">No projects added yet</h4>
+        <p style="margin: 0; font-size: 0.9rem;">Add a project to show your work in your portfolio.</p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<!-- Modal Form -->
+<div id="projectSubmissionModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
+  <div style="background: #ffffff; border-radius: 16px; width: 100%; max-width: 520px; padding: 2.25rem; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h3 style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin: 0;">Add a project</h3>
+      <button onclick="document.getElementById('projectSubmissionModal').style.display='none'" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #64748b;">&times;</button>
+    </div>
+
+    <form action="/student/projects" method="POST">
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Project Title</label>
+        <input type="text" name="title" required minlength="2" maxlength="120" placeholder="e.g. Distributed Task Queue" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Description</label>
+        <textarea name="description" rows="3" required minlength="10" maxlength="3000" placeholder="What problem does it solve? Architecture decisions..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;"></textarea>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Technologies Used (Comma separated)</label>
+        <input type="text" name="techStack" required maxlength="1500" placeholder="Go, Redis, Docker, gRPC" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">GitHub Repository URL</label>
+        <input type="url" name="githubUrl" placeholder="https://github.com/..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Live Demo Deployment URL</label>
+        <input type="url" name="liveDemoUrl" placeholder="https://..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+      </div>
+
+      <button type="submit" style="width: 100%; background: #2563eb; color: #ffffff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer;">
+        Save project
+      </button>
+    </form>
+  </div>
+</div>

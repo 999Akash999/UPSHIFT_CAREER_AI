@@ -1,0 +1,16 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width:1000px;margin:0 auto;">
+  <a href="/recruiter/manage-jobs" style="color:#2563eb;">← Job postings</a>
+  <h1 style="color:#0f172a;">Applicants · <%= job.title %></h1>
+  <% if (applicants.length) { %>
+    <div style="display:grid;gap:.75rem;">
+      <% applicants.forEach(application => { %>
+        <article style="padding:1rem;background:#fff;border:1px solid #e2e8f0;border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+          <div><strong><%= application.student ? application.student.name : 'Candidate' %></strong><div style="color:#64748b;"><%= application.student ? application.student.email : '' %> · <%= application.status %></div></div>
+          <a href="/recruiter/applications/<%= application._id %>">Review application →</a>
+        </article>
+      <% }) %>
+    </div>
+  <% } else { %><p>No applications received yet.</p><% } %>
+</main>

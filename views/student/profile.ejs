@@ -1,0 +1,199 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 980px; margin: 0 auto;">
+  <div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+      Student Profile & Portfolio
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Keep your professional background, GitHub links, and technical competencies updated for recruiter visibility.
+    </p>
+    <a class="button-primary" href="/student/resume-builder" style="margin-top: 1rem;">✦ Create an AI resume</a>
+  </div>
+
+  <section class="profile-score-card" aria-labelledby="profile-score-title">
+    <div class="profile-score-heading">
+      <div><span class="profile-eyebrow">Career readiness</span><h3 id="profile-score-title">Employability at a glance</h3><p>See which areas are building your score and where to focus next.</p></div>
+      <div class="profile-score-value"><strong><%= Math.round(snapshot?.overallScore || 0) %></strong><span>/ 100</span></div>
+    </div>
+    <div class="profile-chart-wrap"><canvas id="profileEmployabilityChart" role="img" aria-label="Employability score chart by skill category"></canvas></div>
+    <a class="profile-score-link" href="/student/employability">View full employability report →</a>
+  </section>
+
+  <form id="profileEditForm" action="/student/profile" method="POST" enctype="multipart/form-data">
+    <section class="profile-photo-card">
+      <% if (currUser.avatar && currUser.avatar !== '/images/avatars/default.png') { %>
+        <img class="profile-photo-preview" src="<%= currUser.avatar %>" alt="Current profile picture">
+      <% } else { %><span class="profile-photo-fallback"><%= currUser.name.charAt(0).toUpperCase() %></span><% } %>
+      <div class="profile-photo-copy">
+        <h3>Profile picture</h3>
+        <p>JPG, PNG or WEBP · up to 5 MB</p>
+        <label class="photo-upload-button">Choose a photo<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp" onchange="previewProfilePhoto(this)"></label>
+        <img id="profilePhotoPreview" class="profile-photo-preview is-hidden" alt="Selected profile picture preview">
+      </div>
+    </section>
+    <div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem;">
+      
+      <!-- Left Column: Core Profile & Social Credentials -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1.25rem;">Basic Information</h3>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Full Name</label>
+            <input type="text" name="name" value="<%= currUser.name %>" required minlength="2" maxlength="100" autocomplete="name" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;">
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Primary domain</label>
+            <input type="text" name="primaryDomain" maxlength="80" value="<%= student.primaryDomain || '' %>" placeholder="Frontend, Data Science, Cybersecurity…" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;">
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Email Address</label>
+            <input type="email" value="<%= currUser.email %>" disabled style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; color: #64748b; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;">
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Target Engineering Role</label>
+            <input type="text" name="targetRole" value="<%= student.targetRole %>" required minlength="2" maxlength="100" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem; outline: none;">
+          </div>
+
+          <div style="margin-bottom: 0;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Short Bio</label>
+            <textarea name="bio" rows="4" maxlength="500" placeholder="Brief technical summary..." style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; outline: none;"><%= student.bio || '' %></textarea>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1rem;">Career preferences & experience</h3>
+          <div style="display: grid; gap: 0.85rem; font-size: 0.85rem;">
+            <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">Preferred location
+              <input type="text" name="preferredLocation" maxlength="100" value="<%= student.careerDetails?.preferredLocation || '' %>" placeholder="City, country, or anywhere" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.85rem; border-radius: 8px; font-size: 0.88rem;">
+            </label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">Work preference
+                <select name="workMode" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.65rem; border-radius: 8px; font-size: 0.88rem;">
+                  <% const workMode = student.careerDetails?.workMode || ''; %><option value="">Choose</option><% ['Remote','Hybrid','On-site'].forEach((item) => { %><option value="<%= item %>" <%= workMode === item ? 'selected' : '' %>><%= item %></option><% }) %>
+                </select>
+              </label>
+              <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">Experience (years)
+                <input type="number" name="experienceYears" min="0" max="50" step="0.5" value="<%= student.careerDetails?.experienceYears || 0 %>" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.65rem; border-radius: 8px; font-size: 0.88rem;">
+              </label>
+            </div>
+            <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">Availability
+              <% const availability = student.careerDetails?.availability || ''; %><select name="availability" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.85rem; border-radius: 8px; font-size: 0.88rem;"><option value="">Choose</option><% ['Immediately','Within 1 month','Within 3 months','Not looking'].forEach((item) => { %><option value="<%= item %>" <%= availability === item ? 'selected' : '' %>><%= item %></option><% }) %></select>
+            </label>
+            <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">Certifications <span style="font-weight: 400;">One per line</span>
+              <textarea name="certifications" rows="3" maxlength="2500" placeholder="AWS Cloud Practitioner&#10;Google Data Analytics" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.85rem; border-radius: 8px; font-size: 0.88rem;"><%= (student.careerDetails?.certifications || []).join('\n') %></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1.25rem;">External Profiles & Links</h3>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">GitHub URL</label>
+            <input type="url" name="githubUrl" value="<%= student.socialProfiles?.github || '' %>" placeholder="https://github.com/username" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">LinkedIn URL</label>
+            <input type="url" name="linkedinUrl" value="<%= student.socialProfiles?.linkedin || '' %>" placeholder="https://linkedin.com/in/username" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">LeetCode URL</label>
+            <input type="url" name="leetcodeUrl" value="<%= student.socialProfiles?.leetcode || '' %>" placeholder="https://leetcode.com/u/username" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem;">Personal Portfolio / Demo Site</label>
+            <input type="url" name="portfolioUrl" value="<%= student.socialProfiles?.portfolio || '' %>" placeholder="https://dev-portfolio.io" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; outline: none;">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Academic Details & Skills Inventory -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1rem;">Academic Baseline</h3>
+          
+          <div style="display: grid; gap: 0.85rem; font-size: 0.85rem;">
+            <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">College
+              <input type="text" name="college" maxlength="150" value="<%= student.academicDetails?.college || '' %>" placeholder="College or university" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.85rem; border-radius: 8px; font-size: 0.88rem;">
+            </label>
+            <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">Degree
+              <input type="text" name="degree" maxlength="120" value="<%= student.academicDetails?.degree || '' %>" placeholder="B.Tech, BCA, M.Sc…" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.85rem; border-radius: 8px; font-size: 0.88rem;">
+            </label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">Graduation year
+                <input type="number" name="graduationYear" min="1950" max="<%= new Date().getFullYear() + 10 %>" value="<%= student.academicDetails?.graduationYear || '' %>" placeholder="2026" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.65rem; border-radius: 8px; font-size: 0.88rem;">
+              </label>
+              <label style="display: grid; gap: 0.35rem; color: #64748b; font-weight: 650;">CGPA / 10
+                <input type="number" name="cgpa" min="0" max="10" step="0.01" value="<%= student.academicDetails?.cgpa || '' %>" placeholder="8.5" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.7rem 0.65rem; border-radius: 8px; font-size: 0.88rem;">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.85rem;">Verified Skills Tagging</h3>
+          <p style="font-size: 0.8rem; color: #64748b; margin: 0 0 1rem;">Update or add technical keywords separated by commas.</p>
+          
+          <textarea name="skills" rows="4" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; outline: none; margin-bottom: 1.5rem;"><%= (student.skills || []).join(', ') %></textarea>
+
+          <p id="profileSaveStatus" class="profile-save-status" role="status" aria-live="polite"></p>
+          <button id="profileSaveButton" type="submit" style="width: 100%; background: #2563eb; color: #ffffff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+            Save Profile
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const metrics = <%- JSON.stringify(snapshot?.breakdown || { technical: 0, projects: 0, roadmapProgress: 0, softSkills: 0, problemSolving: 0 }) %>;
+    if (typeof renderEmployabilityBars === 'function') renderEmployabilityBars('profileEmployabilityChart', metrics);
+  });
+</script>
+
+<script>
+  const profileEditForm = document.getElementById('profileEditForm');
+  const profileSaveButton = document.getElementById('profileSaveButton');
+  const profileSaveStatus = document.getElementById('profileSaveStatus');
+  profileEditForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    profileSaveButton.disabled = true;
+    profileSaveButton.textContent = 'Saving profile…';
+    profileSaveStatus.textContent = 'Saving your changes…';
+    profileSaveStatus.className = 'profile-save-status is-saving';
+    try {
+      const response = await fetch(profileEditForm.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(profileEditForm),
+        credentials: 'same-origin',
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.success) throw new Error(result.error || 'Could not save your profile. Please try again.');
+      profileSaveStatus.textContent = result.message || 'Profile updated successfully.';
+      profileSaveStatus.className = 'profile-save-status is-success';
+      profileSaveButton.textContent = 'Saved ✓';
+      window.setTimeout(() => window.location.reload(), 700);
+    } catch (error) {
+      profileSaveStatus.textContent = error.message || 'Could not save your profile. Please try again.';
+      profileSaveStatus.className = 'profile-save-status is-error';
+      profileSaveButton.disabled = false;
+      profileSaveButton.textContent = 'Save Profile';
+    }
+  });
+</script>

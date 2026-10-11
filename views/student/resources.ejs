@@ -1,0 +1,20 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width:1000px;margin:0 auto;">
+  <h1 style="color:#0f172a;">Learning Resources</h1>
+  <form method="GET" action="/student/resources" style="display:flex;gap:.5rem;margin:1rem 0 1.5rem;">
+    <input name="domain" value="<%= typeof domain !== 'undefined' ? domain : '' %>" placeholder="Filter by domain" style="padding:.65rem;border:1px solid #cbd5e1;border-radius:8px;">
+    <button type="submit" style="padding:.65rem 1rem;background:#2563eb;color:#fff;border:0;border-radius:8px;">Filter</button>
+  </form>
+  <% if (resources.length) { %>
+    <div style="display:grid;gap:.75rem;">
+      <% resources.forEach(resource => { %>
+        <article style="padding:1rem;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+          <span style="color:#2563eb;font-size:.8rem;font-weight:700;"><%= resource.domain %> · <%= resource.resourceType %></span>
+          <h2 style="margin:.35rem 0;"><a href="<%= resource.url %>" target="_blank" rel="noopener" style="color:#0f172a;"><%= resource.title %> ↗</a></h2>
+          <span style="color:#64748b;font-size:.85rem;"><%= resource.difficulty %></span>
+        </article>
+      <% }) %>
+    </div>
+  <% } else { %><p style="padding:2rem;background:#fff;border-radius:10px;color:#64748b;">No resources found yet. Try another domain or check back later.</p><% } %>
+</main>

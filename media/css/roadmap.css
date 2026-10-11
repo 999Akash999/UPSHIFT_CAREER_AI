@@ -1,0 +1,54 @@
+.roadmap-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.roadmap-container::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  bottom: 15px;
+  left: 12px;
+  width: 3px;
+  background: #e2e8f0;
+  border-radius: 2px;
+}
+
+.roadmap-week-card {
+  background: var(--white);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.roadmap-marker {
+  position: absolute;
+  left: -2rem;
+  top: 1.5rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--blue-primary);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.75rem;
+  box-shadow: 0 0 0 4px var(--off-white);
+}
+
+.milestone-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--off-white);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #e2e8f0;
+}

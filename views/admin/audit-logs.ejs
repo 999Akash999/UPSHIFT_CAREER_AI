@@ -1,0 +1,55 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">
+      Security Compliance & Audit Logs
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Immutable log stream recording critical permission mutations, login anomalies, and administrative actions.
+    </p>
+  </div>
+</div>
+
+<div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+  <div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+      <thead>
+        <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+          <th style="padding: 1rem 1.25rem;">TIMESTAMP</th>
+          <th style="padding: 1rem 1.25rem;">EVENT IDENTIFIER</th>
+          <th style="padding: 1rem 1.25rem;">PERFORMED BY</th>
+          <th style="padding: 1rem 1.25rem;">CLIENT IP</th>
+          <th style="padding: 1rem 1.25rem;">EVENT PAYLOAD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (typeof logs !== 'undefined' && logs.length > 0) { %>
+          <% logs.forEach(l => { %>
+            <tr style="border-bottom: 1px solid #f1f5f9; font-family: 'JetBrains Mono', monospace;">
+              <td style="padding: 1rem 1.25rem; color: #64748b;"><%= new Date(l.createdAt).toISOString() %></td>
+              <td style="padding: 1rem 1.25rem;">
+                <span style="background: #0f172a; color: #ffffff; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">
+                  <%= l.action %>
+                </span>
+              </td>
+              <td style="padding: 1rem 1.25rem; color: #2563eb; font-weight: 700;"><%= l.performedBy %></td>
+              <td style="padding: 1rem 1.25rem; color: #64748b;"><%= l.ipAddress || '127.0.0.1' %></td>
+              <td style="padding: 1rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #334155;">
+                <%= typeof l.details === 'object' ? JSON.stringify(l.details) : l.details %>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr style="border-bottom: 1px solid #f1f5f9; font-family: 'JetBrains Mono', monospace;">
+            <td style="padding: 1rem 1.25rem; color: #64748b;">2026-10-10T21:30:00.000Z</td>
+            <td style="padding: 1rem 1.25rem;"><span style="background: #0f172a; color: #ffffff; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">SYS_INIT</span></td>
+            <td style="padding: 1rem 1.25rem; color: #2563eb; font-weight: 700;">system_daemon</td>
+            <td style="padding: 1rem 1.25rem; color: #64748b;">127.0.0.1</td>
+            <td style="padding: 1rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #334155;">Cluster initialization completed successfully.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

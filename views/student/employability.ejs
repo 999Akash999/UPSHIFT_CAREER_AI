@@ -1,0 +1,101 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 1040px; margin: 0 auto;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem; letter-spacing: -0.02em;">
+        Employability Index Analytics
+      </h2>
+      <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+        Your score starts at zero and updates as you complete assessments, projects, roadmap milestones, and learning activities.
+      </p>
+    </div>
+
+    <form action="/student/employability/recalculate" method="POST">
+      <button type="submit" style="background: #2563eb; color: #ffffff; border: none; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
+        🔄 Recalculate Index
+      </button>
+    </form>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 2rem; margin-bottom: 2rem;">
+    
+    <!-- Big Score Callout -->
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2.5rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center;">
+      <span style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase;">Composite Rating</span>
+      <div style="font-size: 4.5rem; font-weight: 900; color: #2563eb; font-family: 'JetBrains Mono', monospace; line-height: 1; margin: 1rem 0 0.5rem;">
+        <%= snapshot ? snapshot.overallScore : 0 %>
+      </div>
+      <span style="font-size: 1.1rem; color: #64748b; font-weight: 700; margin-bottom: 1.5rem;">/ 100 Points</span>
+      
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; display: inline-block;">
+        <%= snapshot && snapshot.overallScore >= 75 ? 'Job Ready' : snapshot && snapshot.overallScore >= 40 ? 'Making Progress' : 'Getting Started' %>
+      </div>
+    </div>
+
+    <!-- Competency Radar Matrix -->
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1.25rem;">Multi-Factor Competency Radar</h3>
+      <div style="position: relative; height: 300px; width: 100%;">
+        <canvas id="studentEmployabilityCanvas"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Score Weighting Breakdown -->
+  <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 1.5rem;">Scoring Factor Allocation</h3>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">
+          <span>Recent assessments (30%)</span>
+          <span style="color: #2563eb;"><%= snapshot?.breakdown?.technical || 0 %>/100</span>
+        </div>
+        <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: <%= snapshot?.breakdown?.technical || 0 %>%; height: 100%; background: #2563eb;"></div></div>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">
+          <span>Projects (20%)</span>
+          <span style="color: #2563eb;"><%= snapshot?.breakdown?.projects || 0 %>/100</span>
+        </div>
+        <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: <%= snapshot?.breakdown?.projects || 0 %>%; height: 100%; background: #2563eb;"></div></div>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">
+          <span>Roadmap milestones (20%)</span>
+          <span style="color: #2563eb;"><%= snapshot?.breakdown?.roadmapProgress || 0 %>/100</span>
+        </div>
+        <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: <%= snapshot?.breakdown?.roadmapProgress || 0 %>%; height: 100%; background: #2563eb;"></div></div>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">
+          <span>Learning activities (20%)</span>
+          <span style="color: #2563eb;"><%= snapshot?.breakdown?.problemSolving || 0 %>/100</span>
+        </div>
+        <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: <%= snapshot?.breakdown?.problemSolving || 0 %>%; height: 100%; background: #2563eb;"></div></div>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">
+          <span>Daily consistency (10%)</span>
+          <span style="color: #2563eb;"><%= snapshot?.breakdown?.softSkills || 0 %>/100</span>
+        </div>
+        <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;"><div style="width: <%= snapshot?.breakdown?.softSkills || 0 %>%; height: 100%; background: #2563eb;"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const metrics = <%- JSON.stringify(snapshot && snapshot.breakdown ? snapshot.breakdown : { technical: 0, projects: 0, roadmapProgress: 0, softSkills: 0, problemSolving: 0 }) %>;
+    if (typeof renderEmployabilityRadar === "function") {
+      renderEmployabilityRadar("studentEmployabilityCanvas", metrics);
+    }
+  });
+</script>

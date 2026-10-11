@@ -1,0 +1,90 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="max-width: 600px; margin: 0 auto;">
+  <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+    
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <span style="font-size: 2rem;">💳</span>
+      <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin: 0.5rem 0 0.25rem;">Order Confirmation</h2>
+      <p style="color: #64748b; font-size: 0.9rem; margin: 0;">Secured transaction via Razorpay Payment Gateway</p>
+    </div>
+
+    <!-- Order Summary Box -->
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+        <span style="font-weight: 700; color: #0f172a;"><%= course.title %></span>
+        <span style="font-weight: 800; color: #0f172a;">₹<%= course.discountPrice || course.price %></span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #64748b;">
+        <span>Platform & Tax Surcharge</span>
+        <span>₹0 (Included)</span>
+      </div>
+      <div style="border-top: 1px solid #e2e8f0; margin-top: 0.75rem; padding-top: 0.75rem; display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 900; color: #2563eb;">
+        <span>Total Payable</span>
+        <span>₹<%= course.discountPrice || course.price %></span>
+      </div>
+    </div>
+
+    <!-- Checkout Action Trigger -->
+      <button id="rzp-pay-btn" style="width: 100%; background: #2563eb; color: #ffffff; border: none; padding: 0.95rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
+      <%= (course.discountPrice || course.price) === 0 ? 'Enroll in this free course' : `Pay ₹${course.discountPrice || course.price} with Razorpay` %>
+    </button>
+  </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  document.getElementById('rzp-pay-btn').onclick = function(e) {
+    e.preventDefault();
+    const options = {
+      key: "<%= typeof razorpayKey !== 'undefined' ? razorpayKey : 'rzp_test_placeholder' %>",
+      amount: "<%= (course.discountPrice || course.price) * 100 %>", // in paise
+      currency: "INR",
+      name: "UPSHIFT CAREER",
+      description: "Enrollment: <%= course.title %>",
+      order_id: "",
+      handler: async function (response) {
+        try {
+          const result = await fetch('/payments/orders/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(response)
+          });
+          const data = await result.json();
+          if (!result.ok) throw new Error(data.message || 'Payment verification failed.');
+          window.location.assign('/student/dashboard');
+        } catch (error) {
+          alert(error.message);
+        }
+      },
+      prefill: {
+        name: "<%= currUser.name %>",
+        email: "<%= currUser.email %>"
+      },
+      theme: {
+        color: "#2563eb"
+      }
+    };
+    const button = this;
+    button.disabled = true;
+    fetch('/payments/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ courseId: '<%= course._id %>' })
+    })
+      .then(async response => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Could not create order.');
+        if (data.enrolled) {
+          window.location.assign('/student/my-courses');
+          return;
+        }
+        options.order_id = data.orderId;
+        options.amount = data.amount;
+        options.key = data.keyId;
+        new Razorpay(options).open();
+      })
+      .catch(error => alert(error.message))
+      .finally(() => { button.disabled = false; });
+  };
+</script>

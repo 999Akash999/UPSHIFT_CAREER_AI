@@ -1,0 +1,12 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width:700px;margin:0 auto;background:#fff;padding:2rem;border:1px solid #e2e8f0;border-radius:14px;">
+  <a href="/student/mentorship" style="color:#2563eb;">← Mentors</a>
+  <h1 style="color:#0f172a;">Book a session with <%= mentor.user ? mentor.user.name : 'Mentor' %></h1>
+  <form action="/mentor/book" method="POST" style="display:grid;gap:1rem;">
+    <input type="hidden" name="mentorId" value="<%= mentor.user._id %>">
+    <label>Session time<input type="datetime-local" name="sessionDate" required></label>
+    <label>What would you like help with?<textarea name="agenda" rows="4" maxlength="1000" required></textarea></label>
+    <button type="submit" style="padding:.8rem 1rem;background:#2563eb;color:#fff;border:0;border-radius:8px;font-weight:700;">Request session</button>
+  </form>
+</main>

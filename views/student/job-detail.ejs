@@ -1,0 +1,21 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main style="max-width:850px;margin:0 auto;background:#fff;padding:2rem;border:1px solid #e2e8f0;border-radius:14px;">
+  <a href="/student/jobs" style="color:#2563eb;">← Open jobs</a>
+  <p style="margin-bottom:.25rem;color:#2563eb;font-weight:700;"><%= job.company ? job.company.name : 'Hiring company' %> · <%= job.location %></p>
+  <h1 style="margin:.25rem 0;color:#0f172a;"><%= job.title %></h1>
+  <p style="color:#64748b;"><%= job.type %> · <%= job.salary || 'Salary not listed' %></p>
+  <p style="white-space:pre-line;line-height:1.65;color:#334155;"><%= job.description %></p>
+  <h3>Required skills</h3>
+  <p><%= (job.requiredSkills || []).join(', ') %></p>
+  <% if (existingApplication) { %>
+    <p style="padding:1rem;background:#f0fdf4;color:#166534;border-radius:8px;">You have already applied for this role.</p>
+  <% } else { %>
+    <form action="/student/applications" method="POST" enctype="multipart/form-data" style="display:grid;gap:1rem;margin-top:1.5rem;">
+      <input type="hidden" name="jobId" value="<%= job._id %>">
+      <label>Resume (PDF, max 5 MB)<input type="file" name="resume" accept="application/pdf" required></label>
+      <label>Cover note<textarea name="coverNote" rows="4" maxlength="2000"></textarea></label>
+      <button type="submit" style="padding:.8rem 1rem;background:#2563eb;color:#fff;border:0;border-radius:8px;font-weight:700;">Submit application</button>
+    </form>
+  <% } %>
+</main>

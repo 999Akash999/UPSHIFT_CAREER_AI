@@ -1,0 +1,90 @@
+<% layout('layouts/dashboardLayout') %>
+<% const acquiredSkills = Array.isArray(student.skills) ? student.skills : []; %>
+<% const gaps = Array.isArray(topGaps) ? topGaps.filter(Boolean) : []; %>
+
+<section class="skill-gap-page">
+  <header class="skill-gap-heading">
+    <div>
+      <p class="skill-gap-eyebrow">YOUR CAREER PROFILE</p>
+      <h1>Skill gap analysis</h1>
+      <p>See the skills in your profile and focus your next learning steps for <strong><%= student.targetRole || 'your target role' %></strong>.</p>
+    </div>
+    <a class="skill-gap-edit-link" href="/student/profile">Edit my skills <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <div class="skill-gap-summary" aria-label="Skills summary">
+    <article class="skill-gap-stat">
+      <span class="skill-gap-stat-icon acquired-icon" aria-hidden="true">✓</span>
+      <div><strong><%= acquiredSkills.length %></strong><span>Skills in your profile</span></div>
+    </article>
+    <article class="skill-gap-stat">
+      <span class="skill-gap-stat-icon gap-icon" aria-hidden="true">＋</span>
+      <div><strong><%= gaps.length %></strong><span>Skills to explore</span></div>
+    </article>
+    <article class="skill-gap-role-stat">
+      <span>FOCUS ROLE</span>
+      <strong><%= student.targetRole || 'Choose a target role' %></strong>
+      <small>Recommendations are based on your saved profile.</small>
+    </article>
+  </div>
+
+  <div class="skill-gap-columns">
+    <section class="skill-gap-card acquired-card">
+      <div class="skill-gap-card-heading">
+        <span class="skill-gap-card-icon acquired-icon" aria-hidden="true">✓</span>
+        <div><h2>Your skills</h2><p>Skills currently listed on your profile</p></div>
+        <span class="skill-gap-count"><%= acquiredSkills.length %></span>
+      </div>
+      <% if (acquiredSkills.length) { %>
+        <ul class="skill-gap-chips acquired-skill-boxes" aria-label="Skills in your profile">
+          <% acquiredSkills.forEach(skill => { %><li><span aria-hidden="true">✓</span><strong><%= skill %></strong><small>In your profile</small></li><% }) %>
+        </ul>
+      <% } else { %>
+        <div class="skill-gap-empty"><span aria-hidden="true">✦</span><strong>Add your current skills</strong><p>Your analysis gets more useful when your profile reflects what you already know.</p><a href="/student/profile">Update profile →</a></div>
+      <% } %>
+    </section>
+
+    <section class="skill-gap-card missing-card">
+      <div class="skill-gap-card-heading">
+        <span class="skill-gap-card-icon explore-icon" aria-hidden="true">＋</span>
+        <div><h2>Skills to explore</h2><p>Potential areas to build toward your goal</p></div>
+        <span class="skill-gap-count"><%= gaps.length %></span>
+      </div>
+      <% if (gaps.length) { %>
+        <ul class="skill-gap-chips explore-chips" aria-label="Skills to explore">
+          <% gaps.forEach((gap, index) => { %><li><span><%= String(index + 1).padStart(2, '0') %></span><%= gap %></li><% }) %>
+        </ul>
+      <% } else { %>
+        <div class="skill-gap-empty"><span aria-hidden="true">◎</span><strong>No suggested gaps yet</strong><p>Run a fresh analysis after adding your target role and skills to your profile.</p><form class="skill-gap-refresh-form" action="/student/skill-gap/analyze" method="POST"><button type="submit">Refresh analysis →</button><small role="status" aria-live="polite"></small></form></div>
+      <% } %>
+    </section>
+  </div>
+
+  <section class="skill-gap-next-step">
+    <div class="next-step-art" aria-hidden="true">↗</div>
+    <div class="next-step-copy"><p class="skill-gap-eyebrow">TURN INSIGHT INTO PROGRESS</p><h2>Build a learning plan around your gaps</h2><p>Use your roadmap to study each topic, practice it, and keep track of your progress.</p></div>
+    <a href="/student/roadmap">Open learning roadmap <span aria-hidden="true">→</span></a>
+  </section>
+</section>
+
+<script>
+  const skillGapRefreshForm = document.querySelector('.skill-gap-refresh-form');
+  skillGapRefreshForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const button = skillGapRefreshForm.querySelector('button');
+    const status = skillGapRefreshForm.querySelector('[role="status"]');
+    button.disabled = true;
+    button.textContent = 'Checking…';
+    status.textContent = '';
+    try {
+      const response = await fetch(skillGapRefreshForm.action, { method: 'POST', headers: { Accept: 'application/json' } });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Could not refresh skill analysis.');
+      window.location.reload();
+    } catch (error) {
+      button.disabled = false;
+      button.textContent = 'Try again →';
+      status.textContent = error.message;
+    }
+  });
+</script>

@@ -1,0 +1,84 @@
+<% layout('layouts/dashboardLayout') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem;">
+      Student Mentorship Sessions
+    </h2>
+    <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+      Inspect booking details, review candidate agendas, and track historical student reviews.
+    </p>
+  </div>
+</div>
+
+<div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+  <div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+      <thead>
+        <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-weight: 700; font-size: 0.8rem; text-transform: uppercase;">
+          <th style="padding: 1rem 1.25rem;">CANDIDATE</th>
+          <th style="padding: 1rem 1.25rem;">DATE & TIME</th>
+          <th style="padding: 1rem 1.25rem;">SESSION AGENDA</th>
+          <th style="padding: 1rem 1.25rem;">STATUS</th>
+          <th style="padding: 1rem 1.25rem; text-align: right;">ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (typeof bookings !== 'undefined' && bookings.length > 0) { %>
+          <% bookings.forEach(booking => { %>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 1rem 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="width: 36px; height: 36px; border-radius: 50%; background: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">
+                    <%= booking.student && booking.student.name ? booking.student.name.charAt(0).toUpperCase() : 'S' %>
+                  </div>
+                  <div>
+                    <div style="font-weight: 700; color: #0f172a;"><%= booking.student ? booking.student.name : 'Student' %></div>
+                    <div style="font-size: 0.75rem; color: #64748b;"><%= booking.student ? booking.student.email : '' %></div>
+                  </div>
+                </div>
+              </td>
+              <td style="padding: 1rem 1.25rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #0f172a;">
+                <%= new Date(booking.sessionDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) %><br>
+                <span style="color: #2563eb; font-weight: 700;"><%= new Date(booking.sessionDate).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %></span>
+              </td>
+              <td style="padding: 1rem 1.25rem; max-width: 320px;">
+                <span style="display: block; font-size: 0.85rem; color: #334155; line-height: 1.4;"><%= booking.agenda %></span>
+              </td>
+              <td style="padding: 1rem 1.25rem;">
+                <% if (booking.status === 'confirmed') { %>
+                  <span style="background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 0.25rem 0.65rem; border-radius: 20px; font-weight: 700; font-size: 0.75rem;">CONFIRMED</span>
+                <% } else if (booking.status === 'completed') { %>
+                  <span style="background: rgba(37, 99, 235, 0.1); color: #2563eb; padding: 0.25rem 0.65rem; border-radius: 20px; font-weight: 700; font-size: 0.75rem;">COMPLETED</span>
+                <% } else if (booking.status === 'cancelled') { %>
+                  <span style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 0.25rem 0.65rem; border-radius: 20px; font-weight: 700; font-size: 0.75rem;">CANCELLED</span>
+                <% } else { %>
+                  <span style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 0.25rem 0.65rem; border-radius: 20px; font-weight: 700; font-size: 0.75rem;">PENDING</span>
+                <% } %>
+              </td>
+              <td style="padding: 1rem 1.25rem; text-align: right;">
+                <% if (booking.status === 'confirmed') { %>
+                  <a href="<%= booking.meetingLink || '#' %>" target="_blank" style="background: #2563eb; color: #ffffff; padding: 0.45rem 0.9rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-decoration: none; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);">
+                    Launch Call →
+                  </a>
+                <% } else if (booking.review && booking.review.rating) { %>
+                  <span style="color: #f59e0b; font-weight: 700; font-size: 0.85rem;">★ <%= booking.review.rating %>/5</span>
+                <% } else { %>
+                  <span style="color: #94a3b8; font-size: 0.8rem;">—</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td colspan="5" style="padding: 3rem; text-align: center; color: #64748b;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">📑</div>
+              <h4 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem;">No Recorded Sessions Found</h4>
+              <p style="margin: 0; font-size: 0.85rem;">When students book your calendar slots, they will appear in this registry.</p>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
