@@ -29,6 +29,7 @@ const uploadAvatar = (req, res, next) => upload.single("avatar")(req, res, (erro
 router.post("/profile", uploadAvatar, studentController.updateProfile);
 router.get("/resume-builder", resumeBuilderController.renderBuilder);
 router.post("/resume-builder/generate", aiLimiter, resumeBuilderController.generate);
+router.post("/resume-builder/download", apiLimiter, resumeBuilderController.downloadPdf);
 router.get("/daily-tasks", workspaceController.getDailyTasks);
 router.get("/skill-gap", workspaceController.getSkillGap);
 router.get("/employability", workspaceController.getEmployability);

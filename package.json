@@ -35,6 +35,7 @@
     "passport-linkedin-oauth2": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^9.2.1",
+    "pdfkit": "^0.20.2",
     "razorpay": "^2.9.8",
     "socket.io": "^4.8.4"
   },

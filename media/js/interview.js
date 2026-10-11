@@ -69,6 +69,22 @@
       return;
     }
     try {
+      const integrityType = ({ tab_hidden: "PAGE_HIDDEN", window_blur: "WINDOW_BLUR" })[code];
+      if (integrityType) {
+        const result = await postJSON(`/student/interview/${sessionId}/integrity-events`, {
+          eventId: window.crypto?.randomUUID?.() || `${Date.now()}_${Math.random().toString(36).slice(2)}`,
+          type: integrityType,
+          details: { source: code === "tab_hidden" ? "visibilitychange" : "window_blur" },
+        });
+        if (result.action === "terminated") {
+          showWarning(result.message, result.warningCount);
+          updateDeviceStatus(false, result.message);
+          releaseDevices();
+          return;
+        }
+        showWarning(result.message || localMessage || "Interview monitoring event recorded.", result.warningCount);
+        return;
+      }
       const result = await postJSON("/student/interview/event", { sessionId, code });
       showWarning(result.event?.message || localMessage || "Interview monitoring event recorded.", result.warningCount);
     } catch (error) {

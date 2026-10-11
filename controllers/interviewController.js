@@ -1,6 +1,8 @@
 const InterviewSession = require("../models/InterviewSession");
 const AI_CONFIG = require("../config/aiConfig");
 const { generateAIContent } = require("../services/aiService");
+const mongoose = require("mongoose");
+const INTEGRITY_POLICY = require("../config/interviewIntegrity");
 
 const TOTAL_QUESTIONS = 10;
 const STARTER_QUESTIONS = {
@@ -48,6 +50,8 @@ exports.startMockInterview = async (req, res) => {
       language,
       transcript: [],
       status: "active",
+      maxWarnings: INTEGRITY_POLICY.maxWarnings,
+      warningCount: 0,
       proctoring: {
         cameraActive: true,
         screenActive: true,
@@ -63,8 +67,11 @@ exports.startMockInterview = async (req, res) => {
 };
 
 exports.verifyDevices = async (req, res) => {
-  const session = await InterviewSession.findOne({ _id: req.body?.sessionId, student: req.user._id, status: "active" });
-  if (!session) return res.status(404).json({ success: false, error: "Active interview session not found." });
+  if (!mongoose.isValidObjectId(req.body?.sessionId)) return res.status(400).json({ success: false, error: "Invalid interview session ID." });
+  const session = await InterviewSession.findOne({ _id: req.body.sessionId, student: req.user._id });
+  if (!session) return res.status(404).json({ success: false, error: "Interview session not found." });
+  if (session.status === "terminated_integrity") return res.status(409).json({ success: false, status: session.status, error: "This interview was terminated under the integrity policy." });
+  if (session.status !== "active") return res.status(409).json({ success: false, status: session.status, error: "Interview session is not active." });
   ensureProctoringState(session);
   if (!deviceCheckIsValid(req.body?.deviceCheck)) {
     session.proctoring.cameraActive = req.body?.deviceCheck?.camera === true;
@@ -86,18 +93,18 @@ exports.verifyDevices = async (req, res) => {
 exports.recordProctoringEvent = async (req, res) => {
   const { code, sessionId } = req.body || {};
   const event = PROCTORING_EVENTS[code];
-  if (!event || !sessionId) return res.status(400).json({ success: false, error: "Invalid interview monitoring event." });
-  const session = await InterviewSession.findOne({ _id: sessionId, student: req.user._id, status: "active" });
-  if (!session) return res.status(404).json({ success: false, error: "Active interview session not found." });
-  ensureProctoringState(session);
-
-  if (code === "camera_interrupted") session.proctoring.cameraActive = false;
-  if (code === "screen_interrupted" || code === "screen_not_monitor") session.proctoring.screenActive = false;
-  if (event.severity === "warning") session.proctoring.warningCount += 1;
-  session.proctoring.events.push({ code, ...event });
-  session.proctoring.events = session.proctoring.events.slice(-50);
-  await session.save();
-  return res.json({ success: true, warningCount: session.proctoring.warningCount, event: { code, ...event } });
+  if (!event || !mongoose.isValidObjectId(sessionId)) return res.status(400).json({ success: false, error: "Invalid interview monitoring event." });
+  const session = await InterviewSession.findOne({ _id: sessionId, student: req.user._id });
+  if (!session) return res.status(404).json({ success: false, error: "Interview session not found." });
+  if (session.status === "terminated_integrity") return res.status(409).json({ success: false, status: session.status, error: "This interview was terminated under the integrity policy." });
+  if (session.status !== "active") return res.status(409).json({ success: false, status: session.status, error: "Interview session is not active." });
+  const update = { $push: { "proctoring.events": { $each: [{ code, ...event }], $slice: -50 } } };
+  if (event.severity === "warning") update.$inc = { "proctoring.warningCount": 1 };
+  if (code === "camera_interrupted") update.$set = { "proctoring.cameraActive": false };
+  if (code === "screen_interrupted" || code === "screen_not_monitor") update.$set = { "proctoring.screenActive": false };
+  const updated = await InterviewSession.findOneAndUpdate({ _id: session._id, student: req.user._id, status: "active" }, update, { new: true });
+  if (!updated) return res.status(409).json({ success: false, error: "Interview session is no longer active." });
+  return res.json({ success: true, warningCount: updated.proctoring.warningCount, event: { code, ...event } });
 };
 
 exports.submitAnswer = async (req, res) => {
@@ -106,16 +113,19 @@ exports.submitAnswer = async (req, res) => {
     if (!sessionId || !String(answer || "").trim() || String(answer).length > 5000) {
       return res.status(400).json({ error: "An active session and answer are required." });
     }
-    const session = await InterviewSession.findOne({ _id: sessionId, student: req.user._id, status: "active" });
-    if (!session) return res.status(404).json({ error: "Interview session not found or already completed." });
+    if (!mongoose.isValidObjectId(sessionId)) return res.status(400).json({ success: false, error: "Invalid interview session ID." });
+    const session = await InterviewSession.findOne({ _id: sessionId, student: req.user._id });
+    if (!session) return res.status(404).json({ error: "Interview session not found." });
+    if (session.status === "terminated_integrity") return res.status(409).json({ success: false, status: session.status, error: "This interview was terminated under the integrity policy." });
+    if (session.status !== "active") return res.status(409).json({ success: false, status: session.status, error: "Interview session is not active." });
     if (session.proctoring?.cameraActive !== true || session.proctoring?.screenActive !== true || session.proctoring?.displaySurface !== "monitor") {
       return res.status(409).json({ error: "Your camera and entire-screen share must be active before submitting an answer." });
     }
     if (session.transcript.length >= TOTAL_QUESTIONS) {
-      session.status = "completed";
-      session.finalScore = Math.round(session.transcript.reduce((sum, item) => sum + (JSON.parse(item.feedback || "{}").score || 0), 0) / TOTAL_QUESTIONS);
-      await session.save();
-      return res.json({ success: true, completed: true, finalScore: session.finalScore, totalQuestions: TOTAL_QUESTIONS });
+      const finalScore = Math.round(session.transcript.reduce((sum, item) => sum + (JSON.parse(item.feedback || "{}").score || 0), 0) / TOTAL_QUESTIONS);
+      const completedSession = await InterviewSession.findOneAndUpdate({ _id: session._id, student: req.user._id, status: "active" }, { $set: { status: "completed", finalScore, endedAt: new Date() } }, { new: true });
+      if (!completedSession) return res.status(409).json({ success: false, error: "Interview session is no longer active." });
+      return res.json({ success: true, completed: true, finalScore, totalQuestions: TOTAL_QUESTIONS });
     }
     const starterQuestion = STARTER_QUESTIONS[session.language || "en-IN"];
     const question = session.transcript.length === 0
@@ -141,21 +151,17 @@ exports.submitAnswer = async (req, res) => {
       nextQuestion: String(result.nextQuestion || "Tell me more about your approach and the trade-offs you considered."),
     };
 
-    session.transcript.push({ question, answer: String(answer).trim(), feedback: JSON.stringify(feedback) });
-    const completed = session.transcript.length >= TOTAL_QUESTIONS;
-    if (completed) {
-      session.finalScore = Math.round(session.transcript.reduce((sum, item) => sum + (JSON.parse(item.feedback || "{}").score || 0), 0) / TOTAL_QUESTIONS);
-      session.status = "completed";
-    }
-    let saved = true;
-    try {
-      await session.save();
-    } catch (saveError) {
-      saved = false;
-      console.error("Interview feedback could not be saved:", saveError.message);
-    }
+    const nextTranscript = [...session.transcript, { question, answer: String(answer).trim(), feedback: JSON.stringify(feedback) }];
+    const completed = nextTranscript.length >= TOTAL_QUESTIONS;
+    const finalScore = completed ? Math.round(nextTranscript.reduce((sum, item) => sum + (JSON.parse(item.feedback || "{}").score || 0), 0) / TOTAL_QUESTIONS) : null;
+    const savedSession = await InterviewSession.findOneAndUpdate(
+      { _id: session._id, student: req.user._id, status: "active", "proctoring.cameraActive": true, "proctoring.screenActive": true, "proctoring.displaySurface": "monitor" },
+      { $push: { transcript: { question, answer: String(answer).trim(), feedback: JSON.stringify(feedback) } }, $set: completed ? { status: "completed", finalScore, endedAt: new Date() } : {} },
+      { new: true, runValidators: true }
+    );
+    if (!savedSession) return res.status(409).json({ success: false, error: "Interview session is no longer active or device checks are no longer valid." });
 
-    res.json({ success: true, feedback, nextQuestion: feedback.nextQuestion, saved, completed, warningCount: session.proctoring.warningCount, questionNumber: session.transcript.length, totalQuestions: TOTAL_QUESTIONS, finalScore: completed ? session.finalScore : null });
+    res.json({ success: true, feedback, nextQuestion: feedback.nextQuestion, saved: true, completed, warningCount: savedSession.proctoring.warningCount, questionNumber: savedSession.transcript.length, totalQuestions: TOTAL_QUESTIONS, finalScore });
   } catch (err) {
     console.error("Interview evaluation error:", err);
     res.status(err.status || 502).json({ error: err.message || "Evaluation error" });

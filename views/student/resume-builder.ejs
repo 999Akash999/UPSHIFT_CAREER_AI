@@ -11,18 +11,30 @@
       <h3>Your details</h3>
       <p class="form-hint">Your saved skills, education, links, and portfolio projects are included automatically. Add factual work experience or extra projects; AI will improve wording without inventing achievements.</p>
       <label>Target role<input name="targetRole" required maxlength="120" value="<%= student.targetRole || '' %>" placeholder="Frontend Developer"></label>
+      <label>Phone number<input name="phone" type="tel" maxlength="40" placeholder="+91 98XXXXXXXX"></label>
+      <label>Professional summary<textarea name="summary" rows="4" maxlength="5000" placeholder="A short introduction about your background, strengths, and the role you want."><%= student.bio || '' %></textarea></label>
       <label>Skills<input name="skills" maxlength="5000" value="<%= (student.skills || []).join(', ') %>" placeholder="JavaScript, React, Node.js"></label>
       <label>Education<textarea name="education" rows="3" maxlength="5000" placeholder="Degree, college, graduation year"><%= [student.academicDetails?.degree, student.academicDetails?.college, student.academicDetails?.graduationYear].filter(Boolean).join(', ') %></textarea></label>
       <label>Experience<textarea name="experience" rows="5" maxlength="5000" placeholder="Role, company, dates, and what you worked on. Put each role on a new line."></textarea></label>
+      <label>Achievements<textarea name="achievements" rows="3" maxlength="5000" placeholder="Awards, coding milestones, or notable accomplishments. Put each on a new line."></textarea></label>
       <label>Projects<textarea name="projects" rows="5" maxlength="5000" placeholder="Project name, technologies, what you built, and any real results."></textarea></label>
       <label>Certifications<textarea name="certifications" rows="2" maxlength="5000" placeholder="List certifications, if you have any."></textarea></label>
+      <fieldset class="resume-social-fields">
+        <legend>Social links</legend>
+        <p class="form-hint">Add the profiles you want recruiters to open from your resume. Leave a field blank to omit it.</p>
+        <label>LinkedIn<input name="links.linkedin" type="url" maxlength="500" value="<%= student.socialProfiles?.linkedin || '' %>" placeholder="https://linkedin.com/in/your-name"></label>
+        <label>GitHub<input name="links.github" type="url" maxlength="500" value="<%= student.socialProfiles?.github || '' %>" placeholder="https://github.com/your-name"></label>
+        <label>LeetCode<input name="links.leetcode" type="url" maxlength="500" value="<%= student.socialProfiles?.leetcode || '' %>" placeholder="https://leetcode.com/u/your-name"></label>
+        <label>Portfolio<input name="links.portfolio" type="url" maxlength="500" value="<%= student.socialProfiles?.portfolio || '' %>" placeholder="https://your-portfolio.com"></label>
+      </fieldset>
       <label>Job description for keyword coverage <span class="form-hint">Optional. Checked locally against your resume; not sent to AI.</span><textarea name="jobDescription" rows="5" maxlength="10000" placeholder="Paste the job description to see which role skills your resume mentions."></textarea></label>
       <button class="button-primary resume-generate-button" id="generateResumeButton" type="submit"><span>✦</span> Generate my resume</button>
       <p class="resume-status" id="resumeStatus" role="status" aria-live="polite"></p>
     </form>
 
     <section class="resume-preview-wrap">
-      <div class="preview-toolbar"><div><h3>Resume preview</h3><p>Your generated resume will appear here.</p></div><button class="button-secondary is-hidden" id="printResumeButton" type="button" onclick="window.print()">Print / Save PDF</button></div>
+      <div class="preview-toolbar"><div><h3>Resume preview</h3><p>Your generated resume will appear here.</p></div><div class="resume-export-actions"><button class="button-secondary is-hidden" id="printResumeButton" type="button" onclick="window.print()">Print</button><button class="button-primary is-hidden" id="downloadResumeButton" type="button">Download PDF</button></div></div>
+      <form id="resumeDownloadForm" action="/student/resume-builder/download" method="post" hidden><input type="hidden" name="resume"></form>
       <article class="resume-paper" id="resumePreview">
         <div class="resume-empty"><span>▤</span><strong>Your resume preview</strong><p>Fill in your details and generate a draft. You can then print it or save it as PDF.</p></div>
       </article>
@@ -37,7 +49,10 @@
   const resumePreview = document.getElementById('resumePreview');
   const generateResumeButton = document.getElementById('generateResumeButton');
   const printResumeButton = document.getElementById('printResumeButton');
+  const downloadResumeButton = document.getElementById('downloadResumeButton');
+  const resumeDownloadForm = document.getElementById('resumeDownloadForm');
   const atsAnalysis = document.getElementById('atsAnalysis');
+  let currentResume = null;
 
   function resumeEscape(value) {
     return String(value || '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
@@ -48,23 +63,65 @@
     return `<ul>${items.map((item) => `<li>${resumeEscape(item)}</li>`).join('')}</ul>`;
   }
 
+  function groupResumeSkills(skills) {
+    const categoryTerms = [
+      ['Languages', ['java', 'javascript', 'typescript', 'python', 'c++', 'c#', 'sql']],
+      ['Frontend', ['html', 'css', 'react', 'angular', 'vue', 'bootstrap', 'tailwind', 'next.js']],
+      ['Backend', ['node.js', 'express', 'django', 'flask', 'spring', 'rest api', 'graphql']],
+      ['Databases', ['mongodb', 'mysql', 'postgresql', 'redis', 'sqlite', 'database']],
+      ['Tools', ['git', 'github', 'docker', 'postman', 'vscode', 'aws', 'azure', 'linux']],
+      ['Core CS', ['data structures', 'algorithms', 'oop', 'operating systems', 'computer networks', 'dbms']],
+    ];
+    const groups = new Map();
+    const add = (category, values) => {
+      const existing = groups.get(category) || [];
+      values.map((value) => value.trim()).filter(Boolean).forEach((value) => {
+        if (!existing.some((item) => item.toLowerCase() === value.toLowerCase())) existing.push(value);
+      });
+      groups.set(category, existing);
+    };
+    (Array.isArray(skills) ? skills : []).forEach((raw) => {
+      const value = String(raw || '').trim();
+      if (!value) return;
+      const colon = value.indexOf(':');
+      if (colon > 0) { add(value.slice(0, colon).trim(), value.slice(colon + 1).split(/[,;|]/)); return; }
+      value.split(/[,;|]/).map((item) => item.trim()).filter(Boolean).forEach((skill) => {
+        const lower = skill.toLowerCase();
+        const match = categoryTerms.find(([, terms]) => terms.some((term) => lower === term || lower.includes(term)));
+        add(match?.[0] || 'Additional Skills', [skill]);
+      });
+    });
+    return [...groups.entries()];
+  }
+
   function renderResume(resume) {
     const experience = Array.isArray(resume.experience) ? resume.experience : [];
     const projects = Array.isArray(resume.projects) ? resume.projects : [];
     const education = Array.isArray(resume.education) ? resume.education : [];
     const certifications = Array.isArray(resume.certifications) ? resume.certifications : [];
+    const achievements = Array.isArray(resume.achievements) ? resume.achievements : [];
     const skills = Array.isArray(resume.skills) ? resume.skills : [];
+    const skillGroups = groupResumeSkills(skills);
     const links = resume.links || {};
+    const socialLabels = { linkedin: 'LinkedIn', github: 'GitHub', leetcode: 'LeetCode', portfolio: 'Portfolio' };
+    const socialLinks = Object.entries(socialLabels).filter(([key]) => links[key]).map(([key, label]) => {
+      const url = String(links[key]);
+      if (!/^https?:\/\//i.test(url)) return '';
+      return `<a href="${resumeEscape(url)}" target="_blank" rel="noopener noreferrer" aria-label="Open ${label} profile">${label}<span aria-hidden="true"> ↗</span></a>`;
+    }).filter(Boolean).join('');
     resumePreview.innerHTML = `
-      <header class="resume-paper-header"><h1>${resumeEscape(resume.name)}</h1><p>${resumeEscape(resume.headline || resumeForm.targetRole.value)}</p>
-        <div class="resume-contact">${resumeEscape(resume.email)}${links.linkedin ? ` · ${resumeEscape(links.linkedin)}` : ''}${links.github ? ` · ${resumeEscape(links.github)}` : ''}${links.leetcode ? ` · ${resumeEscape(links.leetcode)}` : ''}${links.portfolio ? ` · ${resumeEscape(links.portfolio)}` : ''}</div></header>
+      <header class="resume-paper-header"><h1>${resumeEscape(resume.name)}</h1>
+        <div class="resume-contact">${resume.phone ? `${resumeEscape(resume.phone)} &nbsp; — &nbsp; ` : ''}${resumeEscape(resume.email)}</div>${socialLinks ? `<nav class="resume-social-links" aria-label="Professional profiles">${socialLinks}</nav>` : ''}</header>
       ${resume.summary ? `<section><h2>Professional Summary</h2><p>${resumeEscape(resume.summary)}</p></section>` : ''}
-      ${skills.length ? `<section><h2>Skills</h2><p>${skills.map(resumeEscape).join(' · ')}</p></section>` : ''}
-      ${experience.length ? `<section><h2>Experience</h2>${experience.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.role)}${item.company ? ` · ${resumeEscape(item.company)}` : ''}</h3>${item.duration ? `<p class="resume-date">${resumeEscape(item.duration)}</p>` : ''}${resumeList(item.bullets)}</div>`).join('')}</section>` : ''}
-      ${projects.length ? `<section><h2>Projects</h2>${projects.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.name)}</h3>${item.technologies ? `<p class="resume-date">${resumeEscape(item.technologies)}</p>` : ''}${resumeList(item.bullets)}${item.githubUrl ? `<a href="${resumeEscape(item.githubUrl)}">Source code</a>` : ''}${item.liveDemoUrl ? `${item.githubUrl ? ' · ' : ''}<a href="${resumeEscape(item.liveDemoUrl)}">Live demo</a>` : ''}</div>`).join('')}</section>` : ''}
-      ${education.length ? `<section><h2>Education</h2>${education.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.degree || item.school)}</h3>${item.degree && item.school ? `<p>${resumeEscape(item.school)}</p>` : ''}${item.year ? `<p class="resume-date">${resumeEscape(item.year)}</p>` : ''}${item.details ? `<p>${resumeEscape(item.details)}</p>` : ''}</div>`).join('')}</section>` : ''}
+      ${education.length ? `<section><h2>Education</h2>${education.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.degree || item.school)}${item.year ? `<span>${resumeEscape(item.year)}</span>` : ''}</h3>${item.degree && item.school ? `<p>${resumeEscape(item.school)}</p>` : ''}${item.details ? `<p>${resumeEscape(item.details)}</p>` : ''}</div>`).join('')}</section>` : ''}
+      ${skillGroups.length ? `<section><h2>Technical Skills</h2><div class="resume-skill-groups">${skillGroups.map(([category, items]) => `<p><strong>${resumeEscape(category)}:</strong> ${items.map(resumeEscape).join(', ')}</p>`).join('')}</div></section>` : ''}
+      ${experience.length ? `<section><h2>Experience</h2>${experience.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.role)}${item.company ? ` · ${resumeEscape(item.company)}` : ''}${item.duration ? `<span>${resumeEscape(item.duration)}</span>` : ''}</h3>${resumeList(item.bullets)}</div>`).join('')}</section>` : ''}
+      ${projects.length ? `<section><h2>Projects</h2>${projects.map((item) => `<div class="resume-entry"><h3>${resumeEscape(item.name)}${item.liveDemoUrl && /^https?:\/\//i.test(item.liveDemoUrl) ? `<a href="${resumeEscape(item.liveDemoUrl)}" target="_blank" rel="noopener noreferrer">Live Demo</a>` : ''}</h3>${item.technologies ? `<p class="resume-date">${resumeEscape(item.technologies)}</p>` : ''}${resumeList(item.bullets)}${item.githubUrl && /^https?:\/\//i.test(item.githubUrl) ? `<a href="${resumeEscape(item.githubUrl)}" target="_blank" rel="noopener noreferrer">Source code</a>` : ''}</div>`).join('')}</section>` : ''}
+      ${achievements.length ? `<section><h2>Achievements</h2>${resumeList(achievements)}</section>` : ''}
       ${certifications.length ? `<section><h2>Certifications</h2>${resumeList(certifications)}</section>` : ''}`;
+    currentResume = resume;
     printResumeButton.classList.remove('is-hidden');
+    downloadResumeButton.classList.remove('is-hidden');
   }
 
   function renderAtsAnalysis(analysis) {
@@ -91,7 +148,10 @@
     generateResumeButton.disabled = true;
     generateResumeButton.innerHTML = '<span>◌</span> Creating draft…';
     try {
-      const payload = Object.fromEntries(new FormData(resumeForm).entries());
+      const formData = new FormData(resumeForm);
+      const payload = Object.fromEntries(formData.entries());
+      payload.links = Object.fromEntries(['linkedin', 'github', 'leetcode', 'portfolio'].map((key) => [key, formData.get(`links.${key}`) || '']));
+      Object.keys(payload).filter((key) => key.startsWith('links.')).forEach((key) => delete payload[key]);
       const response = await fetch('/student/resume-builder/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -110,5 +170,13 @@
       generateResumeButton.disabled = false;
       generateResumeButton.innerHTML = '<span>✦</span> Generate my resume';
     }
+  });
+
+  downloadResumeButton.addEventListener('click', async () => {
+    if (!currentResume) return;
+    resumeDownloadForm.elements.resume.value = JSON.stringify(currentResume);
+    resumeDownloadForm.submit();
+    resumeStatus.textContent = 'Your PDF download has started.';
+    resumeStatus.className = 'resume-status success';
   });
 </script>
