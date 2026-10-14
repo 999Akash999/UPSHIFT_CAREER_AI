@@ -4,7 +4,7 @@ const fs = require("fs");
 
 // Ensure upload folders exist
 const uploadBase = path.join(__dirname, "../uploads");
-const subDirs = ["resumes", "avatars", "company-logos"];
+const subDirs = ["resumes", "avatars", "company-logos", "projects"];
 subDirs.forEach((dir) => {
   const fullPath = path.join(uploadBase, dir);
   if (!fs.existsSync(fullPath)) {
@@ -20,6 +20,8 @@ const storage = multer.diskStorage({
       cb(null, path.join(uploadBase, "avatars"));
     } else if (file.fieldname === "logo") {
       cb(null, path.join(uploadBase, "company-logos"));
+    } else if (file.fieldname === "projectImage") {
+      cb(null, path.join(uploadBase, "projects"));
     } else {
       cb(null, uploadBase);
     }
@@ -44,7 +46,7 @@ const fileFilter = (req, file, cb) => {
     return cb(error, false);
   }
 
-  if (file.fieldname === "avatar" || file.fieldname === "logo") {
+  if (file.fieldname === "avatar" || file.fieldname === "logo" || file.fieldname === "projectImage") {
     if (allowedImageTypes.includes(file.mimetype)) {
       return cb(null, true);
     }

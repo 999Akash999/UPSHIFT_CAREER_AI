@@ -1,0 +1,11 @@
+<form class="contact-query-form" action="/contact/query" method="post">
+  <input type="hidden" name="source" value="<%= queryFormSource %>">
+  <div class="contact-query-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="contact-query-fields">
+    <label>Name<input name="name" type="text" maxlength="100" autocomplete="name" required placeholder="Your name"></label>
+    <label>Email<input name="email" type="email" maxlength="254" autocomplete="email" required placeholder="you@example.com"></label>
+    <label class="contact-query-full">Subject<input name="subject" type="text" maxlength="160" required placeholder="What do you need help with?"></label>
+    <label class="contact-query-full">Your query<textarea name="message" rows="6" maxlength="5000" required placeholder="Describe your question or issue. Please do not include passwords or verification codes."></textarea></label>
+  </div>
+  <button class="landing-primary" type="submit">Send query <span aria-hidden="true">→</span></button>
+</form>

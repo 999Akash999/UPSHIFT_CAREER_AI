@@ -25,7 +25,7 @@
   </section>
 
   <section class="resources-group" id="pdf-notes">
-    <div class="resources-group-heading"><div><p class="eyebrow">DOWNLOADABLE STUDY NOTES</p><h2>PDF notes library</h2></div><span class="resources-count">11 PDFs</span></div>
+    <div class="resources-group-heading"><div><p class="eyebrow">DOWNLOADABLE STUDY NOTES</p><h2>PDF notes library</h2></div><span class="resources-count"><%= 11 + pdfNoteGroups.reduce((total, group) => total + group.notes.length, 0) %> PDFs</span></div>
     <p class="resources-group-intro">Open a book in your browser or save the PDF for offline study. Start with the section you need and use the practice links above to apply it.</p>
     <div class="resources-pdf-subgroup"><h3>Web &amp; frontend</h3><div class="resource-card-grid">
       <article class="resource-card resource-pdf-card"><span class="resource-card-icon">HTML</span><span class="resource-card-kind">PDF · 1.5 MB</span><h3>HTML5 Notes for Professionals</h3><p>HTML structure, semantic elements, forms, and browser markup references.</p><div class="resource-file-actions"><a href="/downloads/resources/html5-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/html5-notes-for-professionals.pdf" download>Download</a></div></article>
@@ -44,6 +44,22 @@
       <article class="resource-card resource-pdf-card"><span class="resource-card-icon">⌘</span><span class="resource-card-kind">PDF · 2.6 MB</span><h3>Algorithms Notes for Professionals</h3><p>Algorithmic thinking, common techniques, and problem-solving references.</p><div class="resource-file-actions"><a href="/downloads/resources/algorithms-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/algorithms-notes-for-professionals.pdf" download>Download</a></div></article>
       <article class="resource-card resource-pdf-card"><span class="resource-card-icon">Git</span><span class="resource-card-kind">PDF · 2.5 MB</span><h3>Git Notes for Professionals</h3><p>Version control concepts, everyday commands, branches, and collaboration workflows.</p><div class="resource-file-actions"><a href="/downloads/resources/git-notes-for-professionals.pdf" target="_blank" rel="noopener">Open PDF</a><a href="/downloads/resources/git-notes-for-professionals.pdf" download>Download</a></div></article>
     </div></div>
+    <% pdfNoteGroups.forEach((group) => { %>
+      <div class="resources-pdf-subgroup">
+        <h3><%= group.category %></h3>
+        <div class="resource-card-grid">
+          <% group.notes.forEach((note) => { %>
+            <article class="resource-card resource-pdf-card">
+              <span class="resource-card-icon"><%= note.technology %></span>
+              <span class="resource-card-kind">PDF · NOTES FOR PROFESSIONALS</span>
+              <h3><%= note.technology %> Notes for Professionals</h3>
+              <p><%= note.description %></p>
+              <div class="resource-file-actions"><a href="<%= note.url %>" target="_blank" rel="noopener">Open PDF</a><a href="<%= note.url %>" download>Download</a></div>
+            </article>
+          <% }); %>
+        </div>
+      </div>
+    <% }); %>
   </section>
 
   <section class="resources-group" id="web">

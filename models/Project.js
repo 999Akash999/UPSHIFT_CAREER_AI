@@ -22,6 +22,12 @@ const projectSchema = new mongoose.Schema(
       minlength: 10,
       maxlength: 3000,
     },
+    imageUrl: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+      default: "",
+    },
     techStack: [
       {
         type: String,

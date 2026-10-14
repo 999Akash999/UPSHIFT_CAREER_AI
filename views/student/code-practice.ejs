@@ -1,0 +1,354 @@
+<% layout('layouts/dashboardLayout') %>
+
+<main class="coding-page">
+  <header class="coding-hero">
+    <div>
+      <p class="coding-eyebrow">INTERVIEW PREPARATION</p>
+      <h1>DSA Practice</h1>
+      <p>Practice these questions, clear your concepts, and get placed at FAANG/MAANG.</p>
+    </div>
+      <span class="coding-language-pill">Java · C++ · C · JavaScript · Python</span>
+  </header>
+
+  <section class="coding-progress" aria-label="Question bank progress">
+    <div class="coding-progress-icon" aria-hidden="true">&lt;/&gt;</div>
+    <div class="coding-progress-copy"><strong><%= solvedQuestionCount %> <span> / <%= targetQuestionCount %></span></strong><small>questions solved · <%= questionCount %> questions available</small></div>
+    <div class="coding-progress-track" aria-label="<%= Math.round(solvedQuestionCount / targetQuestionCount * 100) %> percent complete"><span style="width:<%= Math.max(1, Math.round(solvedQuestionCount / targetQuestionCount * 100)) %>%"></span></div>
+    <p>Your solved questions and accepted solutions are saved to your practice profile.</p>
+  </section>
+
+  <section class="coding-catalog" aria-labelledby="topicHeading">
+    <div class="coding-section-heading">
+      <div><p class="coding-eyebrow">BUILD YOUR DSA FOUNDATION</p><h2 id="topicHeading">Choose a topic</h2></div>
+      <label class="coding-search"><span aria-hidden="true">⌕</span><input id="topicSearch" type="search" placeholder="Search topics" aria-label="Search topics"></label>
+    </div>
+
+    <div class="coding-topic-grid" id="topicGrid">
+      <% topics.forEach((topic, index) => { %>
+        <button class="coding-topic-card <%= index === 0 ? 'is-selected' : '' %>" type="button" data-topic-id="<%= topic.id %>" data-search="<%= `${topic.name} ${topic.description}`.toLowerCase() %>" aria-pressed="<%= index === 0 ? 'true' : 'false' %>">
+          <span class="coding-topic-number"><%= String(index + 1).padStart(2, '0') %></span>
+          <span class="coding-topic-copy"><strong><%= topic.name %></strong><small><%= topic.description %></small></span>
+          <span class="coding-topic-count"><%= topic.questionCount %></span>
+        </button>
+      <% }) %>
+    </div>
+    <p class="coding-no-topics" id="noTopics" hidden>No topics match your search.</p>
+  </section>
+
+  <section class="coding-questions" aria-live="polite">
+    <div><p class="coding-eyebrow">SELECTED TOPIC</p><h2 id="selectedTopicName"><%= topics[0].name %></h2></div>
+    <div class="coding-question-list" id="codingQuestionList">
+      <% questions.forEach((question, index) => { %>
+        <button type="button" class="coding-question-row <%= index === 0 ? 'is-selected' : '' %>" data-question-id="<%= question.id %>" data-topic-id="<%= question.topicId %>" aria-pressed="<%= index === 0 ? 'true' : 'false' %>">
+          <span class="coding-question-number"><%= question.questionNumber %></span><span class="coding-question-title"><strong><%= question.title %></strong><small><%= topics.find(topic => topic.id === question.topicId)?.name %></small></span><% if (question.isSolved) { %><span class="coding-solved-badge">✓ Solved</span><% } %><span class="coding-difficulty <%= question.difficulty.toLowerCase() %>"><%= question.difficulty %></span>
+        </button>
+      <% }) %>
+      <div class="coding-topic-empty" id="codingTopicEmpty" hidden>No questions in this topic yet. More will be added as the question bank grows.</div>
+    </div>
+  </section>
+
+  <section class="coding-daily-strip" aria-label="Today's assigned questions">
+    <div class="coding-daily-heading"><a href="/student/dashboard" aria-label="Back to dashboard">← Dashboard</a><div><strong>Today’s DSA set</strong><small>Complete all 3 questions to keep today’s practice on track.</small></div><span id="dailyProgress"><%= dailyCompletedCount %> / 3 complete</span></div>
+    <div class="coding-daily-list" id="dailyAssignments">
+      <% dailyAssignments.forEach((assignment) => { %>
+        <button type="button" class="coding-daily-card <%= assignment.isCompleted ? 'is-complete' : '' %>" data-question-id="<%= assignment.questionId %>"><span><%= String(assignment.slot).padStart(2, '0') %></span><strong><%= assignment.title %></strong><small><%= assignment.isCompleted ? '✓ Completed' : assignment.difficulty %></small></button>
+      <% }) %>
+    </div>
+  </section>
+  <section class="coding-workspace-preview" aria-label="Coding workspace">
+    <div class="coding-workspace-toolbar">
+      <div class="coding-toolbar-question"><span aria-hidden="true">‹</span><div><small>DSA PRACTICE / <span id="toolbarTopic">ARRAYS &amp; HASHING</span></small><strong id="toolbarTitle">Find two values that reach the goal</strong></div></div>
+      <div class="coding-toolbar-actions"><button type="button" id="runCode" class="coding-run-button" <%= runnerConfigured ? '' : 'disabled' %>><span aria-hidden="true">▶</span> Run</button><button type="button" id="submitCode" class="coding-submit-button" <%= runnerConfigured ? '' : 'disabled' %>>Submit</button></div>
+    </div>
+    <div class="coding-workspace-grid">
+      <article class="coding-problem-placeholder" id="codingProblem" aria-labelledby="problemTitle">
+        <nav class="coding-problem-tabs" aria-label="Problem details"><button type="button" class="is-active">Description</button><span>·</span><span class="coding-problem-tab-meta">UPSHIFT DSA</span></nav>
+        <div class="coding-problem-scroll"><div class="coding-problem-meta"><span id="problemSequence">Question 1</span><span id="problemDifficulty">Easy</span><span id="problemTopic">Arrays &amp; Hashing</span></div><h1 id="problemTitle">Find two values that reach the goal</h1><p id="problemPrompt"></p><h2>Constraints</h2><ul id="problemConstraints"></ul><h2>Examples</h2><div id="problemExamples"></div><section id="problemApproachSection" hidden><h2>Approach</h2><p id="problemExplanation"></p><p id="problemComplexity" class="coding-complexity"></p></section><p class="coding-hidden-test-note">Run checks sample cases. Submit checks all <strong id="problemTestCaseCount">10</strong> test cases (including hidden ones); passing every case updates your DSA streak.</p></div>
+      </article>
+      <div class="coding-editor-column">
+        <article class="coding-editor-placeholder"><div class="coding-editor-top"><div class="coding-editor-title"><span class="coding-code-mark">{ }</span><strong>Code</strong></div><label class="coding-language-select-label" for="codingLanguage"><select id="codingLanguage" aria-label="Select coding language"><option value="javascript">JavaScript (Node.js)</option><option value="cpp">C++</option><option value="c">C</option><option value="java">Java</option><option value="python">Python 3</option></select></label></div><div class="coding-editor-tools"><span id="solutionFilename">Solution.js</span><span>UPSHIFT editor</span></div><textarea id="solutionEditor" aria-label="Code editor" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea><div class="coding-editor-footer"><span id="testSummary"><%= runnerConfigured ? 'Ready to run' : 'Piston runner needs setup' %></span><span id="editorLineInfo">Ln 1, Col 1</span></div></article>
+        <section class="coding-output-panel" aria-label="Test cases and results"><div class="coding-output-tabs"><button id="testcaseTab" type="button" class="is-active" aria-selected="true">☑ Testcase</button><button id="resultTab" type="button" aria-selected="false">›_ Test Result</button></div><div id="codingTestResults" class="coding-test-results" role="status" aria-live="polite"><div id="codingTestcaseView" class="coding-testcase-view">Choose an example case to inspect its input and expected output.</div><div id="codingResultView" class="coding-result-view" hidden><span class="coding-output-empty">Run your code to see the result here.</span></div></div></section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="application/json" id="codingQuestionData"><%- questionsJson %></script>
+<script type="application/json" id="dailyAssignmentData"><%- dailyAssignmentsJson %></script>
+
+<style>
+  .coding-page{max-width:1120px;margin:0 auto;color:#302749}.coding-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin:0 0 1.25rem}.coding-eyebrow{margin:0 0 .35rem;color:#8061bd;font-size:.66rem;font-weight:850;letter-spacing:.13em}.coding-hero h1{margin:0;color:#302749;font-size:clamp(1.8rem,4vw,2.4rem);letter-spacing:-.045em}.coding-hero>div>p:last-child{max-width:620px;margin:.4rem 0 0;color:#81788e;font-size:.88rem;line-height:1.6}.coding-try-link{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem .9rem;border:1px solid #e5dcef;border-radius:10px;background:#fff;color:#6945a9;font-size:.75rem;font-weight:800;text-decoration:none;white-space:nowrap}.coding-try-link:hover{background:#f8f5fc;border-color:#cfbce7}.coding-progress{display:grid;grid-template-columns:auto auto minmax(90px,1fr) minmax(220px,1.3fr);align-items:center;gap:.9rem;margin-bottom:1.8rem;padding:1rem;border:1px solid #e8e1f0;border-radius:15px;background:linear-gradient(110deg,#fff,#fbf9fe)}.coding-progress-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;background:#f0eafa;color:#704bb8;font:700 .9rem ui-monospace,monospace}.coding-progress-copy{display:grid;gap:.12rem;min-width:max-content}.coding-progress-copy strong{color:#362c49;font-size:1.05rem}.coding-progress-copy strong span{color:#9287a0;font-size:.82rem;font-weight:600}.coding-progress-copy small{color:#8d8498;font-size:.67rem}.coding-progress-track{height:8px;overflow:hidden;border-radius:99px;background:#eee9f4}.coding-progress-track span{display:block;height:100%;border-radius:inherit;background:#8962cb}.coding-progress>p{margin:0;color:#81788e;font-size:.7rem;line-height:1.5}.coding-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:.8rem}.coding-section-heading h2,.coding-questions h2{margin:0;color:#362c49;font-size:1.3rem;letter-spacing:-.03em}.coding-search{display:flex;align-items:center;gap:.45rem;width:min(100%,230px);padding:.55rem .7rem;border:1px solid #e6dfed;border-radius:9px;background:#fff;color:#8061bd}.coding-search input{width:100%;border:0;outline:0;background:transparent;color:#362c49;font:inherit;font-size:.75rem}.coding-topic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.coding-topic-card{display:flex;align-items:center;gap:.7rem;min-width:0;padding:.75rem;border:1px solid #e9e3f1;border-radius:12px;background:#fff;text-align:left;cursor:pointer;transition:border-color .15s,background .15s}.coding-topic-card:hover,.coding-topic-card.is-selected{border-color:#bca6de;background:#faf7ff}.coding-topic-number{display:grid;flex:0 0 32px;place-items:center;width:32px;height:32px;border-radius:9px;background:#f2edf9;color:#7956b9;font-size:.68rem;font-weight:850}.coding-topic-copy{display:grid;gap:.2rem;min-width:0;flex:1}.coding-topic-copy strong{overflow:hidden;color:#423750;font-size:.78rem;text-overflow:ellipsis;white-space:nowrap}.coding-topic-copy small{display:-webkit-box;overflow:hidden;color:#8b8295;font-size:.65rem;line-height:1.4;-webkit-box-orient:vertical;-webkit-line-clamp:1}.coding-topic-count{display:grid;place-items:center;min-width:28px;height:24px;padding:0 .35rem;border-radius:99px;background:#f5f2f8;color:#81768e;font-size:.67rem;font-weight:800}.coding-no-topics{padding:1.2rem;border:1px dashed #ddd3e9;border-radius:12px;color:#81788e;text-align:center;font-size:.8rem}.coding-questions{margin-top:1.8rem}.coding-questions h2{margin-bottom:.75rem}.coding-empty-state{display:grid;justify-items:center;padding:2rem 1rem;border:1px dashed #dcd2e9;border-radius:15px;background:linear-gradient(140deg,#fff,#fcfaff);text-align:center}.coding-empty-state>span{display:grid;place-items:center;width:43px;height:43px;margin-bottom:.7rem;border-radius:13px;background:#f1ecf9;color:#7653b7;font-size:1.25rem}.coding-empty-state h3{margin:0;color:#423750;font-size:1rem}.coding-empty-state p{max-width:560px;margin:.45rem 0;color:#81788e;font-size:.75rem;line-height:1.6}.coding-empty-state small{color:#967fba;font-size:.67rem;font-weight:800}.coding-judge-note{display:flex;align-items:flex-start;gap:.7rem;margin-top:1rem;padding:.85rem 1rem;border:1px solid #e5e0eb;border-radius:12px;background:#fff}.coding-judge-note>span{color:#19815e;font-weight:900}.coding-judge-note p{margin:0;color:#81788e;font-size:.72rem;line-height:1.55}.coding-judge-note strong{color:#473c55}.coding-topic-card[hidden]{display:none}@media(max-width:760px){.coding-progress{grid-template-columns:auto 1fr;gap:.65rem}.coding-progress-track{grid-column:1/-1}.coding-progress>p{grid-column:1/-1}.coding-topic-grid{grid-template-columns:1fr}}@media(max-width:600px){.coding-hero{align-items:flex-start;flex-direction:column}.coding-try-link{width:100%;justify-content:center}.coding-section-heading{align-items:stretch;flex-direction:column}.coding-search{width:auto}}
+.coding-workspace-preview{margin-top:1.8rem}.coding-workspace-heading{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:.8rem}.coding-workspace-heading h2{margin:0;color:#362c49;font-size:1.3rem;letter-spacing:-.03em}.coding-workspace-heading>span{color:#81788e;font-size:.7rem}.coding-workspace-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:.75rem}.coding-problem-placeholder,.coding-editor-placeholder{overflow:hidden;border:1px solid #e8e1f0;border-radius:13px;background:#fff}.coding-problem-placeholder{min-height:270px;padding:1.1rem}.coding-placeholder-label{color:#8c75b4;font-size:.62rem;font-weight:850;letter-spacing:.12em}.coding-problem-placeholder h3{margin:.6rem 0 .35rem;color:#423750;font-size:.95rem}.coding-problem-placeholder p{margin:0;color:#81788e;font-size:.75rem;line-height:1.6}.coding-editor-top,.coding-editor-actions{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.7rem .85rem;background:#faf9fc}.coding-editor-top{border-bottom:1px solid #eee9f4}.coding-editor-top strong{font-size:.72rem}.coding-editor-top span{color:#81788e;font-size:.65rem}.coding-editor-placeholder textarea{display:block;box-sizing:border-box;width:100%;min-height:190px;padding:.9rem;border:0;outline:0;background:#1e1b25;color:#c8c2d1;font:12px/1.65 ui-monospace,monospace;resize:vertical}.coding-editor-actions{border-top:1px solid #eee9f4}.coding-editor-actions span{color:#81788e;font-size:.66rem}.coding-editor-actions button{padding:.5rem .75rem;border:0;border-radius:8px;background:#ded9e5;color:#887f92;font:inherit;font-size:.68rem;font-weight:800}@media(max-width:760px){.coding-workspace-grid{grid-template-columns:1fr}.coding-problem-placeholder{min-height:160px}}@media(max-width:600px){.coding-workspace-heading{align-items:flex-start;flex-direction:column}}
+.coding-language-pill{padding:.65rem .85rem;border:1px solid #e5dcef;border-radius:10px;background:#fff;color:#6945a9;font-size:.72rem;font-weight:800}.coding-topic-count{color:#7553af}.coding-question-list{display:grid;gap:.45rem}.coding-question-row{display:flex;align-items:center;gap:.7rem;width:100%;padding:.7rem .8rem;border:1px solid #e9e3f1;border-radius:10px;background:#fff;text-align:left;cursor:pointer}.coding-question-row:hover,.coding-question-row.is-selected{border-color:#bca6de;background:#faf7ff}.coding-question-row[hidden]{display:none}.coding-question-number{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:8px;background:#f2edf9;color:#7956b9;font-size:.66rem;font-weight:850}.coding-question-title{display:grid;gap:.15rem;flex:1;min-width:0}.coding-question-title strong{overflow:hidden;color:#423750;font-size:.76rem;text-overflow:ellipsis;white-space:nowrap}.coding-question-title small{color:#8b8295;font-size:.63rem}.coding-difficulty{padding:.24rem .45rem;border-radius:99px;background:#eef8f3;color:#18704f;font-size:.62rem;font-weight:800}.coding-topic-empty{padding:1rem;border:1px dashed #dcd2e9;border-radius:12px;color:#81788e;font-size:.76rem}.coding-topic-empty[hidden]{display:none}.coding-problem-meta{display:flex;gap:.4rem;margin:.5rem 0}.coding-problem-meta span{padding:.22rem .45rem;border-radius:99px;background:#f4f0f8;color:#745a9b;font-size:.62rem;font-weight:750}.coding-problem-placeholder h4{margin:.9rem 0 .35rem;color:#493e58;font-size:.73rem}.coding-problem-placeholder ul{margin:.2rem 0;padding-left:1.1rem;color:#81788e;font-size:.68rem;line-height:1.6}.coding-example{overflow:auto;margin:.4rem 0;padding:.65rem;border-radius:8px;background:#f7f5fa;color:#50475d;font:11px/1.5 ui-monospace,monospace;white-space:pre-wrap}.coding-editor-placeholder textarea{color:#e2deea}.coding-editor-placeholder textarea:focus{outline:2px solid #9371c9;outline-offset:-2px}.coding-editor-actions button:not(:disabled){background:#7954c8;color:white;cursor:pointer}.coding-editor-actions button:disabled{opacity:.55;cursor:not-allowed}.coding-test-results{display:grid;gap:.4rem;padding:.75rem .85rem;border-top:1px solid #eee9f4;color:#81788e;font-size:.72rem}.coding-test-summary{color:#423750}.coding-test-summary.is-pass{color:#18704f}.coding-test-summary.is-fail,.coding-test-results.has-error{color:#a24752}.coding-test-row{display:flex;justify-content:space-between;gap:.7rem;padding:.5rem .6rem;border-radius:7px}.coding-test-row.is-pass{background:#eef8f3;color:#18704f}.coding-test-row.is-fail{background:#fff3f2;color:#9e4148}.coding-test-row small{overflow-wrap:anywhere}.coding-local-note{color:#8061bd;line-height:1.5}.coding-editor-actions button:disabled{opacity:.55;cursor:wait}@media(max-width:760px){.coding-question-title strong{white-space:normal}}
+.coding-language-select-label{display:flex;align-items:center;gap:.45rem;color:#81788e;font-size:.62rem}.coding-language-select-label select{max-width:165px;padding:.35rem .45rem;border:1px solid #e3dbea;border-radius:7px;background:#fff;color:#423750;font:inherit;font-size:.65rem}.coding-hidden-test-note{margin:.75rem 0 0;color:#81788e;font-size:.68rem;line-height:1.5}.coding-difficulty.medium{background:#fff6e6;color:#a66a1a}.coding-difficulty.hard{background:#fff0f1;color:#a24752}
+</style>
+<style>
+.coding-language-select-label{display:flex;align-items:center;gap:.45rem;color:#81788e;font-size:.62rem}.coding-language-select-label select{max-width:165px;padding:.35rem .45rem;border:1px solid #e3dbea;border-radius:7px;background:#fff;color:#423750;font:inherit;font-size:.65rem}.coding-hidden-test-note{margin:.75rem 0 0;color:#81788e;font-size:.68rem;line-height:1.5}.coding-difficulty.medium{background:#fff6e6;color:#a66a1a}.coding-difficulty.hard{background:#fff0f1;color:#a24752}
+</style>
+
+<style>
+  .coding-workspace-preview{max-width:none;margin:1.7rem 0 0;border:1px solid #e6dfed;border-radius:16px;background:#fff;box-shadow:0 16px 42px rgba(55,38,80,.08);overflow:hidden}
+.coding-solved-badge{flex:0 0 auto;padding:.25rem .45rem;border-radius:99px;background:#edf8f2;color:#237553;font-size:.6rem;font-weight:850}
+  .coding-workspace-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px;padding:.65rem 1rem;border-bottom:1px solid #e9e3f0;background:#fcfbfe}
+  .coding-toolbar-question{display:flex;align-items:center;gap:.8rem;min-width:0}.coding-toolbar-question>span{font-size:1.8rem;line-height:1;color:#8b70bc}.coding-toolbar-question>div{display:grid;gap:.22rem;min-width:0}.coding-toolbar-question small{overflow:hidden;color:#91879d;font-size:.58rem;font-weight:850;letter-spacing:.1em;text-overflow:ellipsis;white-space:nowrap}.coding-toolbar-question small span{color:#7954b8}.coding-toolbar-question strong{overflow:hidden;color:#382f48;font-size:.85rem;text-overflow:ellipsis;white-space:nowrap}
+  .coding-toolbar-actions{display:flex;align-items:center;gap:.5rem;flex:0 0 auto}.coding-toolbar-actions button{display:inline-flex;align-items:center;justify-content:center;gap:.42rem;min-width:82px;padding:.58rem .85rem;border:1px solid transparent;border-radius:9px;font:inherit;font-size:.7rem;font-weight:850;cursor:pointer}.coding-run-button{background:#f2edf9;color:#704ba9}.coding-run-button:hover:not(:disabled){background:#e9e0f5}.coding-submit-button{background:#7954bd;color:#fff}.coding-submit-button:hover:not(:disabled){background:#6844a9}.coding-toolbar-actions button:disabled{opacity:.46;cursor:not-allowed}
+  .coding-workspace-grid{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:0;min-height:650px}.coding-problem-placeholder{display:flex;flex-direction:column;min-height:650px;max-height:calc(100vh - 190px);padding:0;border:0;border-right:1px solid #e8e2ed;border-radius:0;background:#fff}.coding-problem-tabs{display:flex;align-items:center;gap:.65rem;flex:0 0 48px;padding:0 1.15rem;border-bottom:1px solid #ebe6f0;color:#b7afc1;font-size:.75rem}.coding-problem-tabs button{height:100%;padding:0 .2rem;border:0;border-bottom:2px solid #7954bd;background:transparent;color:#58416f;font:inherit;font-weight:800}.coding-problem-tab-meta{margin-left:auto;color:#a69bb4;font-size:.58rem;font-weight:850;letter-spacing:.1em}.coding-problem-scroll{overflow:auto;padding:1.4rem 1.5rem 1.8rem}.coding-problem-placeholder h1{margin:.85rem 0 .8rem;color:#342a43;font-size:clamp(1.25rem,2vw,1.65rem);letter-spacing:-.035em}.coding-problem-placeholder h2{margin:1.5rem 0 .65rem;color:#41364e;font-size:.92rem}.coding-problem-placeholder p{color:#655c70;font-size:.84rem;line-height:1.75}.coding-problem-placeholder ul{padding-left:1.25rem;color:#655c70;font-size:.8rem;line-height:1.8}.coding-problem-meta span:first-child{background:#edf8f2;color:#237553}.coding-problem-meta span:nth-child(2){background:#f3eef9;color:#72569b}.coding-example{margin:.65rem 0;padding:.85rem 1rem;border-left:3px solid #d7c8eb;border-radius:0 8px 8px 0;background:#f8f6fa;color:#51475d;font:12px/1.7 ui-monospace,SFMono-Regular,monospace}.coding-hidden-test-note{margin-top:1.5rem!important;padding:.8rem 1rem;border:1px solid #e9e0f3;border-radius:10px;background:#fbf9fe;color:#786a89!important}
+  .coding-editor-column{display:grid;grid-template-rows:minmax(360px,1.35fr) minmax(230px,.8fr);gap:0;min-width:0;min-height:650px;background:#fff}.coding-editor-placeholder{display:grid;grid-template-rows:48px 30px minmax(180px,1fr) 29px;min-height:390px;border:0;border-bottom:1px solid #e8e2ed;border-radius:0;background:#fff}.coding-editor-top{padding:0 .9rem;border-bottom:1px solid #ebe6f0;background:#fff}.coding-editor-title{display:flex;align-items:center;gap:.45rem}.coding-code-mark{color:#7954bd;font:800 .8rem ui-monospace,monospace}.coding-editor-top strong{color:#44384f;font-size:.78rem}.coding-language-select-label select{max-width:175px;padding:.4rem .6rem;border-color:#e6dfed;border-radius:8px;background:#fbfaff;color:#473b54;font-size:.68rem;font-weight:750}.coding-editor-tools,.coding-editor-footer{display:flex;align-items:center;justify-content:space-between;padding:0 .9rem;background:#fcfbfe;color:#94899e;font-size:.59rem}.coding-editor-tools{border-bottom:1px solid #eeeaf2}.coding-editor-tools span:first-child{color:#695b74;font-weight:750}.coding-editor-placeholder textarea{width:100%;height:100%;min-height:0;padding:1rem 1.1rem;border:0;border-radius:0;background:#272331;color:#e8e0f1;font:13px/1.75 ui-monospace,SFMono-Regular,monospace;tab-size:4;resize:none}.coding-editor-placeholder textarea:focus{outline:2px solid #9371c9;outline-offset:-2px}.coding-editor-footer{border-top:1px solid #3b3546;background:#302b39;color:#b6acbf}.coding-output-panel{display:grid;grid-template-rows:43px minmax(0,1fr);min-height:230px;overflow:hidden;background:#fff}.coding-output-tabs{display:flex;align-items:stretch;gap:1.1rem;padding:0 .95rem;border-bottom:1px solid #e9e3ed;background:#fcfbfe}.coding-output-tabs button{padding:0 .1rem;border:0;border-bottom:2px solid transparent;background:transparent;color:#a79eaf;font:inherit;font-size:.7rem;font-weight:800;cursor:pointer}.coding-output-tabs button.is-active{border-color:#7954bd;color:#4f3c68}.coding-test-results{display:block;overflow:auto;min-height:0;padding:.75rem .9rem;border:0;color:#81788e;font-size:.72rem}.coding-testcase-view,.coding-result-view{display:grid;gap:.6rem}.coding-sample-case{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .8rem;padding:.65rem .75rem;border:1px solid #eee9f3;border-radius:9px;background:#fff}.coding-sample-case strong{grid-column:1/-1;color:#4b4058;font-size:.69rem}.coding-sample-case small{color:#93889e;font-size:.6rem;font-weight:800}.coding-sample-case pre{overflow:auto;margin:0;padding:.5rem .6rem;border-radius:6px;background:#f7f5f9;color:#51475d;font:11px/1.5 ui-monospace,monospace;white-space:pre-wrap}.coding-output-empty{display:grid;min-height:140px;place-items:center;color:#a198aa;font-size:.72rem;text-align:center}.coding-output-empty.is-error{color:#a24752}.coding-test-summary{display:block;margin-bottom:.35rem;color:#423750;font-size:.76rem}.coding-test-summary.is-pass{color:#18704f}.coding-test-summary.is-fail{color:#a24752}.coding-test-row{display:grid;grid-template-columns:1fr;gap:.25rem;padding:.55rem .65rem;border-radius:8px;font-size:.68rem}.coding-test-row small{color:inherit;opacity:.8}.coding-local-note{display:block;padding:.55rem .65rem;border-radius:8px;background:#f0f8f3;color:#18704f;font-size:.68rem}
+  .coding-questions{margin-top:1.3rem}.coding-question-list{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}.coding-page{max-width:1400px}.coding-topic-grid{grid-template-columns:repeat(auto-fill,minmax(235px,1fr))}.coding-problem-placeholder[hidden],.coding-testcase-view[hidden],.coding-result-view[hidden]{display:none}
+  .dsa-fullscreen{overflow:hidden;background:#f5f3f8}.dsa-fullscreen .skip-to-content{z-index:10000}.dsa-fullscreen .app-layout{display:block;min-height:100vh}.dsa-fullscreen .dashboard-shell{display:block;min-width:0;min-height:100vh}.dsa-fullscreen .dashboard-main{box-sizing:border-box;width:100%;max-width:none;height:100vh;min-height:0;margin:0;padding:12px 16px 14px;overflow:hidden}.dsa-fullscreen .coding-page{display:grid;grid-template-rows:auto minmax(0,1fr);gap:10px;width:100%;max-width:none;height:100%;margin:0}.dsa-fullscreen .coding-hero,.dsa-fullscreen .coding-progress,.dsa-fullscreen .coding-catalog,.dsa-fullscreen .coding-questions{display:none}.coding-daily-strip{display:grid;grid-template-columns:minmax(240px,.7fr) minmax(0,1.3fr);align-items:center;gap:12px;padding:9px 12px;border:1px solid #e8e1f0;border-radius:12px;background:#fff}.coding-daily-heading{display:flex;align-items:center;gap:12px;min-width:0}.coding-daily-heading>a{color:#7653b7;font-size:.72rem;font-weight:800;text-decoration:none;white-space:nowrap}.coding-daily-heading>div{display:grid;gap:2px;min-width:0}.coding-daily-heading strong{color:#362c49;font-size:.82rem}.coding-daily-heading small{color:#81788e;font-size:.64rem}.coding-daily-heading>span{margin-left:auto;color:#18704f;font-size:.68rem;font-weight:800;white-space:nowrap}.coding-daily-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.coding-daily-card{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:8px;row-gap:2px;min-width:0;padding:7px 9px;border:1px solid #e9e3f1;border-radius:9px;background:#faf9fc;text-align:left;cursor:pointer}.coding-daily-card:hover,.coding-daily-card.is-selected{border-color:#aa91d2;background:#f8f4ff}.coding-daily-card>span{grid-row:span 2;color:#7956b9;font-size:.65rem;font-weight:900}.coding-daily-card strong{overflow:hidden;color:#423750;font-size:.67rem;text-overflow:ellipsis;white-space:nowrap}.coding-daily-card small{color:#8b8295;font-size:.59rem}.coding-daily-card.is-complete small{color:#18704f}.dsa-fullscreen .coding-workspace-preview{display:grid;grid-template-rows:auto minmax(0,1fr);min-height:0;margin:0;border:1px solid #e6dfed;border-radius:12px;background:#fff;box-shadow:0 10px 30px rgba(55,38,80,.06);overflow:hidden}.dsa-fullscreen .coding-workspace-toolbar{padding:9px 14px}.dsa-fullscreen .coding-workspace-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);min-height:0;gap:0}.dsa-fullscreen .coding-problem-placeholder{min-height:0;max-height:none;border:0;border-right:1px solid #e8e1f0;border-radius:0}.dsa-fullscreen .coding-editor-column{min-height:0}.dsa-fullscreen .coding-editor-placeholder{min-height:0;border:0;border-radius:0}.dsa-fullscreen .coding-editor-placeholder textarea{min-height:0;resize:none}.dsa-fullscreen .coding-output-panel{min-height:0;border-right:0;border-bottom:0;border-radius:0}.dsa-fullscreen .coding-problem-scroll{max-height:calc(100vh - 125px)}
+  @media(max-width:850px){.dsa-fullscreen{overflow:auto}.dsa-fullscreen .dashboard-main{height:auto;min-height:100vh;overflow:visible}.dsa-fullscreen .coding-page{height:auto;min-height:calc(100vh - 26px)}.coding-daily-strip{grid-template-columns:1fr}.dsa-fullscreen .coding-workspace-grid{grid-template-columns:1fr}.dsa-fullscreen .coding-problem-placeholder{min-height:360px;border-right:0;border-bottom:1px solid #e8e1f0}.dsa-fullscreen .coding-editor-column{min-height:650px}.dsa-fullscreen .coding-problem-scroll{max-height:none}}
+  @media(max-width:520px){.dsa-fullscreen .dashboard-main{padding:8px}.coding-daily-list{grid-template-columns:1fr}.coding-daily-heading{flex-wrap:wrap}.dsa-fullscreen .coding-editor-column{grid-template-rows:minmax(380px,1fr) minmax(240px,.7fr)}}
+  .coding-workspace-preview{margin-top:1.5rem}.coding-workspace-grid{grid-template-columns:minmax(0,1fr);gap:0;min-height:0}.coding-problem-placeholder{min-height:290px;max-height:360px;border-right:0;border-bottom:1px solid #e8e2ed}.coding-problem-scroll{max-height:310px}.coding-editor-column{grid-template-rows:minmax(440px,1fr) minmax(240px,.55fr);min-height:760px}.coding-editor-placeholder{min-height:440px}.coding-editor-placeholder textarea{min-height:0}.coding-daily-strip{grid-template-columns:minmax(240px,.7fr) minmax(0,1.3fr)}
+  @media(max-width:900px){.coding-problem-placeholder{min-height:270px;max-height:350px}.coding-problem-scroll{max-height:300px}.coding-editor-column{grid-template-rows:minmax(430px,1fr) minmax(230px,.55fr);min-height:720px}}
+  @media(max-width:760px){.coding-daily-strip{grid-template-columns:1fr}.coding-daily-list{grid-template-columns:repeat(3,minmax(0,1fr))}.coding-editor-column{grid-template-rows:minmax(420px,1fr) minmax(230px,.65fr);min-height:700px}}
+  @media(max-width:520px){.coding-daily-list{grid-template-columns:1fr}.coding-problem-placeholder{max-height:390px}.coding-problem-scroll{max-height:340px}.coding-editor-column{grid-template-rows:minmax(390px,1fr) minmax(230px,.65fr);min-height:670px}}
+  /* DSA page polish: clear topic picker, compact question navigation, generous editor. */
+  .coding-page{max-width:1500px;padding-bottom:2rem}.coding-hero{align-items:center;margin-bottom:1rem}.coding-hero>div>p:last-child{margin-top:.35rem}.coding-progress{margin-bottom:1.25rem}.coding-catalog{padding:1.1rem 1.15rem;border:1px solid #e8e1f0;border-radius:16px;background:linear-gradient(135deg,#fff 45%,#faf7ff);box-shadow:0 8px 24px rgba(57,37,82,.045)}.coding-section-heading{margin-bottom:.9rem}.coding-topic-grid{grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:.6rem}.coding-topic-card{min-height:68px;padding:.65rem .75rem;box-shadow:0 2px 7px rgba(57,37,82,.025)}.coding-topic-card.is-selected{box-shadow:inset 3px 0 #7954bd,0 5px 14px rgba(80,52,124,.07)}.coding-topic-card:hover{transform:translateY(-1px)}.coding-topic-count{color:#7050a5}.coding-topic-count:empty{display:none}.coding-questions{scroll-margin-top:1rem;margin-top:1.1rem;padding:1rem 1.1rem;border:1px solid #e8e1f0;border-radius:15px;background:#fff}.coding-questions>div:first-child{margin-bottom:.65rem}.coding-questions .coding-eyebrow{margin-bottom:.18rem}.coding-questions h2{font-size:1.12rem}.coding-question-list{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.55rem}.coding-question-row{min-height:58px;padding:.6rem .7rem;transition:border-color .16s,background .16s,transform .16s}.coding-question-row:hover{transform:translateY(-1px)}.coding-question-row.is-selected{box-shadow:inset 3px 0 #7954bd}.coding-topic-empty{padding:1.15rem;background:#fbf9fe;line-height:1.6}.coding-daily-strip{margin-top:1rem;box-shadow:0 3px 12px rgba(57,37,82,.035)}.coding-workspace-preview{scroll-margin-top:1rem;margin-top:1rem}.coding-workspace-toolbar{position:sticky;top:0;z-index:3;min-height:62px;background:rgba(252,251,254,.96);backdrop-filter:blur(10px)}.coding-workspace-grid{grid-template-columns:minmax(0,1fr);min-height:0}.coding-problem-placeholder{min-height:280px;max-height:350px}.coding-problem-scroll{max-height:300px;padding:1rem 1.3rem}.coding-problem-placeholder h1{margin:.55rem 0;font-size:1.35rem}.coding-problem-placeholder h2{margin:.9rem 0 .5rem}.coding-hidden-test-note{margin:.8rem 0 0!important;padding:.65rem .8rem!important}.coding-editor-column{grid-template-rows:minmax(500px,68vh) minmax(240px,.45fr);min-height:0}.coding-editor-placeholder{min-height:500px}.coding-editor-placeholder textarea{font-size:14px;line-height:1.7}.coding-output-panel{min-height:240px}.coding-topic-card:focus-visible,.coding-question-row:focus-visible,.coding-daily-card:focus-visible{outline:3px solid #bba5df;outline-offset:2px}
+  @media(max-width:900px){.coding-topic-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.coding-editor-column{grid-template-rows:minmax(480px,64vh) minmax(230px,.5fr);min-height:0}.coding-editor-placeholder{min-height:480px}}
+  @media(max-width:600px){.coding-page{padding-bottom:1rem}.coding-catalog,.coding-questions{padding:.8rem;border-radius:12px}.coding-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.coding-topic-card{min-height:62px;padding:.5rem}.coding-topic-copy strong{font-size:.71rem}.coding-topic-copy small{font-size:.59rem}.coding-topic-number{flex-basis:28px;width:28px;height:28px}.coding-question-list{grid-template-columns:1fr}.coding-workspace-toolbar{position:static;align-items:center;flex-direction:row}.coding-toolbar-actions{width:auto}.coding-toolbar-actions button{flex:initial}.coding-problem-placeholder{min-height:250px;max-height:390px}.coding-problem-scroll{max-height:340px}.coding-editor-column{grid-template-rows:minmax(410px,58vh) minmax(230px,.55fr);min-height:0}.coding-editor-placeholder{min-height:410px}.coding-daily-heading{flex-wrap:wrap}.coding-daily-list{grid-template-columns:1fr}}
+  @media(max-width:900px){.coding-workspace-grid{grid-template-columns:1fr}.coding-problem-placeholder{max-height:none;min-height:420px;border-right:0;border-bottom:1px solid #e8e2ed}.coding-editor-column{min-height:620px}}
+  @media(max-width:600px){.coding-workspace-toolbar{align-items:flex-start;flex-direction:column;padding:.8rem}.coding-toolbar-actions{width:100%}.coding-toolbar-actions button{flex:1}.coding-problem-scroll{padding:1.1rem}.coding-editor-column{grid-template-rows:minmax(380px,1fr) minmax(230px,.7fr)}.coding-sample-case{grid-template-columns:1fr}.coding-sample-case strong{grid-column:auto}}
+  .coding-complexity{margin-top:-.35rem;font-size:.75rem!important;font-weight:750}
+</style>
+
+<script>
+(() => {
+  const questionData = JSON.parse(document.getElementById('codingQuestionData').textContent);
+  const dailyAssignments = JSON.parse(document.getElementById('dailyAssignmentData').textContent);
+  const topicCards = [...document.querySelectorAll('.coding-topic-card')];
+  const questionRows = [...document.querySelectorAll('.coding-question-row[data-question-id]')];
+  const dailyCards = [...document.querySelectorAll('.coding-daily-card')];
+  const search = document.getElementById('topicSearch');
+  const emptySearch = document.getElementById('noTopics');
+  const selectedName = document.getElementById('selectedTopicName');
+  const emptyTopic = document.getElementById('codingTopicEmpty');
+  const editor = document.getElementById('solutionEditor');
+  const testcaseView = document.getElementById('codingTestcaseView');
+  const resultView = document.getElementById('codingResultView');
+  const runButton = document.getElementById('runCode');
+  const submitButton = document.getElementById('submitCode');
+  const languageSelect = document.getElementById('codingLanguage');
+  const testcaseTab = document.getElementById('testcaseTab');
+  const resultTab = document.getElementById('resultTab');
+  const runnerConfigured = <%= runnerConfigured ? 'true' : 'false' %>;
+  const fileExtension = { javascript: 'js', python: 'py', java: 'java', c: 'c', cpp: 'cpp' };
+  const topicNameById = new Map(topicCards.map((card) => [card.dataset.topicId, card.querySelector('strong').textContent]));
+  let activeQuestion = null;
+
+  const showOutputTab = (tab) => {
+    const showingResult = tab === 'result';
+    testcaseView.hidden = showingResult;
+    resultView.hidden = !showingResult;
+    testcaseTab.classList.toggle('is-active', !showingResult);
+    resultTab.classList.toggle('is-active', showingResult);
+    testcaseTab.setAttribute('aria-selected', String(!showingResult));
+    resultTab.setAttribute('aria-selected', String(showingResult));
+  };
+
+  const showSamples = (question) => {
+    testcaseView.replaceChildren();
+    (question.sampleTestCases || []).forEach((testCase, index) => {
+      const item = document.createElement('article'); item.className = 'coding-sample-case';
+      const heading = document.createElement('strong'); heading.textContent = `Case ${index + 1}`;
+      const inputLabel = document.createElement('small'); inputLabel.textContent = 'Input';
+      const input = document.createElement('pre'); input.textContent = testCase.input;
+      const outputLabel = document.createElement('small'); outputLabel.textContent = 'Expected output';
+      const output = document.createElement('pre'); output.textContent = testCase.expectedOutput;
+      item.append(heading, inputLabel, input, outputLabel, output); testcaseView.append(item);
+    });
+  };
+
+  const showQuestion = (questionId) => {
+    const question = questionData.find((item) => item.id === questionId);
+    if (!question) return;
+    activeQuestion = question;
+    dailyCards.forEach((card) => card.classList.toggle('is-selected', card.dataset.questionId === questionId));
+    questionRows.forEach((row) => {
+      const selected = row.dataset.questionId === questionId;
+      row.classList.toggle('is-selected', selected);
+      row.setAttribute('aria-pressed', String(selected));
+    });
+    document.getElementById('problemDifficulty').textContent = question.difficulty;
+    document.getElementById('problemTopic').textContent = topicNameById.get(question.topicId) || '';
+    document.getElementById('problemSequence').textContent = `Question ${question.questionNumber}`;
+    document.getElementById('problemTitle').textContent = question.title;
+    document.getElementById('problemTestCaseCount').textContent = question.testCaseCount || 10;
+    document.getElementById('toolbarTitle').textContent = question.title;
+    document.getElementById('toolbarTopic').textContent = (topicNameById.get(question.topicId) || '').toUpperCase();
+    document.getElementById('problemPrompt').textContent = question.prompt;
+    const approachSection = document.getElementById('problemApproachSection');
+    approachSection.hidden = !question.explanation;
+    document.getElementById('problemExplanation').textContent = question.explanation || '';
+    document.getElementById('problemComplexity').textContent = question.complexity || '';
+    const constraints = document.getElementById('problemConstraints'); constraints.replaceChildren();
+    question.constraints.forEach((item) => { const li = document.createElement('li'); li.textContent = item; constraints.append(li); });
+    const examples = document.getElementById('problemExamples'); examples.replaceChildren();
+    question.examples.forEach((item, index) => {
+      const block = document.createElement('pre'); block.className = 'coding-example';
+      block.textContent = `Example ${index + 1}\nInput: ${JSON.stringify(item.input)}\nOutput: ${JSON.stringify(item.output)}`;
+      examples.append(block);
+    });
+    showSamples(question);
+    if (question.savedSolution?.language && question.starterCode[question.savedSolution.language]) {
+      languageSelect.value = question.savedSolution.language;
+    }
+    const savedCode = question.savedSolution?.language === languageSelect.value ? question.savedSolution.sourceCode : null;
+    editor.value = savedCode || question.starterCode[languageSelect.value] || '';
+    document.getElementById('solutionFilename').textContent = `Solution.${fileExtension[languageSelect.value]}`;
+    resultView.replaceChildren();
+    const empty = document.createElement('span'); empty.className = 'coding-output-empty';
+    empty.textContent = runnerConfigured ? 'Run your code to see the result here.' : 'Set PISTON_URL on the server to enable code execution.';
+    resultView.append(empty); showOutputTab('testcase');
+    document.getElementById('testSummary').textContent = runnerConfigured ? 'Ready to run' : 'Piston runner needs setup';
+    document.getElementById('editorLineInfo').textContent = 'Ln 1, Col 1';
+    runButton.disabled = !runnerConfigured; submitButton.disabled = !runnerConfigured;
+  };
+
+  const chooseTopic = (card) => {
+    topicCards.forEach((item) => { item.classList.remove('is-selected'); item.setAttribute('aria-pressed', 'false'); });
+    card.classList.add('is-selected'); card.setAttribute('aria-pressed', 'true');
+    const topicId = card.dataset.topicId;
+    selectedName.textContent = card.querySelector('strong').textContent;
+    const matchingRows = questionRows.filter((row) => row.dataset.topicId === topicId);
+    questionRows.forEach((row) => { row.hidden = row.dataset.topicId !== topicId; });
+    emptyTopic.hidden = matchingRows.length > 0;
+    if (matchingRows.length) {
+      editor.readOnly = false; runButton.disabled = !runnerConfigured;
+      showQuestion(matchingRows[0].dataset.questionId);
+    } else {
+      questionRows.forEach((row) => { row.classList.remove('is-selected'); row.setAttribute('aria-pressed', 'false'); });
+      dailyCards.forEach((dailyCard) => dailyCard.classList.remove('is-selected'));
+      document.getElementById('problemTitle').textContent = 'No question selected';
+      document.getElementById('problemPrompt').textContent = 'Questions for this topic will appear here when they are added.';
+      document.getElementById('problemDifficulty').textContent = '';
+      document.getElementById('problemTopic').textContent = card.querySelector('strong').textContent;
+      document.getElementById('problemSequence').textContent = '';
+      document.getElementById('problemApproachSection').hidden = true;
+      document.getElementById('problemConstraints').replaceChildren();
+      document.getElementById('problemExamples').replaceChildren();
+      activeQuestion = null;
+      editor.value = ''; editor.readOnly = true; runButton.disabled = true; submitButton.disabled = true;
+      testcaseView.textContent = 'Select a question to start coding.';
+    }
+  };
+
+  topicCards.forEach((card) => card.addEventListener('click', () => {
+    chooseTopic(card);
+    document.getElementById('codingQuestionList').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }));
+  questionRows.forEach((row) => row.addEventListener('click', () => {
+    showQuestion(row.dataset.questionId);
+    document.querySelector('.coding-workspace-preview').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+  languageSelect.addEventListener('change', () => {
+    if (!activeQuestion) return;
+    editor.value = activeQuestion.savedSolution?.language === languageSelect.value
+      ? activeQuestion.savedSolution.sourceCode
+      : activeQuestion.starterCode[languageSelect.value] || '';
+    document.getElementById('solutionFilename').textContent = `Solution.${fileExtension[languageSelect.value]}`;
+    resultView.replaceChildren();
+    const empty = document.createElement('span'); empty.className = 'coding-output-empty'; empty.textContent = 'Starter code changed. Run it to see the result.'; resultView.append(empty);
+    document.getElementById('testSummary').textContent = 'Starter code loaded'; showOutputTab('testcase');
+  });
+  const updateCursorPosition = () => {
+    const before = editor.value.slice(0, editor.selectionStart);
+    const lines = before.split('\n');
+    document.getElementById('editorLineInfo').textContent = `Ln ${lines.length}, Col ${lines[lines.length - 1].length + 1}`;
+  };
+  editor.addEventListener('keyup', updateCursorPosition);
+  editor.addEventListener('click', updateCursorPosition);
+  editor.addEventListener('keydown', (event) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      const start = editor.selectionStart; const end = editor.selectionEnd;
+      editor.setRangeText('    ', start, end, 'end'); updateCursorPosition();
+    } else if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault(); executeSubmission(event.shiftKey ? 'submit' : 'run');
+    }
+  });
+  testcaseTab.addEventListener('click', () => showOutputTab('testcase'));
+  resultTab.addEventListener('click', () => showOutputTab('result'));
+  search.addEventListener('input', () => {
+    const query = search.value.trim().toLowerCase();
+    let visibleCount = 0;
+    topicCards.forEach((card) => {
+      const matches = card.dataset.search.includes(query);
+      card.hidden = !matches;
+      if (matches) visibleCount += 1;
+    });
+    emptySearch.hidden = visibleCount > 0;
+  });
+
+  const executeSubmission = async (action) => {
+    if (!activeQuestion || !runnerConfigured) return;
+    const button = action === 'run' ? runButton : submitButton;
+    runButton.disabled = true; submitButton.disabled = true;
+    button.textContent = action === 'run' ? 'Running…' : 'Submitting…';
+    document.getElementById('testSummary').textContent = action === 'run' ? 'Running examples…' : 'Checking all test cases…';
+    resultView.replaceChildren();
+    const pending = document.createElement('span'); pending.className = 'coding-output-empty';
+    pending.textContent = action === 'run' ? 'Compiling and running sample cases…' : 'Compiling and checking sample + hidden cases…';
+    resultView.append(pending); showOutputTab('result');
+    fetch('/student/code-practice/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ questionId: activeQuestion.id, language: languageSelect.value, sourceCode: editor.value, action }),
+    }).then(async (response) => {
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || 'Could not run this submission.');
+      const passed = data.results.filter((item) => item.passed).length;
+      const summary = document.createElement('strong'); summary.className = `coding-test-summary ${data.accepted ? 'is-pass' : 'is-fail'}`;
+      summary.textContent = data.accepted ? 'Accepted · All test cases passed' : `${passed} / ${data.results.length} ${action === 'run' ? 'sample cases' : 'test cases'} passed`;
+      resultView.replaceChildren(summary);
+      data.results.forEach((item) => {
+        const row = document.createElement('div'); row.className = `coding-test-row ${item.passed ? 'is-pass' : 'is-fail'}`;
+        const label = document.createElement('strong'); label.textContent = `Case ${item.index} · ${item.status}`; row.append(label);
+        if (item.message || item.actualOutput) { const details = document.createElement('small'); details.textContent = item.message || `Output: ${item.actualOutput}`; row.append(details); }
+        resultView.append(row);
+      });
+      if (data.accepted && data.streak) {
+        const streak = document.createElement('small'); streak.className = 'coding-local-note';
+        streak.textContent = `DSA streak updated: ${data.streak.current} day${data.streak.current === 1 ? '' : 's'} · best ${data.streak.best}`;
+        resultView.append(streak);
+      }
+      if (data.accepted) {
+        activeQuestion.isSolved = true;
+        activeQuestion.savedSolution = { language: languageSelect.value, sourceCode: editor.value };
+        const selectedQuestionRow = document.querySelector('.coding-question-row.is-selected');
+        if (selectedQuestionRow && !selectedQuestionRow.querySelector('.coding-solved-badge')) {
+          const solvedBadge = document.createElement('span'); solvedBadge.className = 'coding-solved-badge'; solvedBadge.textContent = '✓ Solved'; selectedQuestionRow.append(solvedBadge);
+        }
+        const assignment = dailyAssignments.find((item) => item.questionId === activeQuestion.id);
+        const dailyCard = dailyCards.find((item) => item.dataset.questionId === activeQuestion.id);
+        if (assignment && dailyCard && data.dailyProgress) {
+          assignment.isCompleted = true;
+          dailyCard.classList.add('is-complete');
+          dailyCard.querySelector('small').textContent = '✓ Completed';
+          document.getElementById('dailyProgress').textContent = `${data.dailyProgress.completed} / ${data.dailyProgress.total} complete`;
+        }
+      }
+      document.getElementById('testSummary').textContent = data.accepted ? 'Accepted' : `${passed} / ${data.results.length} cases passed`;
+    }).catch((error) => {
+      resultView.replaceChildren();
+      const message = document.createElement('span'); message.className = 'coding-output-empty is-error'; message.textContent = error.message || 'The code runner is unavailable. Please try again.';
+      resultView.append(message); document.getElementById('testSummary').textContent = 'Run failed';
+    }).finally(() => {
+      runButton.disabled = !runnerConfigured || !activeQuestion;
+      submitButton.disabled = !runnerConfigured || !activeQuestion;
+      runButton.innerHTML = '<span aria-hidden="true">▶</span> Run'; submitButton.textContent = 'Submit';
+    });
+  };
+  runButton.addEventListener('click', () => executeSubmission('run'));
+  submitButton.addEventListener('click', () => executeSubmission('submit'));
+  dailyCards.forEach((card) => card.addEventListener('click', () => {
+    const question = questionData.find((item) => item.id === card.dataset.questionId);
+    if (!question) return;
+    const topicCard = topicCards.find((item) => item.dataset.topicId === question.topicId);
+    if (topicCard) chooseTopic(topicCard);
+    showQuestion(question.id);
+    document.querySelector('.coding-workspace-preview').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+  const firstAvailableTopic = topicCards.find((card) => questionRows.some((row) => row.dataset.topicId === card.dataset.topicId)) || topicCards[0];
+  if (firstAvailableTopic) chooseTopic(firstAvailableTopic);
+})();
+</script>

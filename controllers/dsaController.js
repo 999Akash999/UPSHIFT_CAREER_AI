@@ -114,3 +114,14 @@ exports.submitAnswer = async (req, res) => {
     res.status(500).json({ error: "Could not save your practice result. Please try again." });
   }
 };
+
+exports.recordCodeSolve = async (req, res) => {
+  try {
+    const student = await recordDsaPractice(req.student._id);
+    if (!student) return res.status(404).json({ error: "Student profile not found." });
+    res.json({ success: true, currentStreak: student.dsaStreak || 0, bestStreak: student.dsaBestStreak || 0 });
+  } catch (error) {
+    console.error("DSA code practice result failed:", error);
+    res.status(500).json({ error: "Could not save your practice streak. Please try again." });
+  }
+};

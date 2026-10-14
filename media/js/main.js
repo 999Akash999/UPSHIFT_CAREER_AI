@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
     wrapper.append(table);
   });
 
+  document.getElementById("sidebarNavToggle")?.addEventListener("click", () => toggleSidebarNav());
+  document.getElementById("sidebarScrim")?.addEventListener("click", () => toggleSidebarNav(false));
+  document.querySelectorAll("#appSidebar .sidebar-link").forEach((link) => {
+    link.addEventListener("click", () => toggleSidebarNav(false));
+  });
+
   // Auto-dismiss alert notifications
   const alerts = document.querySelectorAll(".flash-alert-success");
   alerts.forEach((alert) => {
@@ -41,20 +47,34 @@ document.addEventListener("DOMContentLoaded", () => {
         if (backdrop) backdrop.style.display = "none";
       }
       toggleSidebarNav(false);
-      document.getElementById("publicNav")?.classList.remove("is-open");
+      closePublicNav();
     }
   });
+
+  const publicNav = document.getElementById("publicNav");
+  if (publicNav) {
+    publicNav.addEventListener("click", (event) => {
+      if (event.target.closest("a")) closePublicNav();
+    });
+    document.addEventListener("click", (event) => {
+      const toggle = document.querySelector(".public-nav-toggle");
+      if (publicNav.classList.contains("is-open") && !publicNav.contains(event.target) && !toggle?.contains(event.target)) {
+        closePublicNav();
+      }
+    });
+  }
 });
 
 function toggleSidebarNav(forceState) {
   const sidebar = document.getElementById("appSidebar");
   const scrim = document.getElementById("sidebarScrim");
-  const toggle = document.querySelector(".nav-toggle");
+  const toggle = document.getElementById("sidebarNavToggle");
   if (!sidebar) return;
   const shouldOpen = typeof forceState === "boolean" ? forceState : !sidebar.classList.contains("is-open");
   sidebar.classList.toggle("is-open", shouldOpen);
   scrim?.classList.toggle("is-visible", shouldOpen);
   toggle?.setAttribute("aria-expanded", String(shouldOpen));
+  toggle?.setAttribute("aria-label", shouldOpen ? "Close navigation" : "Open navigation");
   document.body.classList.toggle("nav-is-open", shouldOpen);
 }
 
@@ -64,6 +84,15 @@ function togglePublicNav() {
   if (!nav) return;
   const isOpen = nav.classList.toggle("is-open");
   toggle?.setAttribute("aria-expanded", String(isOpen));
+  toggle?.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+}
+
+function closePublicNav() {
+  const nav = document.getElementById("publicNav");
+  const toggle = document.querySelector(".public-nav-toggle");
+  nav?.classList.remove("is-open");
+  toggle?.setAttribute("aria-expanded", "false");
+  toggle?.setAttribute("aria-label", "Open navigation");
 }
 
 function previewProfilePhoto(input) {

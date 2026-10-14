@@ -64,6 +64,7 @@ app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "media")));
 app.use("/uploads/avatars", express.static(path.join(__dirname, "uploads/avatars")));
+app.use("/uploads/projects", express.static(path.join(__dirname, "uploads/projects")));
 app.use((req, res, next) => {
   ["body", "params", "headers"].forEach((key) => {
     if (req[key]) req[key] = mongoSanitize.sanitize(req[key]);
@@ -234,6 +235,15 @@ databaseConnectionPromise
     console.log("✓ Event registration counts synchronized.");
     const assessmentCount = await require("./services/assessmentSeedService").ensureSkillAssessments();
     console.log(`✓ ${assessmentCount} skill assessments are ready.`);
+    if (process.env.TURSO_URL) {
+      try {
+        const dsaQuestions = require("./data/codePracticeQuestionBank");
+        await require("./services/dsaTursoService").initialize(dsaQuestions);
+        console.log(`✓ Turso DSA store ready (${dsaQuestions.length} seed questions synchronized).`);
+      } catch (error) {
+        console.error("⚠ Turso DSA store is unavailable; DSA practice will retry on request:", error.message);
+      }
+    }
     require("./jobs")();
     server.listen(PORT, () => {
       console.log(`✓ UPSHIFT CAREER Server live at http://localhost:${PORT}`);
@@ -248,6 +258,9 @@ databaseConnectionPromise
 const shutdown = () => {
   console.log("\nInitiating server shutdown...");
   server.close(async () => {
+    await require("./services/dsaTursoService").close().catch((error) => {
+      console.error("Turso DSA store shutdown failed:", error.message);
+    });
     await mongoose.connection.close();
     console.log("✓ Server and Database connections closed.");
     process.exit(0);

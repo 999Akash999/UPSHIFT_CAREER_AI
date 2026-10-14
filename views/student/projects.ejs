@@ -21,9 +21,9 @@
   <% if (projects.length) { %>
     <section class="projects-grid" aria-label="Your projects">
       <% projects.forEach((project) => { %>
-        <article class="project-card">
+        <article class="project-card <%= project.imageUrl ? 'has-project-image' : '' %>">
           <div class="project-card-cover">
-            <span class="project-card-mark" aria-hidden="true"><%= (project.title || 'P').trim().charAt(0).toUpperCase() %></span>
+            <% if (project.imageUrl) { %><img src="<%= project.imageUrl %>" alt="<%= project.title %> project" loading="lazy"><% } else { %><span class="project-card-mark" aria-hidden="true"><%= (project.title || 'P').trim().charAt(0).toUpperCase() %></span><% } %>
             <% if (project.isVerified) { %><span class="project-verified"><span aria-hidden="true">✓</span> Verified</span><% } else { %><span class="project-type-label">PROJECT</span><% } %>
           </div>
           <div class="project-card-body">
@@ -40,6 +40,17 @@
               <% } else { %>
                 <span class="project-links-empty">No code or demo link added</span>
               <% } %>
+            </div>
+            <div class="project-card-actions">
+              <button type="button" class="project-edit-button" data-project-edit
+                data-project-id="<%= project._id %>"
+                data-title="<%= project.title %>"
+                data-description="<%= project.description %>"
+                data-tech-stack="<%= (project.techStack || []).join(', ') %>"
+                data-github-url="<%= project.githubUrl || '' %>"
+                data-live-demo-url="<%= project.liveDemoUrl || '' %>"
+                data-image-url="<%= project.imageUrl || '' %>">Edit</button>
+              <button type="button" class="project-delete-button" data-project-delete data-project-id="<%= project._id %>" data-project-title="<%= project.title %>">Delete</button>
             </div>
           </div>
         </article>
@@ -77,6 +88,11 @@
         <label class="project-form-field project-form-field-wide" for="projectTechStack">Technologies <span>Separate with commas</span>
           <input id="projectTechStack" type="text" name="techStack" required maxlength="1500" placeholder="JavaScript, Node.js, MongoDB">
         </label>
+        <label class="project-form-field project-form-field-wide" for="projectImage">Project image <span>Optional · JPG, PNG, WEBP · max 5 MB</span>
+          <input id="projectImage" type="file" name="projectImage" accept="image/jpeg,image/png,image/webp">
+          <small class="project-image-help">This image will appear on one half of your project card.</small>
+          <img class="project-image-preview" id="projectImagePreview" alt="Project image preview" hidden>
+        </label>
         <label class="project-form-field" for="projectGithub">GitHub repository <span>Optional</span>
           <input id="projectGithub" type="url" name="githubUrl" placeholder="https://github.com/you/project" inputmode="url">
         </label>
@@ -87,7 +103,7 @@
       <p class="project-form-status" id="projectSubmissionStatus" role="status" aria-live="polite"></p>
       <footer class="project-form-actions">
         <button class="projects-secondary-button" id="cancelProjectModal" type="button">Cancel</button>
-        <button class="projects-primary-button" type="submit"><span aria-hidden="true">＋</span> Save project</button>
+        <button class="projects-primary-button" id="saveProjectButton" type="submit"><span aria-hidden="true">＋</span> Save project</button>
       </footer>
     </form>
   </section>

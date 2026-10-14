@@ -1,0 +1,22 @@
+<% const socialPlatforms = [
+  { label: 'Instagram', url: process.env.INSTAGRAM_URL, icon: 'instagram' },
+  { label: 'LinkedIn', url: process.env.LINKEDIN_URL, icon: 'linkedin' },
+  { label: 'X', url: process.env.X_URL, icon: 'x' },
+]; %>
+<nav class="upshift-social" aria-label="UPSHIFT social media">
+  <strong>Follow UPSHIFT</strong>
+  <div class="upshift-social-links">
+      <% socialPlatforms.forEach(({ label, url, icon }) => { %>
+        <% if (/^https:\/\//i.test(url || '')) { %><a href="<%= url %>" target="_blank" rel="noopener noreferrer" aria-label="UPSHIFT on <%= label %>" title="<%= label %>"><% } else { %><span class="upshift-social-unlinked" aria-label="<%= label %> profile link not configured" title="Add the official <%= label %> URL to enable this link"><% } %>
+          <% if (icon === 'instagram') { %>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="social-icon-fill" cx="18" cy="6" r="1"/></svg>
+          <% } else if (icon === 'linkedin') { %>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path class="social-icon-fill" d="M5.2 8.7H2.3V21h2.9V8.7ZM3.75 7.1a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4ZM21.7 13.95c0-3.7-1.98-5.43-4.62-5.43a4 4 0 0 0-3.58 1.97V8.7h-2.9V21h2.9v-6.09c0-1.6.3-3.14 2.28-3.14 1.96 0 1.98 1.82 1.98 3.24V21h2.9v-7.05h1.04Z"/></svg>
+          <% } else { %>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path class="social-icon-fill" d="M18.9 2H22l-6.78 7.75L23.2 22h-6.25l-4.9-7.25L5.7 22H2.55l7.25-8.29L1.8 2h6.42l4.43 6.58L18.9 2Zm-1.1 18h1.73L7.27 3.9H5.42L17.8 20Z"/></svg>
+          <% } %>
+          <span><%= label %></span>
+        <% if (/^https:\/\//i.test(url || '')) { %></a><% } else { %></span><% } %>
+      <% }); %>
+  </div>
+</nav>

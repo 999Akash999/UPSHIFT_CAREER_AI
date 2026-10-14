@@ -336,6 +336,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .public-footer-links strong { margin-bottom: .15rem; color: #403653; font-size: .76rem; }
 .public-footer-links a, .public-footer-bottom a { width: fit-content; color: #746a84; font-size: .76rem; text-decoration: none; }
 .public-footer-links a:hover, .public-footer-bottom a:hover { color: #6541b3; text-decoration: underline; }
+.upshift-social { display: grid !important; align-content: start; gap: .65rem !important; }
+.public-footer .upshift-social { justify-self: end; justify-items: end; text-align: right; }
+.upshift-social > strong { color: #403653; font-size: .76rem; }
+.upshift-social > small { color: #938aa0; font-size: .7rem; }
+.upshift-social-links { display: flex; flex-wrap: wrap; gap: .5rem; }
+.upshift-social-links a, .upshift-social-unlinked { display: inline-flex; align-items: center; gap: .4rem; width: auto !important; padding: .45rem .65rem; border: 1px solid #e9e2f2; border-radius: 9px; color: #746a84 !important; font-size: .72rem; text-decoration: none !important; }
+.upshift-social-links a:hover { border-color: #cdbce5; background: #faf7ff; color: #6541b3 !important; }
+.upshift-social-unlinked { opacity: .65; }
+.upshift-social-links svg { width: 17px; height: 17px; flex: 0 0 17px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.upshift-social-links .social-icon-fill { fill: currentColor; stroke: none; }
+.dashboard-footer .upshift-social { flex: 0 0 auto; }
+.dashboard-footer .upshift-social { margin-left: auto; justify-items: end; text-align: right; }
+.dashboard-footer .upshift-social > strong { color: #6f657c; font-size: .7rem; }
+.dashboard-footer .upshift-social-links a, .dashboard-footer .upshift-social-unlinked { padding: .35rem .5rem; font-size: .68rem; }
 .public-footer-bottom { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 1rem; border-top: 1px solid #eee9f6; }
 .public-info-page { max-width: 1120px; min-height: 58vh; margin: 0 auto; padding: clamp(2rem,6vw,5rem) clamp(1rem,4vw,2rem); }
 .public-info-hero { max-width: 760px; margin-bottom: 2rem; }
@@ -395,6 +409,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .public-contact-card > p:not(.public-info-eyebrow) { color: #766d83; font-size: .88rem; line-height: 1.7; }
 .public-info-eyebrow { margin: 0; color: #8978a8; font-size: .7rem; font-weight: 800; letter-spacing: .11em; }
 .public-contact-aside { background: #faf8fd; }
+.contact-query-form { margin-top: 1.1rem; }
+.contact-query-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .85rem; }
+.contact-query-fields label { display: grid; gap: .35rem; color: #514761; font-size: .76rem; font-weight: 750; }
+.contact-query-fields input, .contact-query-fields textarea { width: 100%; padding: .72rem .78rem; border: 1px solid #e3dbea; border-radius: 9px; background: #fff; color: #302749; font: inherit; font-size: .8rem; }
+.contact-query-fields textarea { min-height: 140px; resize: vertical; }
+.contact-query-fields input:focus, .contact-query-fields textarea:focus { border-color: #9b7bc9; outline: 3px solid #7954c81c; }
+.contact-query-full { grid-column: 1 / -1; }
+.contact-query-form > button { margin-top: .9rem; border: 0; cursor: pointer; }
+.contact-query-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.public-help-query { max-width: 850px; margin-top: 1.5rem; }
+.public-help-query h2 { margin: .2rem 0 .6rem; color: #302749; font-size: 1.2rem; }
+.public-help-query > p:not(.public-info-eyebrow) { color: #766d83; font-size: .88rem; line-height: 1.7; }
 .public-policy-page { max-width: 940px; }
 .public-policy-content { display: grid; gap: .8rem; }
 .public-policy-content article { padding: 1.2rem 1.35rem; border: 1px solid #ebe5f4; border-radius: 12px; background: white; }
@@ -421,6 +447,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .public-founder-kicker { justify-content: center; }
   .public-team-section .public-team-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .public-contact-grid { grid-template-columns: 1fr; }
+  .contact-query-fields { grid-template-columns: 1fr; }
+  .contact-query-full { grid-column: auto; }
 }
 @media (max-width: 420px) { .public-team-grid { grid-template-columns: 1fr; } }
 
@@ -636,3 +664,69 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   @page { size: A4; margin: 16mm; }
 }
 @media(max-width:600px){.market-gap-evidence{padding:.9rem}.market-gap-heading{flex-direction:column}.market-gap-heading>span{white-space:normal}.market-gap-list{grid-template-columns:1fr}}
+
+/* Shared layout safeguards for phones and narrow tablets. */
+html { min-width: 320px; }
+body { overflow-x: hidden; }
+.dashboard-shell, .dashboard-main, .dashboard-main > *, .app-layout > * { min-width: 0; }
+.dashboard-main img, .dashboard-main video, .dashboard-main canvas,
+.public-main img, .public-main video { max-width: 100%; }
+.dashboard-main pre, .dashboard-main code, .dashboard-main .code-editor,
+.dashboard-main .editor-pane { max-width: 100%; }
+.dashboard-main pre, .dashboard-main .code-editor, .dashboard-main .editor-pane { overflow: auto; }
+.dashboard-main table { max-width: 100%; }
+.dashboard-main :is(.table-responsive, .table-wrap, .table-container) { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.dashboard-main input, .dashboard-main select, .dashboard-main textarea { max-width: 100%; }
+.dashboard-main :is(.page-heading, .section-heading, .panel-heading, .card-header) { min-width: 0; }
+.dashboard-main :is(.page-heading h1, .page-heading h2, .section-heading h2, .panel-heading h2) { overflow-wrap: anywhere; }
+
+@media (max-width: 1050px) {
+  .app-layout { min-height: 100dvh; }
+  .dashboard-topbar { gap: .6rem; }
+  .dashboard-main { overflow-wrap: break-word; }
+}
+
+@media (max-width: 760px) {
+  .dashboard-main { padding: 1rem .85rem calc(1.5rem + env(safe-area-inset-bottom)); }
+  .dashboard-footer { gap: .65rem; }
+  .dashboard-footer-links { gap: .55rem .85rem !important; }
+  .dashboard-main :is(.page-heading, .section-heading, .panel-heading) { flex-wrap: wrap; }
+  .dashboard-main :is(.page-heading > *, .section-heading > *, .panel-heading > *) { min-width: 0; }
+  .dashboard-main :is(.page-heading a, .page-heading button, .section-heading a, .section-heading button) { max-width: 100%; }
+  .dashboard-main :is(.form-actions, .button-row, .toolbar-actions) { flex-wrap: wrap; }
+  .dashboard-main :is(.form-actions, .button-row, .toolbar-actions) > * { min-width: 0; }
+  .dashboard-main :is(.modal, .modal-dialog, .dialog-content) { max-width: calc(100vw - 1.25rem); }
+  .notification-dropdown { right: -3.25rem; }
+}
+
+@media (max-width: 480px) {
+  .dashboard-topbar { padding-right: .75rem; padding-left: .75rem; }
+  .topbar-leading h1 { max-width: 42vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar-actions { gap: .4rem; }
+  .dashboard-main { padding-right: .7rem; padding-left: .7rem; }
+  .dashboard-main :is(.card, .panel, .content-card) { min-width: 0; }
+  .dashboard-main :is(input, select, textarea) { font-size: 16px; }
+  .dashboard-main :is(.btn, .button, button[type="submit"]) { max-width: 100%; }
+  .dashboard-footer { font-size: .7rem; }
+  .notification-dropdown { right: -2.8rem; }
+}
+
+/* Keep shared overlays and controls reachable on touch screens. */
+@media (max-width: 760px) {
+  #aiCopilotDrawer {
+    width: min(420px, 100vw) !important;
+    max-width: 100vw;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+  #aiCopilotDrawer > div:last-of-type { padding: .75rem !important; }
+  #aiCopilotDrawer #drawerPromptInput { min-width: 0; font-size: 16px !important; }
+  #aiCopilotDrawer button { min-height: 44px; }
+  .sidebar-link, .public-nav-links > a { min-height: 44px; }
+  .public-nav-links { z-index: 51; max-height: calc(100dvh - 66px); overflow-y: auto; overscroll-behavior: contain; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  button, [role="button"], summary, .sidebar-link, .public-nav-links > a { touch-action: manipulation; }
+  button:not(:disabled), [role="button"], summary { -webkit-tap-highlight-color: rgba(121,84,200,.14); }
+}

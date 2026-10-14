@@ -32,25 +32,29 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 </head>
-<body class="dashboard-body">
+<body class="dashboard-body <%= typeof fullScreenDashboard !== 'undefined' && fullScreenDashboard ? 'dsa-fullscreen' : '' %>">
 
   <a class="skip-to-content" href="#main-content">Skip to main content</a>
 
   <div class="app-layout">
 
     <!-- Persistent Deep Navy Sidebar -->
+    <% if (!(typeof fullScreenDashboard !== 'undefined' && fullScreenDashboard)) { %>
     <%- include('../partials/sidebar') %>
+    <% } %>
 
     <!-- Main Workspace Column -->
     <div class="dashboard-shell">
       
       <!-- Top Action Bar -->
+      <% if (!(typeof fullScreenDashboard !== 'undefined' && fullScreenDashboard)) { %>
       <%- include('../partials/topbar') %>
 
       <!-- Alert & Flash Container -->
       <div style="padding: 1rem 2rem 0;">
         <%- include('../partials/flash') %>
       </div>
+      <% } %>
 
       <!-- Injected Dashboard Workspace -->
       <main class="dashboard-main" id="main-content" tabindex="-1">
@@ -58,7 +62,7 @@
       </main>
 
       <!-- App Bottom Bar -->
-      <footer class="dashboard-footer">
+      <% if (!(typeof fullScreenDashboard !== 'undefined' && fullScreenDashboard)) { %><footer class="dashboard-footer">
         <div>&copy; <%= new Date().getFullYear() %> UPSHIFT CAREER. Operating System for Student Engineers.</div>
         <div class="dashboard-footer-links" style="display: flex; gap: 1rem; flex-wrap:wrap;">
           <a href="/about" style="color: inherit; text-decoration: none;">About</a>
@@ -70,14 +74,15 @@
           <a href="/student/settings" style="color: inherit; text-decoration: none;">Settings</a>
           <a href="mailto:unshiftcareerai999@gmail.com" style="color: inherit; text-decoration: none;">Helpdesk</a>
         </div>
-      </footer>
+        <%- include('../partials/social-links') %>
+      </footer><% } %>
 
     </div>
 
   </div>
 
   <!-- Global AI Assistant Sliding Drawer -->
-  <%- include('../partials/ai-drawer') %>
+  <% if (!(typeof fullScreenDashboard !== 'undefined' && fullScreenDashboard)) { %><%- include('../partials/ai-drawer') %><% } %>
 
   <!-- Workspace Scripts -->
   <script src="/js/main.js"></script>

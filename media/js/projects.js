@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("projectSubmissionModal");
   const openButtons = [...document.querySelectorAll("[data-project-modal-open]")];
+  const editButtons = [...document.querySelectorAll("[data-project-edit]")];
+  const deleteButtons = [...document.querySelectorAll("[data-project-delete]")];
   const closeButton = document.getElementById("closeProjectModal");
   const cancelButton = document.getElementById("cancelProjectModal");
   const form = document.getElementById("projectSubmissionForm");
@@ -8,6 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitButton = form?.querySelector("button[type='submit']");
   const description = form?.elements.namedItem("description");
   const descriptionCount = document.getElementById("projectDescriptionCount");
+  const imageInput = document.getElementById("projectImage");
+  const imagePreview = document.getElementById("projectImagePreview");
+  const modalTitle = document.getElementById("projectModalTitle");
+  const modalDescription = document.getElementById("projectModalDescription");
+  const saveProjectButton = document.getElementById("saveProjectButton");
+  let previewUrl = null;
+  let editingImageUrl = "";
 
   if (!modal || !openButtons.length || !form || !status || !submitButton) return;
 
@@ -16,8 +25,41 @@ document.addEventListener("DOMContentLoaded", () => {
     "a[href], button:not(:disabled), input:not(:disabled), textarea:not(:disabled), select:not(:disabled), [tabindex]:not([tabindex='-1'])"
   )].filter((element) => !element.hidden && element.getClientRects().length);
 
+  const clearPreviewUrl = () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = null;
+  };
+
   const openModal = (event) => {
     lastOpener = event.currentTarget;
+    const projectButton = event.currentTarget.closest("[data-project-edit]");
+    clearPreviewUrl();
+    form.reset();
+    imageInput.value = "";
+    editingImageUrl = "";
+    form.dataset.projectId = "";
+    if (projectButton) {
+      const { projectId, title, description: projectDescription, techStack, githubUrl, liveDemoUrl, imageUrl } = projectButton.dataset;
+      form.dataset.projectId = projectId;
+      form.action = `/student/projects/${encodeURIComponent(projectId)}`;
+      form.elements.namedItem("title").value = title || "";
+      form.elements.namedItem("description").value = projectDescription || "";
+      form.elements.namedItem("techStack").value = techStack || "";
+      form.elements.namedItem("githubUrl").value = githubUrl || "";
+      form.elements.namedItem("liveDemoUrl").value = liveDemoUrl || "";
+      editingImageUrl = imageUrl || "";
+      modalTitle.textContent = "Edit project";
+      modalDescription.textContent = "Update your project details, links, technologies, or cover image.";
+      saveProjectButton.innerHTML = "Save changes";
+      if (editingImageUrl) { imagePreview.src = editingImageUrl; imagePreview.hidden = false; }
+    } else {
+      form.action = "/student/projects";
+      modalTitle.textContent = "Add a project";
+      modalDescription.textContent = "Share enough detail for someone to understand what you made and why it matters.";
+      saveProjectButton.innerHTML = '<span aria-hidden="true">＋</span> Save project';
+      imagePreview.hidden = true; imagePreview.removeAttribute("src");
+    }
+    updateDescriptionCount();
     modal.hidden = false;
     document.body.classList.add("project-modal-open");
     status.classList.remove("is-success");
@@ -33,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   openButtons.forEach((button) => button.addEventListener("click", openModal));
+  editButtons.forEach((button) => button.addEventListener("click", openModal));
   closeButton?.addEventListener("click", closeModal);
   cancelButton?.addEventListener("click", closeModal);
   modal.addEventListener("click", (event) => {
@@ -66,6 +109,19 @@ document.addEventListener("DOMContentLoaded", () => {
   description?.addEventListener("input", updateDescriptionCount);
   updateDescriptionCount();
 
+  imageInput?.addEventListener("change", () => {
+    const file = imageInput.files?.[0];
+    clearPreviewUrl();
+    if (!file) {
+      if (editingImageUrl) { imagePreview.src = editingImageUrl; imagePreview.hidden = false; }
+      else { imagePreview.hidden = true; imagePreview.removeAttribute("src"); }
+      return;
+    }
+    previewUrl = URL.createObjectURL(file);
+    imagePreview.src = previewUrl;
+    imagePreview.hidden = false;
+  });
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -77,13 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(form.action, {
-        method: "POST",
+        method: form.dataset.projectId ? "PUT" : "POST",
         headers: {
           Accept: "application/json",
           "X-Requested-With": "XMLHttpRequest",
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
-        body: new URLSearchParams(new FormData(form)),
+        body: new FormData(form),
       });
 
       if (response.redirected) {
@@ -105,4 +160,22 @@ document.addEventListener("DOMContentLoaded", () => {
       submitButton.innerHTML = originalButtonText;
     }
   });
+
+  deleteButtons.forEach((button) => button.addEventListener("click", async () => {
+    const projectName = button.dataset.projectTitle || "this project";
+    if (!window.confirm(`Delete “${projectName}” from your portfolio? This cannot be undone.`)) return;
+    button.disabled = true;
+    try {
+      const response = await fetch(`/student/projects/${encodeURIComponent(button.dataset.projectId)}`, {
+        method: "DELETE",
+        headers: { Accept: "application/json", "X-Requested-With": "XMLHttpRequest" },
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.success) throw new Error(result.error || "Could not delete this project.");
+      window.location.reload();
+    } catch (error) {
+      window.alert(error.message || "Could not delete this project. Please try again.");
+      button.disabled = false;
+    }
+  }));
 });

@@ -35,6 +35,25 @@
     </div>
   </section>
 
+  <section class="dsa-section code-practice" id="codePractice">
+    <div class="dsa-section-heading"><div><p class="dsa-kicker">HANDS ON CODING</p><h2>Coding workspace</h2></div><span>JavaScript · Runs against your test cases</span></div>
+    <div class="code-workbench">
+      <div class="code-workbench-top"><div><strong>Solution.js</strong><span>JavaScript · Local runner</span></div><button type="button" class="dsa-check-button" id="runCode">▶ Run tests</button></div>
+      <label class="code-editor-label" for="codeEditor">Your solution <small>Write <code>function solution(input)</code>. Return the answer for each input.</small></label>
+      <textarea id="codeEditor" class="code-editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="JavaScript solution editor">function solution(input) {
+  // Write your solution here
+  return input;
+}</textarea>
+      <div class="test-case-heading"><div><strong>Test cases</strong><small>JSON array of input and expected output pairs</small></div><button type="button" id="resetCases" class="code-reset">Reset example</button></div>
+      <label class="sr-only" for="testCases">Test cases JSON</label>
+      <textarea id="testCases" class="test-case-editor" spellcheck="false" aria-label="Test cases JSON">[
+  { "input": 2, "expected": 2 },
+  { "input": [1, 2, 3], "expected": [1, 2, 3] }
+]</textarea>
+      <div class="test-results" id="testResults" aria-live="polite"><span class="result-idle">Run your code to see test results.</span></div>
+    </div>
+  </section>
+
   <section class="dsa-section badges-section">
     <div class="dsa-section-heading"><div><p class="dsa-kicker">CONSISTENCY REWARDS</p><h2>Your badges</h2></div><span>Keep showing up to unlock more</span></div>
     <div class="badge-grid" id="dsaBadgeGrid">
@@ -49,11 +68,88 @@
 
 <style>
   .dsa-page{max-width:1050px;margin:0 auto;color:#302641}.dsa-hero{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:1.4rem}.dsa-hero h1{font-size:clamp(1.8rem,4vw,2.4rem);letter-spacing:-.035em;color:#241b35;margin:.25rem 0}.dsa-hero p:last-child{color:#746b80;margin:.4rem 0 0;max-width:650px;line-height:1.55}.dsa-kicker{font-size:.7rem;letter-spacing:.12em;font-weight:850;color:#7954c8;margin:0}.dsa-start,.dsa-check-button{border:0;border-radius:10px;padding:.75rem 1rem;background:#7954c8;color:#fff;text-decoration:none;font:inherit;font-size:.85rem;font-weight:800;white-space:nowrap;cursor:pointer}.dsa-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem;margin:1.3rem 0 2rem}.dsa-stat{display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid #e9e2f2;border-radius:14px;padding:1rem;box-shadow:0 7px 22px #39245208}.dsa-stat>span{font-size:1.4rem}.dsa-stat div{display:grid;gap:.15rem;min-width:0}.dsa-stat small,.dsa-stat em{font-size:.75rem;color:#81768e;font-style:normal}.dsa-stat strong{font-size:1.05rem;color:#302641}.dsa-stat>em{margin-left:auto}.dsa-section{margin:2rem 0}.dsa-section-heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:.85rem}.dsa-section-heading h2{font-size:1.35rem;color:#302641;margin:.2rem 0}.dsa-section-heading>span{font-size:.8rem;color:#81768e}.dsa-question-list{display:grid;gap:.7rem}.dsa-question{background:#fff;border:1px solid #e9e2f2;border-radius:13px;overflow:hidden}.dsa-question[open]{box-shadow:0 10px 26px #3924520b;border-color:#d9c9ed}.dsa-question summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.85rem;padding:.9rem 1rem}.dsa-question summary::-webkit-details-marker{display:none}.question-number{width:2.1rem;height:2.1rem;display:grid;place-items:center;background:#f3edfc;color:#6943aa;border-radius:9px;font-weight:850;font-size:.76rem}.question-summary{display:grid;gap:.2rem;flex:1}.question-summary strong{font-size:.92rem;color:#302641}.question-summary small{font-size:.75rem;color:#81768e}.question-solved{font-size:.76rem;font-weight:800;color:#7954c8}.dsa-question[data-solved="true"] .question-solved{color:#16815f}.question-content{padding:0 1rem 1rem 3.95rem}.question-prompt{font-size:.9rem;line-height:1.6;color:#463b54;margin:.2rem 0 1rem}.dsa-answer-form fieldset{border:0;padding:0;margin:0}.dsa-answer-form legend{font-size:.8rem;font-weight:800;margin-bottom:.55rem}.dsa-choice{display:flex;align-items:flex-start;gap:.6rem;padding:.65rem .75rem;margin:.4rem 0;border:1px solid #ebe5f2;border-radius:9px;font-size:.83rem;line-height:1.45;cursor:pointer}.dsa-choice:has(input:checked){border-color:#9c7ad2;background:#f8f4fc}.dsa-choice input{margin-top:.15rem;accent-color:#7954c8;flex:none}.dsa-answer-form fieldset:disabled .dsa-choice{cursor:default}.dsa-form-actions{display:flex;align-items:center;gap:.8rem;margin-top:.75rem}.dsa-check-button:disabled{background:#19815e;cursor:default}.dsa-form-actions small{color:#81768e}.dsa-answer-feedback{font-size:.84rem;line-height:1.5;margin:.65rem 0 0;color:#71677e}.dsa-answer-feedback.is-correct{color:#16815f;font-weight:700}.dsa-answer-feedback.is-wrong{color:#a24752}.badge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.dsa-badge{display:flex;align-items:flex-start;gap:.8rem;padding:1rem;background:#fff;border:1px solid #e9e2f2;border-radius:13px;opacity:.76}.dsa-badge.earned{opacity:1;border-color:#d8c5f2;background:linear-gradient(135deg,#fff,#faf7ff)}.badge-icon{width:2.4rem;height:2.4rem;display:grid;place-items:center;border-radius:10px;background:#f2edf8;color:#7954c8;font-size:1.1rem;flex:none}.dsa-badge>div{flex:1}.badge-title{font-size:.9rem}.dsa-badge p{font-size:.78rem;line-height:1.4;color:#81768e;margin:.25rem 0}.badge-progress{font-size:.7rem;color:#7954c8;font-weight:750}.badge-track{height:5px;border-radius:99px;background:#eee8f5;margin-top:.4rem;overflow:hidden}.badge-track span{height:100%;display:block;background:#8b65cc;border-radius:inherit;transition:width .25s}@media(max-width:680px){.dsa-hero{align-items:flex-start;flex-direction:column}.dsa-stats{grid-template-columns:1fr}.dsa-stat>em{margin-left:auto}.dsa-section-heading{align-items:flex-start;flex-direction:column;gap:.25rem}.question-content{padding-left:1rem}.badge-grid{grid-template-columns:1fr}.dsa-question summary{gap:.55rem;padding:.8rem}.question-number{width:1.85rem;height:1.85rem}}
+.code-workbench{background:#fff;border:1px solid #e7e1ed;border-radius:14px;overflow:hidden;box-shadow:0 8px 24px #39245208}.code-workbench-top{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;background:#fbfaff;border-bottom:1px solid #eee9f4}.code-workbench-top>div{display:flex;align-items:center;gap:.65rem}.code-workbench-top strong{font-size:.85rem}.code-workbench-top span{font-size:.7rem;color:#766b82;background:#f0ebf6;padding:.25rem .5rem;border-radius:5px}.code-editor-label{display:grid;gap:.3rem;padding:.85rem 1rem .45rem;font-size:.82rem;font-weight:750}.code-editor-label small,.test-case-heading small{font-size:.72rem;font-weight:400;color:#81768e}.code-editor{display:block;box-sizing:border-box;width:calc(100% - 2rem);min-height:220px;margin:0 1rem 1rem;padding:1rem;border:1px solid #302a3b;border-radius:9px;background:#1d1b24;color:#e8e5ef;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical;tab-size:2;white-space:pre}.test-case-heading{display:flex;align-items:center;justify-content:space-between;padding:.35rem 1rem .5rem}.test-case-heading>div{display:grid;gap:.25rem}.test-case-heading strong{font-size:.82rem}.code-reset{border:0;background:transparent;color:#7954c8;font:inherit;font-size:.75rem;font-weight:750;cursor:pointer}.test-case-editor{display:block;box-sizing:border-box;width:calc(100% - 2rem);min-height:115px;margin:0 1rem 1rem;padding:.75rem;border:1px solid #e6e0ed;border-radius:8px;background:#fbfaff;color:#3c3447;font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}.test-results{display:grid;gap:.45rem;padding:.8rem 1rem;border-top:1px solid #eee9f4;font-size:.8rem}.result-idle{color:#81768e}.test-result{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:7px;background:#fff3f2;color:#9e4148}.test-result.pass{background:#eef8f3;color:#18704f}.test-results-summary{font-weight:800;color:#302641}.test-results-summary.failed{color:#a24752}.code-workbench .dsa-check-button:disabled{opacity:.7;cursor:wait}@media(max-width:680px){.code-editor{min-height:190px}.code-workbench-top,.test-case-heading{gap:.6rem}.code-workbench-top{align-items:flex-start}}
 </style>
 
 <script>
 (() => {
   const badgeGrid = document.getElementById('dsaBadgeGrid');
+  const codeEditor = document.getElementById('codeEditor');
+  const testCasesEditor = document.getElementById('testCases');
+  const resultPanel = document.getElementById('testResults');
+  const exampleCases = '[\n  { "input": 2, "expected": 2 },\n  { "input": [1, 2, 3], "expected": [1, 2, 3] }\n]';
+  document.getElementById('resetCases').addEventListener('click', () => { testCasesEditor.value = exampleCases; });
+  document.getElementById('runCode').addEventListener('click', () => {
+    let cases;
+    try {
+      cases = JSON.parse(testCasesEditor.value);
+      if (!Array.isArray(cases) || !cases.length || cases.some((item) => !item || !Object.hasOwn(item, 'input') || !Object.hasOwn(item, 'expected'))) throw new Error('Use a non-empty array of { "input": ..., "expected": ... } objects.');
+    } catch (error) {
+      resultPanel.textContent = error instanceof SyntaxError ? `Invalid test case JSON: ${error.message}` : error.message;
+      resultPanel.className = 'test-results test-result';
+      return;
+    }
+    const button = document.getElementById('runCode');
+    button.disabled = true; button.textContent = 'Running…';
+    resultPanel.className = 'test-results'; resultPanel.textContent = 'Running test cases…';
+    const workerSource = `
+      const stable = (value) => Array.isArray(value) ? value.map(stable) : value && typeof value === 'object' ? Object.keys(value).sort().reduce((out, key) => (out[key] = stable(value[key]), out), {}) : value;
+      onmessage = (event) => {
+        try {
+          const { code, cases } = event.data;
+          const run = new Function('input', code + '\\n; if (typeof solution !== "function") throw new Error("Define function solution(input)."); return solution(input);');
+          const results = cases.map(({ input, expected }, index) => {
+            const actual = run(input);
+            const passed = JSON.stringify(stable(actual)) === JSON.stringify(stable(expected));
+            return { index: index + 1, passed, expected, actual };
+          });
+          postMessage({ results });
+        } catch (error) { postMessage({ error: error && error.message ? error.message : String(error) }); }
+      };
+    `;
+    let worker;
+    let workerUrl;
+    let finished = false;
+    let timer;
+    const finish = (message) => {
+      if (finished) return;
+      finished = true; clearTimeout(timer);
+      if (worker) worker.terminate();
+      if (workerUrl) URL.revokeObjectURL(workerUrl);
+      button.disabled = false; button.textContent = '▶ Run tests';
+      if (message.error) { resultPanel.className = 'test-results test-result'; resultPanel.textContent = message.error; return; }
+      resultPanel.replaceChildren();
+      const passed = message.results.filter((item) => item.passed).length;
+      const summary = document.createElement('strong'); summary.className = `test-results-summary ${passed === message.results.length ? '' : 'failed'}`; summary.textContent = `${passed} / ${message.results.length} test cases passed`; resultPanel.append(summary);
+      message.results.forEach((item) => {
+        const row = document.createElement('div'); row.className = `test-result ${item.passed ? 'pass' : ''}`;
+        const label = document.createElement('strong'); label.textContent = `Case ${item.index} · ${item.passed ? 'Passed' : 'Failed'}`; row.append(label);
+        if (!item.passed) { const detail = document.createElement('span'); detail.textContent = `Expected ${JSON.stringify(item.expected)} · Got ${JSON.stringify(item.actual)}`; row.append(detail); }
+        resultPanel.append(row);
+      });
+      if (passed === message.results.length) {
+        const streakStatus = document.createElement('span'); streakStatus.className = 'result-idle'; streakStatus.textContent = 'Saving your DSA streak…'; resultPanel.append(streakStatus);
+        fetch('/student/dsa/code-solved', { method: 'POST', headers: { 'Accept': 'application/json' } })
+          .then(async (response) => {
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(data.error || 'Could not save your streak.');
+            document.getElementById('dsaStreak').textContent = data.currentStreak;
+            document.getElementById('dsaBestStreak').textContent = data.bestStreak;
+            streakStatus.textContent = 'All test cases passed. Your DSA streak is up to date.';
+            streakStatus.className = 'dsa-answer-feedback is-correct';
+          })
+          .catch((error) => { streakStatus.textContent = `${error.message} Your code passed, but the streak was not updated.`; streakStatus.className = 'dsa-answer-feedback is-wrong'; });
+      }
+    };
+    timer = setTimeout(() => finish({ error: 'Execution timed out (2 seconds). Check for an infinite loop.' }), 2000);
+    try {
+      workerUrl = URL.createObjectURL(new Blob([workerSource], { type: 'text/javascript' }));
+      worker = new Worker(workerUrl);
+      worker.onmessage = (event) => finish(event.data);
+      worker.onerror = (event) => finish({ error: event.message || 'Could not run this code in the browser.' });
+      worker.postMessage({ code: codeEditor.value, cases });
+    } catch (error) { finish({ error: error.message || 'Could not start the JavaScript runner.' }); }
+  });
   const escapeHTML = (value) => String(value || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   document.querySelectorAll('.dsa-answer-form').forEach((form) => {
     form.addEventListener('submit', async (event) => {
