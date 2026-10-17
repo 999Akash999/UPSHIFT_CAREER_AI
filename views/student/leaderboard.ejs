@@ -1,0 +1,67 @@
+<% layout('layouts/dashboardLayout') %>
+
+<section class="leaderboard-page" aria-labelledby="leaderboardTitle">
+  <header class="leaderboard-heading">
+    <div>
+      <p class="leaderboard-eyebrow">LEARN • PRACTICE • GROW</p>
+      <h1 id="leaderboardTitle">Student leaderboard</h1>
+      <p>See how your daily learning and skill assessment progress compares with other students.</p>
+    </div>
+    <a class="leaderboard-action" href="/student/daily-tasks">Continue learning <span aria-hidden="true">→</span></a>
+  </header>
+
+  <div class="leaderboard-summary">
+    <article class="leaderboard-summary-card leaderboard-summary-rank">
+      <span>Your current rank</span>
+      <strong><%= currentRank ? `#${currentRank.rank}` : '—' %></strong>
+      <small>Among <%= totalStudents %> active student accounts</small>
+    </article>
+    <article class="leaderboard-summary-card">
+      <span>Your score</span>
+      <strong><%= currentRank ? currentRank.totalScore.toFixed(1) : '0' %><small> pts</small></strong>
+      <small><%= currentRank ? currentRank.completedTasks : 0 %> learning tasks completed</small>
+    </article>
+    <article class="leaderboard-summary-card">
+      <span>How points work</span>
+      <strong>10 <small>pts / task</small></strong>
+      <small>Each assessment adds up to 10 points using your best score.</small>
+    </article>
+  </div>
+
+  <div class="leaderboard-table-card">
+    <div class="leaderboard-table-heading">
+      <div><h2>All students</h2><p>Scores update as learning tasks and assessments are completed.</p></div>
+      <span><%= totalStudents %> students</span>
+    </div>
+    <% if (students.length) { %>
+      <div class="leaderboard-table-scroll" role="region" aria-label="Student rankings" tabindex="0">
+        <table class="leaderboard-table">
+          <thead><tr><th scope="col">Rank</th><th scope="col">Student</th><th scope="col">Learning</th><th scope="col">Assessments</th><th scope="col">Total score</th></tr></thead>
+          <tbody>
+            <% students.forEach(student => { %>
+              <tr class="<%= currentRank && currentRank.id === student.id ? 'leaderboard-current-student' : '' %>">
+                <td><span class="leaderboard-rank <%= student.rank <= 3 ? `leaderboard-rank-top-${student.rank}` : '' %>"><%= student.rank <= 3 ? ['🥇', '🥈', '🥉'][student.rank - 1] : `#${student.rank}` %></span></td>
+                <td><div class="leaderboard-student">
+                  <% if (student.avatar && student.avatar !== '/images/avatars/default.png') { %><img src="<%= student.avatar %>" alt="" loading="lazy"><% } else { %><span class="leaderboard-avatar-fallback" aria-hidden="true"><%= student.name ? student.name.charAt(0).toUpperCase() : 'S' %></span><% } %>
+                  <strong><%= student.name %><% if (currentRank && currentRank.id === student.id) { %><small>You</small><% } %></strong>
+                </div></td>
+                <td><%= student.completedTasks %> tasks <small>(<%= student.learningPoints %> pts)</small></td>
+                <td><%= student.assessmentPoints.toFixed(1) %> pts</td>
+                <td><strong class="leaderboard-total-score"><%= student.totalScore.toFixed(1) %></strong> <small>pts</small></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% if (totalPages > 1) { %>
+        <nav class="leaderboard-pagination" aria-label="Leaderboard pages">
+          <% if (page > 1) { %><a href="?page=<%= page - 1 %>" rel="prev">← Previous</a><% } else { %><span></span><% } %>
+          <span>Page <%= page %> of <%= totalPages %></span>
+          <% if (page < totalPages) { %><a href="?page=<%= page + 1 %>" rel="next">Next →</a><% } else { %><span></span><% } %>
+        </nav>
+      <% } %>
+    <% } else { %>
+      <div class="leaderboard-empty"><span aria-hidden="true">🏆</span><strong>No student rankings yet</strong><p>Once students start learning and taking assessments, their scores will appear here.</p></div>
+    <% } %>
+  </div>
+</section>

@@ -10,10 +10,12 @@ const upload = require("../middlewares/upload");
 const resumeBuilderController = require("../controllers/resumeBuilderController");
 const { aiLimiter, apiLimiter } = require("../middlewares/rateLimiter");
 const recruiterEngagementController = require("../controllers/recruiterEngagementController");
+const leaderboardController = require("../controllers/leaderboardController");
 
 router.use(requireAuth, requireStudent);
 
 router.get("/dashboard", studentController.getDashboard);
+router.get("/leaderboard", leaderboardController.getLeaderboard);
 router.get("/", (req, res) => res.redirect("/student/dashboard"));
 router.get("/profile", studentController.getProfile);
 const uploadAvatar = (req, res, next) => upload.single("avatar")(req, res, (error) => {
